@@ -25,3 +25,20 @@ config.yaml
 
 # 本机推理环境、下载模型和运行产物
 .runtime/
+
+# Go 编译产物、测试和覆盖率文件
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+coverage.*
+!coverage.go
+*.coverprofile
+profile.cov
+
+# Go 本地工作区
+go.work
+go.work.sum
