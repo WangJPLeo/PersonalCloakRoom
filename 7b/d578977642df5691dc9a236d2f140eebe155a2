@@ -1,0 +1,19 @@
+.gitignore
+  s_15175a45a45435::t_e171be76b5f8d7 28-44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7bd578977642df5691dc9a236d2f140eebe155a2",
+  "prompts": {},
+  "sessions": {
+    "s_15175a45a45435": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1a085-4552-77e0-ac6b-55fce41dcb6a",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
