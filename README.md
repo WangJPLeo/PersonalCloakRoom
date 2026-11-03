@@ -1,14 +1,12 @@
-# 出图图 · AI 服装参考图集 (COSTUME-DB-01)
+# PersonalCloakRoom · AI 服装参考图集
 
 一个深色主题的纯净服装参考图集网站，收录 **1407 张** 人物不入镜的 AI 生成服装图像（2:3 比例），支持中英文双语浏览、多维检索，并配备可选的 AI 一键换装试穿。
 
-> 👗 **【Linux.do 3级常任理事专属彩蛋】**  
-> 听说在 [LINUX DO](https://linux.do/) 社区只要升到 **3 级（常任理事）** 就可以解锁“看女装大佬”的保留节目？身为一名尊贵的 Linux.do 3 级老兵，逛了一圈发现坛里的女装资源还不够看，干脆亲手搓了这个 **「拍片哥女装」** 项目！  
-> 不仅收录了 1407 套纯净高质量服装图，还顺手接了 AI 虚拟换装后端——这下各位佬友哪怕现实中没有小裙子，直接传张自拍照就能一键无痛变身“女装大佬”出道了 😂！
+> **PersonalCloakRoom** 提供服装参考图库和可选的 AI 虚拟试衣功能。浏览、搜索和选款可直接在浏览器中使用；连接后端与模型服务后，可上传人物照片和服装图片生成试穿效果。
 
-> 🔗 **在线预览**：https://paipiange.github.io/nvzhuang/  
-> ⭐ **GitHub 源码**：https://github.com/paipiange/nvzhuang  
-> 💃 **兄弟项目（AI 姿势参考与生图工坊）**：https://github.com/paipiange/ai-pose-gallery-zh  
+> 🔗 **GitHub Pages 地址（需将远端仓库更名并开启 Pages 发布）**：https://wangjpleo.github.io/PersonalCloakRoom/<br>
+> ⭐ **GitHub 源码地址（远端仓库更名后）**：https://github.com/WangJPLeo/PersonalCloakRoom<br>
+> 💃 **相关项目（AI 姿势参考与生图工坊）**：https://github.com/paipiange/ai-pose-gallery-zh<br>
 > 💡 **原作者推文 / 灵感来源**：X [@giaaibusi](https://x.com/giaaibusi)  
 > 🐧 **社区友链**：[LINUX DO (https://linux.do/)](https://linux.do/)
 
@@ -33,9 +31,9 @@
 | <img src="docs/tryon-1.png" width="280" alt="选中的服装" /> | <img src="docs/tryon-2.png" width="280" alt="上传的模特照片" /> | <img src="docs/tryon-3.png" width="280" alt="AI 换装合成效果" /> |
 | **参考服装图**<br><sub>（图集中的精选女装）</sub> | **模特原图**<br><sub>（用户上传的人像日常照）</sub> | **AI 换装效果（图 1 + 图 2 ➔ 图 3）**<br><sub>（保留模特五官发型，自然融合服饰材质与剪裁）</sub> |
 
-## 🎬 兄弟项目联动：姿势参考 + 人物参考 → AI 生成结果
+## 🎬 相关项目联动：姿势参考 + 人物参考 → AI 生成结果
 
-如果你不仅想为模特挑选服装，还希望**自由掌控人体的拍摄姿势、骨架动作与构图视角**，推荐搭配我的另一个开源项目一起使用：  
+如果你不仅想为模特挑选服装，还希望**自由掌控人体的拍摄姿势、骨架动作与构图视角**，可搭配以下开源项目一起使用：<br>
 👉 **[拍片哥 · AI 姿势参考库与生图工坊 (AI Pose Gallery & Studio)](https://github.com/paipiange/ai-pose-gallery-zh)**
 
 该项目收录了 **288 组 / 1439 张** AI 人体多视角姿势参考图（日文数据完整汉化），内置「拍片哥 AI 姿势生图与试穿工坊」，支持骨架动作锁定、真实面料试穿与面容复刻：
@@ -48,7 +46,7 @@
 | **锁定身体动作、视角与画面构图**<br><sub>（从 1439 张多角度姿势库中挑选骨架素体）</sub> | **提供面容、发型与服装特征**<br><sub>（结合本项目精选服装或上传的模特穿搭）</sub> | **AI 融合生成结果（图 1 + 图 2 ➔ 图 3）**<br><sub>（动作精准还原，完美呈现人物与穿搭细节）</sub> |
 
 > **上图即实际工作流：图 1 + 图 2 → 图 3。** 人物头像与服装均为可选输入；只选择姿势，也可以让模型自动完成人物与穿搭设计。  
-> 💡 **联动工作流**：在 [拍片哥女装](https://github.com/paipiange/nvzhuang) 挑选高质量服装设计，在 [拍片哥姿势库](https://github.com/paipiange/ai-pose-gallery-zh) 挑选合适的人体动作构图，两者结合即可生成兼具神韵动作与精美穿搭的专业级 AI 模特大片！
+> 💡 **联动工作流**：在 [PersonalCloakRoom](https://github.com/WangJPLeo/PersonalCloakRoom) 挑选高质量服装设计，在 [拍片哥姿势库](https://github.com/paipiange/ai-pose-gallery-zh) 挑选合适的人体动作构图，两者结合即可生成兼具神韵动作与精美穿搭的专业级 AI 模特大片！
 
 ## ✨ 功能特性
 
@@ -63,6 +61,8 @@
 - **黑白主题**：默认白色主题，可在图库页和试穿页切换黑色 / 白色主题，并记住本机选择
 - **浏览器设置中心**：可保存自己的后端地址、Base URL、API Key、接口协议与模型名；个人配置只保存在当前浏览器，后端仅按单次请求临时使用
 - **本机生成记录**：AI 换装成功后自动保存到当前浏览器的 IndexedDB，可随时查看、下载、单条删除或全部清空，不上传、不跨设备同步
+
+> 同一站点来源升级到 PersonalCloakRoom 时，旧版主题、压缩选项、个人模型设置与生成记录会自动迁移。浏览器存储按来源隔离，更换域名后不会跨站点迁移。原项目的版权声明保留在 `LICENSE` 中。
 
 > 自定义上传的服装原图仅保留在当前页面内存中，不写入本地存储或生成记录；刷新或关闭页面后会自动清除。生成时只将压缩后的图片内容发送到用户配置的换装后端。
 - **电商以图搜同款**：大图详情与试穿操作区支持一键唤起淘宝图片搜索，快速查找现实中在售的同款服饰
@@ -164,14 +164,14 @@ docker compose up -d
 cd backend
 
 # 构建镜像
-docker build -f manifest/docker/Dockerfile -t costume-tryon .
+docker build -f manifest/docker/Dockerfile -t personalcloakroom-backend .
 
 # 运行容器（按需注入模型 Key，例如豆包或 OpenAI）
-docker run -d --name costume-tryon \
+docker run -d --name personalcloakroom-backend \
   -p 8000:8000 \
   -e ARK_API_KEY="你的豆包ArkKey" \
   -e OPENAI_API_KEY="sk-你的OpenAIKey" \
-  costume-tryon
+  personalcloakroom-backend
 ```
 
 #### 方式三：无 Docker 本地运行
@@ -237,7 +237,7 @@ npx serve -l 3000 .
 ## 📁 目录结构
 
 ```
-nvzhuang/
+PersonalCloakRoom/
 ├── index.html          # 页面结构 + 样式 + 交互逻辑（含双语字典、AI 试穿搭配台）
 ├── data.js             # 1407 条服装数据（id / 分类 / 关键词 / 图片路径）
 ├── docker-compose.yml  # 一键启动后端 Docker 容器编排
@@ -269,7 +269,7 @@ nvzhuang/
 
 ## 💡 灵感来源与推荐项目
 
-- **兄弟项目 / 姿势与生图工坊**：[拍片哥 AI 姿势参考库 (ai-pose-gallery-zh)](https://github.com/paipiange/ai-pose-gallery-zh) —— 288 组 / 1439 张多角度人体姿势，集成本地与多云端 AI 姿势生图与试穿工坊。
+- **相关项目 / 姿势与生图工坊**：[拍片哥 AI 姿势参考库 (ai-pose-gallery-zh)](https://github.com/paipiange/ai-pose-gallery-zh) —— 288 组 / 1439 张多角度人体姿势，集成本地与多云端 AI 姿势生图与试穿工坊。
 - **原作者 / 灵感来源**：[X @giaaibusi](https://x.com/giaaibusi) —— 诚挚鸣谢原作者对高质量 AI 服装图集的整理与创意分享！
 - **社区友链**：[LINUX DO (https://linux.do/)](https://linux.do/) —— 真诚、友善、团结、专业的开源与技术极客社区。
 - **审计与规范文档**：
@@ -317,11 +317,11 @@ Each record in `data.js` contains the following fields:
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=nvzhuang%2Fnvzhuang%2Cpaipiange%2Fnvzhuang&type=date&legend=top-left">
+<a href="https://www.star-history.com/?repos=WangJPLeo%2FPersonalCloakRoom&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=nvzhuang/nvzhuang%2Cpaipiange/nvzhuang&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=nvzhuang/nvzhuang%2Cpaipiange/nvzhuang&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=nvzhuang/nvzhuang%2Cpaipiange/nvzhuang&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=WangJPLeo/PersonalCloakRoom&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=WangJPLeo/PersonalCloakRoom&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=WangJPLeo/PersonalCloakRoom&type=date&legend=top-left" />
  </picture>
 </a>
 

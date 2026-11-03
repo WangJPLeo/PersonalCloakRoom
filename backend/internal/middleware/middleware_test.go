@@ -18,7 +18,7 @@ func TestCORSOriginValidation(t *testing.T) {
 	cfg := &security.SecurityConfig{
 		TrustedOrigins: []string{
 			"http://localhost:3000",
-			"https://paipiange.github.io",
+			"https://wangjpleo.github.io",
 		},
 		AllowPrivateNetwork: true,
 	}
@@ -51,6 +51,31 @@ func TestCORSOriginValidation(t *testing.T) {
 	}
 	if resp.Header.Get("Access-Control-Allow-Origin") != "http://localhost:3000" {
 		t.Fatalf("unexpected allow origin: %s", resp.Header.Get("Access-Control-Allow-Origin"))
+	}
+
+	// 新项目的 Pages 来源可访问，原项目来源不再获得跨域授权。
+	for _, tc := range []struct {
+		origin string
+		status int
+	}{
+		{"https://wangjpleo.github.io", http.StatusOK},
+		{"https://paipiange.github.io", http.StatusForbidden},
+	} {
+		t.Run(tc.origin, func(t *testing.T) {
+			reqOrigin, _ := http.NewRequest(http.MethodGet, req.URL.String(), nil)
+			reqOrigin.Header.Set("Origin", tc.origin)
+			respOrigin, err := client.Do(reqOrigin)
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer respOrigin.Body.Close()
+			if respOrigin.StatusCode != tc.status {
+				t.Fatalf("origin %s: expected %d, got %d", tc.origin, tc.status, respOrigin.StatusCode)
+			}
+			if tc.status == http.StatusOK && respOrigin.Header.Get("Access-Control-Allow-Origin") != tc.origin {
+				t.Fatalf("origin %s was not allowed", tc.origin)
+			}
+		})
 	}
 
 	// 测试 OPTIONS 预检

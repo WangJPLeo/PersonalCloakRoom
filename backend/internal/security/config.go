@@ -32,7 +32,7 @@ func DefaultSecurityConfig() *SecurityConfig {
 		AuthRequired: true,
 		APIKeysEnv:   "TRYON_API_KEYS",
 		TrustedOrigins: []string{
-			"https://paipiange.github.io",
+			"https://wangjpleo.github.io",
 			"http://localhost:3000",
 			"http://127.0.0.1:3000",
 		},
@@ -66,7 +66,7 @@ func LoadSecurityConfig(ctx context.Context) (*SecurityConfig, error) {
 	}
 	if len(cfg.TrustedOrigins) == 0 {
 		cfg.TrustedOrigins = []string{
-			"https://paipiange.github.io",
+			"https://wangjpleo.github.io",
 			"http://localhost:3000",
 			"http://127.0.0.1:3000",
 		}

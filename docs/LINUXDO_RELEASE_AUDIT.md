@@ -1,4 +1,4 @@
-# 衣装集 (nvzhuang) 项目现状与合规审计报告
+# PersonalCloakRoom 项目现状与合规审计报告
 
 > 审计基准日期：2026-10-29  
 > 适用场景：准备 Linux.do 社区开源分享、日常开源合规排查与质量提升  
@@ -29,7 +29,7 @@
 - **商用授权**：明确代码与 1407 套服装图集完全免费开源、完全可商用，支持个人与商业创作、设计参考及二次开发。
 
 ### 2.2 原尺寸 PNG 404 现况
-- GitHub Pages 地址 `https://paipiange.github.io/nvzhuang/png/SPR-0001.png` 属于超大原始文件，仓库中已托管高质量 `assets/img/*.webp`（优化后 WebP 格式，清晰度满足高分辨率屏幕浏览与 AI 试穿提取）。
+- GitHub Pages 地址 `https://wangjpleo.github.io/PersonalCloakRoom/png/SPR-0001.png` 属于超大原始文件，仓库中已托管高质量 `assets/img/*.webp`（优化后 WebP 格式，清晰度满足高分辨率屏幕浏览与 AI 试穿提取）。
 - **已做处理**：在前端下载交互中，当原尺寸 PNG 缺失时，自动平滑回退到展示大图 WebP 进行下载，保证用户体验不中断。
 
 ### 2.3 结论与行动建议

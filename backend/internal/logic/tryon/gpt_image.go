@@ -203,7 +203,7 @@ func (o *OpenAIImages) Generate(ctx context.Context, personB64, garmentB64, prom
 	}
 
 	// 换装场景需要「人像 + 服装」两张参考图。
-	// 绝大多数 OpenAI 兼容中转站（含用户的中转站 cpa.paipiange.com）对 gpt-image-2 走
+	// 绝大多数 OpenAI 兼容中转站（含自定义中转服务）对 gpt-image-2 走
 	// 火山方舟式多图生图协议：prompt 必填 + image[] 传参考图，返回 b64_json。
 	// 这里统一用 prompt + image[]，对官方 OpenAI 协议则由后端中转站自行兼容。
 	reqBody := gptImageRequest{

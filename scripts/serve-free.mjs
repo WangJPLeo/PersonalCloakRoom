@@ -78,7 +78,7 @@ server.on('error', error => {
   process.exitCode = 1;
 });
 server.listen(port, '127.0.0.1', () => {
-  console.log(`免费图库已启动：${origin}`);
+  console.log(`PersonalCloakRoom 免费图库已启动：${origin}`);
   console.log('无需 API Key。按 Ctrl+C 停止服务。');
   console.log('AI 换装生成属于可选扩展，需要另行配置后端。');
 });

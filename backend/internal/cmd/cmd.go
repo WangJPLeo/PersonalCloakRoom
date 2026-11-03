@@ -5,8 +5,8 @@ import (
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
-	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/os/gcfg"
+	"github.com/gogf/gf/v2/os/gcmd"
 	"github.com/gogf/gf/v2/os/gfile"
 
 	"backend/internal/controller/hello"
@@ -48,9 +48,9 @@ func EnsureServerPort(ctx context.Context, s *ghttp.Server) {
 
 var (
 	Main = gcmd.Command{
-		Name:  "main",
-		Usage: "main",
-		Brief: "start http server",
+		Name:  "PersonalCloakRoom",
+		Usage: "PersonalCloakRoom",
+		Brief: "start PersonalCloakRoom HTTP server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			InitConfigFallback(ctx)
 

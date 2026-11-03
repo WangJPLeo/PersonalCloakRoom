@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: template-single
+  name: personalcloakroom-backend
   labels:
-    app: template-single
+    app: personalcloakroom-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: template-single
+      app: personalcloakroom-backend
   template:
     metadata:
       labels:
-        app: template-single
+        app: personalcloakroom-backend
     spec:
       containers:
         - name : main
-          image: template-single
+          image: personalcloakroom-backend
           imagePullPolicy: Always
 

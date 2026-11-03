@@ -10,6 +10,54 @@ for (const [index, match] of inlineScripts.entries()) {
   new vm.Script(match[1], {filename: `index.html:inline-${index + 1}`});
 }
 
+// 改名升级必须保留同源旧设置，且不能覆盖新设置或在写入失败时删除旧值。
+function runStorageUpgrade(entries, denyWrites = false) {
+  const values = new Map(entries);
+  const document = {documentElement: {dataset: {}}};
+  const localStorage = {
+    getItem: key => values.get(key) ?? null,
+    setItem: (key, value) => {
+      if (denyWrites) throw new Error('storage quota exceeded');
+      values.set(key, value);
+    },
+    removeItem: key => values.delete(key),
+  };
+  vm.runInNewContext(inlineScripts[0][1], {document, localStorage});
+  return {values, theme: document.documentElement.dataset.theme};
+}
+
+const migratedSettings = runStorageUpgrade([
+  ['nvzhuang_theme', 'dark'],
+  ['nvzhuang_compress_image', '0'],
+  ['paipiange.tryon.settings.v1', '{"model":"legacy-model"}'],
+]);
+assert.equal(migratedSettings.theme, 'dark');
+assert.equal(migratedSettings.values.get('PersonalCloakRoom.compressImage'), '0');
+assert.equal(migratedSettings.values.get('PersonalCloakRoom.tryon.settings.v1'), '{"model":"legacy-model"}');
+assert.equal(migratedSettings.values.has('paipiange.tryon.settings.v1'), false);
+const newerSettings = runStorageUpgrade([
+  ['nvzhuang_theme', 'dark'], ['PersonalCloakRoom.theme', 'light'],
+]);
+assert.equal(newerSettings.theme, 'light');
+const quotaFailure = runStorageUpgrade([['nvzhuang_theme', 'dark']], true);
+assert.equal(quotaFailure.values.get('nvzhuang_theme'), 'dark');
+assert.equal(quotaFailure.values.has('PersonalCloakRoom.theme'), false);
+
+const previousBrand = runStorageUpgrade([
+  ['CinlyCloakRoom.theme', 'dark'],
+  ['nvzhuang_theme', 'light'],
+  ['CinlyCloakRoom.compressImage', '0'],
+  ['CinlyCloakRoom.tryon.settings.v1', '{"model":"recent-model"}'],
+  ['paipiange.tryon.settings.v1', '{"model":"older-model"}'],
+]);
+assert.equal(previousBrand.theme, 'dark');
+assert.equal(previousBrand.values.get('PersonalCloakRoom.compressImage'), '0');
+assert.equal(previousBrand.values.get('PersonalCloakRoom.tryon.settings.v1'), '{"model":"recent-model"}');
+assert.equal(previousBrand.values.has('CinlyCloakRoom.tryon.settings.v1'), false);
+assert.equal(previousBrand.values.has('paipiange.tryon.settings.v1'), false);
+const previousBrandQuotaFailure = runStorageUpgrade([['CinlyCloakRoom.theme', 'dark']], true);
+assert.equal(previousBrandQuotaFailure.values.get('CinlyCloakRoom.theme'), 'dark');
+
 function extractFunction(name) {
   const patterns = [`function ${name}(`, `async function ${name}(`];
   const start = patterns.map(pattern => html.indexOf(pattern)).find(index => index >= 0);

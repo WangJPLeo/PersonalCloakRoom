@@ -1,17 +1,17 @@
-# nvzhuang → Linux.do 推广准备：最新代码增量优化任务书
+# PersonalCloakRoom → Linux.do 推广准备：最新代码增量优化任务书
 
 > **交给 Codex / Claude Code / OpenCode 的执行文档**  
 > 检查日期：2026-10-29  
-> 项目：[`paipiange/nvzhuang`](https://github.com/paipiange/nvzhuang)  
+> 项目：[`WangJPLeo/PersonalCloakRoom`](https://github.com/WangJPLeo/PersonalCloakRoom)  
 > 核对分支：`main`  
-> 本次获取的最近提交：[`1b0911024ca01fc314bccf6d0e15a9079dc3d34d`](https://github.com/paipiange/nvzhuang/commit/1b0911024ca01fc314bccf6d0e15a9079dc3d34d)  
+> 本次获取的最近提交：[`1b0911024ca01fc314bccf6d0e15a9079dc3d34d`](https://github.com/WangJPLeo/PersonalCloakRoom/commit/1b0911024ca01fc314bccf6d0e15a9079dc3d34d)  
 > 参考项目：[`vastsa/pi-desktop`](https://github.com/vastsa/pi-desktop)  
 > 参考帖子：<https://linux.do/t/topic/2869113>  
 > 社区准则：<https://linux.do/guidelines>
 
 ## 0. 给执行 AI 的总指令
 
-你现在是 `nvzhuang` 项目的代码维护者。请**以本地仓库的最新代码为准**，先执行 `git status`、`git log -1`、`git remote -v`，确认与远端 `main` 的关系；有未提交的本地修改时不要覆盖，不要直接强制 `git reset`。然后逐项检查本任务书：**已经完成的保持不动，只做必要的增量修改。**
+你现在是 `PersonalCloakRoom` 项目的代码维护者。请**以本地仓库的最新代码为准**，先执行 `git status`、`git log -1`、`git remote -v`，确认与远端 `main` 的关系；有未提交的本地修改时不要覆盖，不要直接强制 `git reset`。然后逐项检查本任务书：**已经完成的保持不动，只做必要的增量修改。**
 
 目标不是添加新奇功能，而是：让仓库的 README、部署说明、演示效果和开源说明真实、清晰、可信，适合开发者在 Linux.do 合规分享，尽可能提升自然收藏与 GitHub Star 转化。
 
@@ -25,7 +25,7 @@
 
 | 项目 | 现状 | 执行要求 |
 |---|---|---|
-| 网站 / 项目名 | 衣装集 COSTUME-DB-01 | 保留，不要随意改名 |
+| 网站 / 项目名 | PersonalCloakRoom | 保留，不要随意改名 |
 | 图片量 | README 写明 1407 张、2:3 比例 | 保留，运行脚本核对 `data.js` 数量 |
 | 前端 | `index.html` + `data.js` + `assets/` 的静态网站 | 保持无需构建的特点 |
 | 分类检索 | 8 类、双语搜索、放大浏览、图片下载 | 先回归测试，禁止无故重构 |
@@ -93,7 +93,7 @@
 
 建议结构：
 
-1. **项目名 + 一句话定位**：`衣装集｜1407 张 AI 服装参考图 + 可选 AI 试穿`。
+1. **项目名 + 一句话定位**：`PersonalCloakRoom｜1407 张 AI 服装参考图 + 可选 AI 试穿`。
 2. **首屏入口**：`在线浏览` · `查看试穿演示` · `快速部署` · `GitHub Issues`；已有 GitHub Star 可用普通 badge，但不要伪造 Star 数。
 3. **主要截图**：优先复用 `docs/screenshot-zh.png`，在首屏附近展示；多语言与搜索图放在第二屏。
 4. **实际换装前/后对比**：复用已存在的 `tryon-1/2/3`，但先完成授权与图片合规审查。
@@ -197,11 +197,11 @@ docker compose config
 
 > 注意：此节系 AI 辅助文案，仅供维护者审稿和制作规则允许的图片，不要直接贴成 Linux.do 普通文字正文；以下内容以实际授权审查和技术测试通过为前提。
 
-**拟用标题：**【开源】身为 Linux.do 3级常任理事，我搓了个「拍片哥女装」图库，还能一键换装试穿！
+**拟用标题：**【开源】PersonalCloakRoom：1407 套服装参考图与 AI 虚拟试衣
 
-听说在咱 Linux.do 水到 3 级（常任理事）就能解锁看“女装大佬”的保留节目？身为一名尊贵的 3 级老兵，逛了一圈发现坛里女装资源还不够丰富，干脆亲手搓了这个**「拍片哥女装 (COSTUME-DB-01)」**开源项目！
+**PersonalCloakRoom** 是一个面向服装参考与虚拟试衣的开源项目，支持在浏览器中浏览、搜索和选择服装。
 
-不仅把 1407 套 AI 高清服装参考图整理成了一个纯静态、秒开、中英双语检索的图集网站；还顺手接了个 GoFrame 虚拟换装后端——各位佬友即使现实里没有女装，直接上传一张自拍照，也能一键无痛变身“女装大佬”出道 😂！
+项目收录 1407 套 AI 服装参考图，提供纯静态页面与中英双语检索；连接 GoFrame 后端及模型服务后，可上传人物照片与目标服装图生成试穿效果。
 
 目前主要特性：
 - **纯前端免费图库**：1407 张高质量 2:3 纯净女装图，支持按季节分类、中英双语双向搜索、大图查看、键盘翻页。
@@ -209,8 +209,8 @@ docker compose config
 - **可选 AI 换装**：自备后端（提供 Docker 一键运行）和模型 API Key（支持 Gemini、豆包、GPT-Image 等），真实把小裙子合成到自拍照上。
 - **完全开源可商用**：已正式签署 MIT License，代码与图集完全免费开放。
 
-- **在线图库：** https://paipiange.github.io/nvzhuang/
-- **GitHub：** https://github.com/paipiange/nvzhuang
+- **在线图库：** https://wangjpleo.github.io/PersonalCloakRoom/
+- **GitHub：** https://github.com/WangJPLeo/PersonalCloakRoom
 
 项目刚搓出来，欢迎各位佬友来玩、提 Issue 和 PR！如果能博君一笑或者对你有些用处，也欢迎给个 ⭐ Star 支持一下，谢谢各位佬友！
 
@@ -246,4 +246,4 @@ docker compose config
 
 ## 9. 维护者投喂 AI 的一句话
 
-> 请以当前仓库最新代码为准，严格执行 `nvzhuang_LinuxDo推广_最新代码增量优化任务书_2026-10-29.md`。先核对 git 状态，保留我已完成的试穿演示、Docker Compose、鸣谢与 GitHub 入口；优先解决文档不一致、安全和社区合规问题。可以安全完成的改动直接修改并测试；许可证/图像授权不允许你替我做主。最后按任务书输出 SUMMARY、TESTS、BLOCKED 和 diff，不要提交或推送。
+> 请以当前仓库最新代码为准，严格执行 `PersonalCloakRoom.md`。先核对 git 状态，保留我已完成的试穿演示、Docker Compose、鸣谢与 GitHub 入口；优先解决文档不一致、安全和社区合规问题。可以安全完成的改动直接修改并测试；许可证/图像授权不允许你替我做主。最后按任务书输出 SUMMARY、TESTS、BLOCKED 和 diff，不要提交或推送。

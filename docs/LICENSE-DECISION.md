@@ -1,4 +1,4 @@
-# 衣装集 (nvzhuang) 开源许可证决策与授权执行书
+# PersonalCloakRoom 开源许可证决策与授权执行书
 
 > 编制日期：2026-10-29  
 > 状态：**RESOLVED（项目所有者已确认采用 MIT License，完全可商用 免费开源）**  

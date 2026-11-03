@@ -2,6 +2,7 @@ import {spawn} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 
 const backend = fileURLToPath(new URL('../backend/', import.meta.url));
+console.log('正在启动 PersonalCloakRoom AI 换装后端…');
 const child = spawn('go', ['run', 'main.go'], {
   cwd: backend,
   env: process.env,

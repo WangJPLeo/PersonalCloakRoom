@@ -4,7 +4,7 @@ setlocal EnableDelayedExpansion
 cd /d "%~dp0"
 
 echo ==========================================
-echo   AI 换装后端 - 重新编译并重启
+echo   PersonalCloakRoom AI 换装后端 - 重新编译并重启
 echo ==========================================
 echo.
 
@@ -38,7 +38,7 @@ echo.
 
 REM ---- 3. 启动 ----
 echo [3/4] 启动服务（监听 8000 端口）...
-start "AI-Tryon-Backend" cmd /k "main.exe"
+start "PersonalCloakRoom-Backend" cmd /k "main.exe"
 echo.
 
 REM ---- 4. 提示 ----

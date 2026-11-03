@@ -1,7 +1,7 @@
 # AI 换装接口保护与图片校验功能需求
 
 > 文档日期：2026-10-30  
-> 适用项目：`nvzhuang`  
+> 适用项目：`PersonalCloakRoom`<br>
 > 需求范围：功能 1「接口鉴权、限流和费用保护」与功能 3「图片校验和资源限制」  
 > 实现方式：保留现有同步 `POST /tryon`，不引入异步任务系统
 
@@ -136,7 +136,7 @@ TRYON_API_KEYS=owner-token-with-at-least-32-characters,second-owner-token-with-a
 
 ```yaml
 trustedOrigins:
-  - "https://paipiange.github.io"
+  - "https://wangjpleo.github.io"
   - "http://localhost:3000"
   - "http://127.0.0.1:3000"
 ```
@@ -246,7 +246,7 @@ security:
   authRequired: true
   apiKeysEnv: "TRYON_API_KEYS"
   trustedOrigins:
-    - "https://paipiange.github.io"
+    - "https://wangjpleo.github.io"
     - "http://localhost:3000"
     - "http://127.0.0.1:3000"
   allowPrivateNetwork: false

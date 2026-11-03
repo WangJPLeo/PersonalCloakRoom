@@ -1,4 +1,4 @@
-# AI 换装后端部署指南
+# PersonalCloakRoom · AI 换装后端部署指南
 
 本文档说明如何把 `backend/`（GoFrame v2 后端）部署到**你自己的服务器**。
 
@@ -40,16 +40,16 @@ docker compose logs -f
 ```bash
 # 1. 在 backend 目录构建镜像
 cd backend
-docker build -f manifest/docker/Dockerfile -t costume-tryon .
+docker build -f manifest/docker/Dockerfile -t personalcloakroom-backend .
 
 # 2. 运行容器，通过环境变量注入 Key（按需填写，豆包用 ARK_API_KEY）
-docker run -d --name costume-tryon \
+docker run -d --name personalcloakroom-backend \
   -p 8000:8000 \
   --restart unless-stopped \
   -e OPENAI_API_KEY="sk-你的key" \
   -e ARK_API_KEY="你的豆包ArkKey" \
   -e GEMINI_API_KEY="AIza你的key" \
-  costume-tryon
+  personalcloakroom-backend
 ```
 
 ### 方式 C：直接编译运行（无 Docker）
@@ -168,7 +168,7 @@ server {
 - **前端配置**：用户可在前端「设置中心」的「试穿后端」区域填入「后端访问 Token」（与第三方模型 API Key 完全隔离独立存储）。发起请求时，前端自动在 Header 中注入 `Authorization: Bearer <token>`。
 
 ### 2. 严格的 CORS 跨域来源白名单
-- `security.trustedOrigins` 必须配置精确来源域名（如 `https://paipiange.github.io`、`http://localhost:3000`），禁止配置通配符 `*`。
+- `security.trustedOrigins` 必须配置精确来源域名（如 `https://wangjpleo.github.io`、`http://localhost:3000`），禁止配置通配符 `*`。
 - 未授权来源发起跨域请求将直接返回 HTTP 403（业务错误码 `40301`，`ORIGIN_NOT_ALLOWED`）。
 
 ### 3. 频控限流、每日额度与并发锁定

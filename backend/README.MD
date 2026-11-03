@@ -1,6 +1,6 @@
-# 出图图 · AI 换装后端服务
+# PersonalCloakRoom · AI 换装后端服务
 
-基于 GoFrame v2 的 AI 换装（虚拟试衣）后端，为「出图图」网站提供 `POST /tryon` 接口。灵感源自 X 推文作者 [@giaaibusi](https://x.com/giaaibusi)。
+基于 GoFrame v2 的 AI 换装（虚拟试衣）后端，为「PersonalCloakRoom」网站提供 `POST /tryon` 接口。灵感源自 X 推文作者 [@giaaibusi](https://x.com/giaaibusi)。
 
 ## 效果演示
 
@@ -39,13 +39,13 @@ docker compose up -d
 
 ```bash
 cd backend
-docker build -f manifest/docker/Dockerfile -t costume-tryon .
+docker build -f manifest/docker/Dockerfile -t personalcloakroom-backend .
 
 # 注入对应的 Key 环境变量运行
-docker run -d --name costume-tryon -p 8000:8000 \
+docker run -d --name personalcloakroom-backend -p 8000:8000 \
   -e ARK_API_KEY="你的豆包ArkKey" \
   -e OPENAI_API_KEY="sk-你的OpenAIKey" \
-  costume-tryon
+  personalcloakroom-backend
 ```
 
 ### 方式三：本地直接运行
