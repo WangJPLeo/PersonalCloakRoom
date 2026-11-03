@@ -95,6 +95,13 @@ logger:
 # ============================================================================
 llm:
   models:
+    grok:
+      provider: openai
+      apiKey: ""
+      envKey: "XAI_API_KEY"
+      baseURL: "https://api.x.ai/v1"
+      model: "grok-imagine-image-2.0"
+
     # OpenAI GPT-Image-2（官方当前主推；gpt-image-1 已于 2026-10 停服）
     gpt-image:
       provider: openai          # OpenAI Images 兼容协议

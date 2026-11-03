@@ -78,6 +78,28 @@ func loadModelConfig(ctx context.Context, alias string) (*ModelConfig, error) {
 	if cfg == nil {
 		return nil, fmt.Errorf("模型 %s 未配置（当前请求可能来自不支持个人模型配置的旧前端或旧后端）", alias)
 	}
+	if alias == "gemini" {
+		if v := strings.TrimSpace(lookupEnv("GOOGLE_GEMINI_BASE_URL")); v != "" {
+			cfg.BaseURL = strings.TrimRight(v, "/")
+			if u, err := url.Parse(cfg.BaseURL); err == nil && u.Path == "" {
+				cfg.BaseURL += "/v1beta"
+			}
+		}
+		if v := strings.TrimSpace(lookupEnv("GEMINI_MODEL")); v != "" {
+			cfg.Model = v
+		}
+	}
+	if alias == "grok" {
+		if v := strings.TrimSpace(lookupEnv("XAI_API_KEY")); v != "" {
+			cfg.APIKey = v
+		}
+		if v := strings.TrimSpace(lookupEnv("GROK_MODELS_BASE_URL")); v != "" {
+			cfg.BaseURL = strings.TrimRight(v, "/")
+		}
+		if v := strings.TrimSpace(lookupEnv("GROK_IMAGE_MODEL")); v != "" {
+			cfg.Model = v
+		}
+	}
 
 	provider := strings.ToLower(strings.TrimSpace(cfg.Provider))
 	if provider != "comfyui" && cfg.APIKey == "" {
@@ -92,6 +114,11 @@ func loadModelConfig(ctx context.Context, alias string) (*ModelConfig, error) {
 // loadLegacyConfig 兼容旧的 llm.openai / llm.gemini 配置写法
 func loadLegacyConfig(ctx context.Context, alias string) *ModelConfig {
 	switch alias {
+	case "grok":
+		return &ModelConfig{
+			Name: "grok", Provider: "openai", APIKey: lookupEnv("XAI_API_KEY"),
+			BaseURL: "https://api.x.ai/v1", Model: "grok-imagine-image-2.0",
+		}
 	case "gpt-image":
 		return &ModelConfig{
 			Name:     alias,

@@ -75,6 +75,7 @@ func (c *ControllerV1) Tryon(ctx context.Context, req *v1.TryonReq) (res *v1.Try
 		req.Size,
 		req.Lang,
 		clientConfig,
+		req.CustomPrompt,
 	)
 	if err != nil {
 		return nil, err

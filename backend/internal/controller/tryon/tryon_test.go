@@ -2,6 +2,7 @@ package tryon
 
 import (
 	"bytes"
+	"context"
 	"encoding/base64"
 	"encoding/json"
 	"image"
@@ -9,12 +10,14 @@ import (
 	"image/png"
 	"io"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"strings"
 	"testing"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/os/gcfg"
 
 	"backend/api/tryon/v1"
 	"backend/internal/middleware"
@@ -191,4 +194,87 @@ func TestControllerTryonQuotaAndConcurrency(t *testing.T) {
 func init() {
 	// 确保测试环境未设置任何破坏性环境变量
 	os.Unsetenv("TRYON_API_KEYS")
+}
+
+func TestTryonDescriptionReachesImageProvider(t *testing.T) {
+	const description = "白色影棚背景，人物坐在椅子上，柔和侧光"
+	image := createTestPNG(300, 300)
+	received := make(chan string, 2)
+	provider := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var body struct{ Prompt string }
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			t.Error(err)
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		received <- body.Prompt
+		w.Header().Set("Content-Type", "application/json")
+		_ = json.NewEncoder(w).Encode(map[string]any{"data": []map[string]string{{"b64_json": image}}})
+	}))
+	defer provider.Close()
+	config, _ := json.Marshal(map[string]any{"llm": map[string]any{"models": map[string]any{"description-test": map[string]any{
+		"provider": "openai", "apiKey": "test-key", "baseURL": provider.URL, "model": "test-image",
+	}}}})
+	adapter, err := gcfg.NewAdapterContent(string(config))
+	if err != nil {
+		t.Fatal(err)
+	}
+	oldAdapter := g.Cfg().GetAdapter()
+	g.Cfg().SetAdapter(adapter)
+	t.Cleanup(func() { g.Cfg().SetAdapter(oldAdapter) })
+	service := security.GetService()
+	oldQuota, oldConcurrency := service.DailyQuotaTracker, service.ConcurrencyManager
+	service.DailyQuotaTracker = security.NewDailyQuotaTracker(100)
+	service.ConcurrencyManager = security.NewConcurrencyManager(2, 1)
+	t.Cleanup(func() { service.DailyQuotaTracker, service.ConcurrencyManager = oldQuota, oldConcurrency })
+	s := g.Server("test-description-provider")
+	s.SetPort(0)
+	s.Group("/", func(group *ghttp.RouterGroup) {
+		group.Middleware(middleware.RequestID, ghttp.MiddlewareHandlerResponse)
+		group.Bind(NewV1())
+	})
+	if err := s.Start(); err != nil {
+		t.Fatal(err)
+	}
+	defer s.Shutdown()
+	port := strings.Split(s.GetListenedAddress(), ":")[1]
+	post := func(text string) (int, string) {
+		t.Helper()
+		body, _ := json.Marshal(v1.TryonReq{PersonImage: image, GarmentImage: image, Model: "description-test", Lang: "zh", CustomPrompt: text})
+		req, _ := http.NewRequestWithContext(context.Background(), http.MethodPost, "http://127.0.0.1:"+port+"/tryon", bytes.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+		res, err := http.DefaultClient.Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer res.Body.Close()
+		payload, _ := io.ReadAll(res.Body)
+		var result struct {
+			Code int
+			Data v1.TryonRes
+		}
+		if err := json.Unmarshal(payload, &result); err != nil {
+			t.Fatalf("invalid API response: %v", err)
+		}
+		return result.Code, result.Data.Image
+	}
+	if code, result := post(description); code != 0 || result != image {
+		t.Fatalf("description request failed, code=%d", code)
+	}
+	select {
+	case prompt := <-received:
+		if !strings.Contains(prompt, description) {
+			t.Fatal("custom description was lost before reaching the model")
+		}
+	default:
+		t.Fatal("model was not called")
+	}
+	if code, _ := post(strings.Repeat("字", 1001)); code == 0 {
+		t.Fatal("HTTP API must reject an overlong description")
+	}
+	select {
+	case <-received:
+		t.Fatal("invalid description must not reach the model")
+	default:
+	}
 }

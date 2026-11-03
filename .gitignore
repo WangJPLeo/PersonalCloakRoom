@@ -22,3 +22,6 @@ id_rsa*
 config.yaml
 **/config/config.yaml
 *.log
+
+# 本机推理环境、下载模型和运行产物
+.runtime/

@@ -17,6 +17,8 @@ type TryonReq struct {
 	KeepFace bool `json:"keep_face" d:"true" dc:"是否保持人物面部一致"`
 	// 语言：zh / en
 	Lang string `json:"lang" d:"zh" dc:"提示词语言"`
+	// 补充画面描述，仅在本次请求内存中使用。
+	CustomPrompt string `json:"custom_prompt,omitempty" v:"max-length:1000#补充描述最多1000个字符" dc:"可选的姿势、背景、光线或风格描述，最多1000字符"`
 	// 浏览器端自定义模型配置。仅用于当前请求，后端不得持久化或记录其中的 Key/Base URL。
 	ClientConfig *ClientModelConfig `json:"client_config,omitempty" dc:"当前请求临时使用的用户模型配置"`
 }

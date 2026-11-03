@@ -46,7 +46,7 @@ type doubaoRequest struct {
 	Image          []string `json:"image,omitempty"`           // 参考图 URL（多图生图）
 	Size           string   `json:"size,omitempty"`            // 如 "2048x2048" / "1024x1536"
 	ResponseFormat string   `json:"response_format,omitempty"` // url / b64_json
-	Watermark      bool     `json:"watermark,omitempty"`
+	Watermark      bool     `json:"watermark"`                 // false must be sent explicitly; omission may enable the provider's default watermark.
 }
 
 // doubaoResponse 豆包图片生成响应
@@ -78,6 +78,7 @@ func (d *Doubao) Generate(ctx context.Context, personB64, garmentB64, prompt, si
 		},
 		Size:           normalizeDoubaoSize(size),
 		ResponseFormat: "url",
+		Watermark:      false,
 	}
 
 	body, err := json.Marshal(reqBody)

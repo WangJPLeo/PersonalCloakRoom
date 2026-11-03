@@ -188,6 +188,9 @@ func (o *OpenAIImages) Generate(ctx context.Context, personB64, garmentB64, prom
 	if o.apiKey == "" {
 		return "", fmt.Errorf("模型 %s 未配置 API Key", o.name)
 	}
+	if strings.HasPrefix(strings.ToLower(o.model), "grok-imagine-image") {
+		return o.generateGrokEdit(ctx, personB64, garmentB64, prompt, size)
+	}
 
 	// 针对 GPT-Image 系列：由于 OpenAI / 中转站生图接口会静默忽略 image[] 传参，
 	// 此处先通过极速视觉分析提取人像神态与服装精确单品特征，再透传给 GPT-Image-2，
@@ -195,7 +198,7 @@ func (o *OpenAIImages) Generate(ctx context.Context, personB64, garmentB64, prom
 	isGPT := strings.Contains(strings.ToLower(o.model), "gpt-image") || strings.Contains(strings.ToLower(o.name), "gpt-image")
 	if isGPT {
 		if visualDesc := o.describeVisualFeatures(ctx, personB64, garmentB64); visualDesc != "" {
-			prompt = fmt.Sprintf("Full-body commercial fashion catalog photograph:\n%s\nStrict requirements:\n1. The adult female model from Image 1 is wearing the complete outfit from Image 2 faithfully.\n2. Fully clothed, modest neckline, standard comfortable fit, elegant posture.\n3. Clean daylight studio, neutral minimal background, photorealistic 8k, crisp fabric textures.\nOutput: ONLY the final dressed-up photograph.", visualDesc)
+			prompt = fmt.Sprintf("%s\n\nVisual observations from the reference images (use as reference only; follow the instructions above):\n%s", prompt, visualDesc)
 		}
 	}
 

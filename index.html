@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="description" content="拍片哥女装 (COSTUME-DB-01) — AI 服装参考图集，收录 1407 套高品质服装图片（2:3），支持一键 AI 试穿换装与中英文双向检索。">
-<title>拍片哥女装 · AI 服装参考图集</title>
+<meta name="description" content="出图图 (COSTUME-DB-01) — AI 服装参考图集，收录 1407 套高品质服装图片（2:3），支持一键 AI 试穿换装与中英文双向检索。">
+<title>出图图 · AI 服装参考图集</title>
 <script>
 try{
   document.documentElement.dataset.theme = localStorage.getItem('nvzhuang_theme') === 'dark' ? 'dark' : 'light';
@@ -275,6 +275,13 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .ai-gen-btn{width:100%;min-height:52px;border-radius:11px;font-size:15px;font-weight:700;cursor:pointer;background:linear-gradient(90deg,#ff7ab6,#ff9d6c);border:0;color:#111}
 .ai-gen-btn:hover{filter:brightness(1.08)}
 .ai-gen-btn:disabled{opacity:.55;cursor:not-allowed;filter:none}
+.ai-description{display:grid;gap:7px;margin:14px 0}
+.ai-description label{font-size:14px;font-weight:700;color:var(--tx)}
+.ai-description textarea{box-sizing:border-box;width:100%;min-height:110px;resize:vertical;padding:12px;border:1px solid var(--control-border);border-radius:11px;background:var(--panel);color:var(--tx);font:inherit;font-size:14px;line-height:1.6}
+.ai-description textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.ai-description textarea:disabled{opacity:.6;cursor:wait}
+.ai-description-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;color:var(--tx3);font-size:12px;line-height:1.5}
+.ai-description-count{flex-shrink:0;font-variant-numeric:tabular-nums}
 .ai-result{margin-top:14px}
 .ai-result .ai-result-box{position:relative;border-radius:12px;overflow:hidden;background:var(--result-bg);border:1px solid var(--line);min-height:120px;display:flex;align-items:center;justify-content:center}
 .ai-result .ai-result-box img{max-width:100%;max-height:420px;display:block}
@@ -392,7 +399,7 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 <body>
 <header class="hero">
   <div class="hero-top">
-    <div class="eyebrow" data-i18n="eyebrow">COSTUME-DB-01 · 图像参照用服装集</div>
+    <div class="eyebrow" data-i18n="eyebrow">COSTUME-DB-01 · 出图图参考图集</div>
     <div class="hero-controls">
       <a class="github-link" href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer" aria-label="原作者/灵感来源 @giaaibusi">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -442,7 +449,7 @@ footer a:hover{color:var(--tx);text-decoration:underline}
       </nav>
     </div>
   </div>
-  <h1><span data-i18n="titleWord">拍片哥女装</span> <span data-i18n="titleDb">图库</span></h1>
+  <h1><span data-i18n="titleWord">出图图</span> <span data-i18n="titleDb">图库</span></h1>
   <p class="sub" data-i18n="subtitle">人物不入镜的纯服装图像（2:3）。可按春・夏・秋・冬・内衣・派对・泳装・性感分类浏览。</p>
 </header>
 
@@ -458,7 +465,7 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 <main><div class="grid" id="grid"></div><button type="button" class="btn2 morebtn" id="more" hidden>加载更多</button></main>
 
 <footer id="foot">
-  <div data-i18n="footerNote">拍片哥女装 COSTUME-DB-01 · 基于 MIT 协议开源 · 完全可商用与作品创作</div>
+  <div data-i18n="footerNote">出图图 COSTUME-DB-01 · 基于 MIT 协议开源 · 完全可商用与作品创作</div>
   <div class="foot-source">
     <span data-i18n="footerCredit">灵感来源与原作者 X 推文：</span><a href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer">@giaaibusi</a>
     <span class="sep"> · </span>
@@ -578,7 +585,8 @@ footer a:hover{color:var(--tx);text-decoration:underline}
         <div class="ai-model-row">
           <span class="lbl" data-i18n="aiModel">换装模型</span>
           <select id="aiModel">
-            <option value="gemini" data-i18n="aiModelGemini">Nano Banana 2（默认）</option>
+            <option value="grok" data-i18n="aiModelGrok">Grok Imagine Image 2.0</option>
+            <option value="gemini" data-i18n="aiModelGemini" selected>Nano Banana 2（默认）</option>
             <option value="gpt-image" data-i18n="aiModelGPT">GPT Image 2</option>
             <option value="doubao" data-i18n="aiModelDoubao">豆包 Seedream（国内）</option>
           </select>
@@ -594,6 +602,14 @@ footer a:hover{color:var(--tx);text-decoration:underline}
         </div>
         <div class="fit-tip-box" data-i18n="fitCostTip">💡 提示：图库浏览与选款完全免费；AI 换装需自建后端并配置模型 API Key，可能产生第三方调用费用。</div>
         <div class="ai-picked" id="aiPicked" data-i18n="aiPickedNone">未选服装</div>
+        <div class="ai-description">
+          <label for="aiCustomPrompt" data-i18n="aiDescriptionLabel">补充描述（可选）</label>
+          <textarea id="aiCustomPrompt" rows="3" maxlength="1000" aria-describedby="aiDescriptionHelp aiDescriptionCount" data-i18n-placeholder="aiDescriptionPlaceholder" placeholder="例如：白色影棚背景，人物自然站立，双手垂下，全身入镜。"></textarea>
+          <div class="ai-description-meta">
+            <span id="aiDescriptionHelp" data-i18n="aiDescriptionHelp">可描述姿势、视角、背景、光线和风格；人物与服装保持一致。留空沿用原图效果。</span>
+            <span class="ai-description-count" id="aiDescriptionCount"><span id="aiDescriptionLength">0</span> / 1000</span>
+          </div>
+        </div>
         <button type="button" class="ai-gen-btn" id="aiGenerate" data-i18n="aiGenerate">开始 AI 换装</button>
         <div class="ai-result">
           <div class="ai-result-box" id="aiResultBox">
@@ -750,8 +766,8 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 // ===== 双语字典 =====
 const I18N = {
   zh: {
-    eyebrow: 'COSTUME-DB-01 · 拍片哥女装参考图集',
-    titleWord: '拍片哥女装',
+    eyebrow: 'COSTUME-DB-01 · 出图图参考图集',
+    titleWord: '出图图',
     titleDb: '图库',
     subtitle: '人物不入镜的纯服装图像（2:3）。可按春・夏・秋・冬・内衣・派对・泳装・性感分类浏览。',
     tipsTab: '使用提示', noticeTab: '注意事项',
@@ -780,7 +796,7 @@ const I18N = {
     prevNext: '前后服装',
     close: '关闭',
     keywordsLabel: '关键词',
-    footerNote: '拍片哥女装 COSTUME-DB-01 · 基于 MIT 协议开源 · 完全可商用与作品创作',
+    footerNote: '出图图 COSTUME-DB-01 · 基于 MIT 协议开源 · 完全可商用与作品创作',
     // 分类名（中文）
     catSpring: '春', catSummer: '夏', catAutumn: '秋', catWinter: '冬',
     catLingerie: '内衣', catParty: '派对', catSwimwear: '泳装', catSexy: '性感',
@@ -812,7 +828,7 @@ const I18N = {
     fitAutoCut: '自动去背景（抠图）', fitLayerUp: '置顶', fitLayerDown: '置底',
     // AI 换装
     aiTitle: '生成效果', aiDesc: '用大模型把衣服真实穿到人像上',
-    aiModel: '换装模型', aiModelGPT: 'GPT Image 2', aiModelDoubao: '豆包 Seedream（国内）', aiModelGemini: 'Nano Banana 2（默认）',
+    aiModel: '换装模型', aiModelGrok: 'Grok Imagine Image 2.0', aiModelGPT: 'GPT Image 2', aiModelDoubao: '豆包 Seedream（国内）', aiModelGemini: 'Nano Banana 2（默认）',
     gptModelNotice: '💡 提示：GPT Image 2 已启用防封控安全提示词；生成时将以端庄商用型录风格合成服装，人物面部将保持神貌相似。',
     aiGeneratingGPT: '正在使用 GPT Image 2 安全模式换装生成中…',
     aiSuccessGPT: '换装完成（已使用 GPT Image 2 防封控安全模式生成并保存）',
@@ -820,6 +836,8 @@ const I18N = {
     aiSuccessComfy: '本机 ComfyUI 生成完成，结果已保存到浏览器生成记录',
     aiPickedNone: '未选服装 — 请在下方「选择一件服装」点选一件', aiPicked: '已选服装：',
     aiGenerate: '开始 AI 换装', aiGenerating: '生成中…', aiNeedPhoto: '请先上传你的照片',
+    aiDescriptionLabel: '补充描述（可选）', aiDescriptionPlaceholder: '例如：白色影棚背景，人物自然站立，双手垂下，全身入镜。',
+    aiDescriptionHelp: '可描述姿势、视角、背景、光线和风格；人物与服装保持一致。留空沿用原图效果。', aiDescriptionTooLong: '补充描述最多1000个字符',
     aiNeedGarment: '请先在「选择一件服装」里点选一件衣服', aiNeedUploadedGarment: '请先上传服装图片', aiNeedBoth: '请先上传照片并选择服装',
     aiFailed: '换装失败，请稍后重试', aiServerErr: '无法连接换装服务，请确认后端已部署并配置',
     aiGatewayErr: '换装服务的网关或上游暂时不可用', aiInvalidResponse: '换装服务返回了无法识别的响应', aiHttpErr: '换装服务返回异常',
@@ -874,8 +892,8 @@ const I18N = {
     historyLoadFailed: '无法读取本机生成记录，请检查浏览器存储权限。', historyGarment: '服装',
   },
   en: {
-    eyebrow: 'COSTUME-DB-01 · PaipianGe Costume Reference Gallery',
-    titleWord: 'PaipianGe',
+    eyebrow: 'COSTUME-DB-01 · 出图图 Costume Reference Gallery',
+    titleWord: '出图图',
     titleDb: 'Costumes',
     subtitle: 'Person-free costume images (2:3). Browse by Spring, Summer, Autumn, Winter, Lingerie, Party, Swimwear, and Sexy categories.',
     tipsTab: 'Usage Tips', noticeTab: 'Notes',
@@ -904,7 +922,7 @@ const I18N = {
     prevNext: 'prev/next',
     close: 'Close',
     keywordsLabel: 'Keywords',
-    footerNote: 'PaipianGe Costumes COSTUME-DB-01 · Open Source under MIT License · Free for Commercial Use',
+    footerNote: '出图图 Costumes COSTUME-DB-01 · Open Source under MIT License · Free for Commercial Use',
     catSpring: 'Spring', catSummer: 'Summer', catAutumn: 'Autumn', catWinter: 'Winter',
     catLingerie: 'Lingerie', catParty: 'Party', catSwimwear: 'Swimwear', catSexy: 'Sexy',
     // AI try-on
@@ -935,7 +953,7 @@ const I18N = {
     fitAutoCut: 'Auto remove background', fitLayerUp: 'Bring to front', fitLayerDown: 'Send to back',
     // AI try-on
     aiTitle: 'Generate result', aiDesc: 'Dress the person with the garment using a large model',
-    aiModel: 'Model', aiModelGPT: 'GPT Image 2', aiModelDoubao: 'Doubao Seedream (CN)', aiModelGemini: 'Nano Banana 2 (default)',
+    aiModel: 'Model', aiModelGrok: 'Grok Imagine Image 2.0', aiModelGPT: 'GPT Image 2', aiModelDoubao: 'Doubao Seedream (CN)', aiModelGemini: 'Nano Banana 2 (default)',
     gptModelNotice: '💡 Notice: GPT Image 2 uses a safety-optimized prompt to prevent moderation rejection; generated with modest commercial styling and likeness preservation.',
     aiGeneratingGPT: 'Generating try-on with GPT Image 2 (safety mode), please wait…',
     aiSuccessGPT: 'Try-on complete (generated via GPT Image 2 safety mode)',
@@ -943,6 +961,8 @@ const I18N = {
     aiSuccessComfy: 'Local ComfyUI generation completed and was saved to browser history',
     aiPickedNone: 'No garment picked — pick one below', aiPicked: 'Picked garment: ',
     aiGenerate: 'Start AI try-on', aiGenerating: 'Generating…', aiNeedPhoto: 'Upload your photo first',
+    aiDescriptionLabel: 'Additional description (optional)', aiDescriptionPlaceholder: 'For example: a white studio background, standing naturally with arms relaxed, full body in frame.',
+    aiDescriptionHelp: 'Describe pose, view, background, lighting and style while keeping the person and garment consistent. Leave blank to keep the original look.', aiDescriptionTooLong: 'The description must be 1000 characters or fewer',
     aiNeedGarment: 'Pick a garment from the "Choose a garment" list first', aiNeedUploadedGarment: 'Upload a garment image first', aiNeedBoth: 'Upload a photo and pick a garment first',
     aiFailed: 'Try-on failed, please retry', aiServerErr: 'Cannot reach try-on service — make sure the backend is deployed and configured',
     aiGatewayErr: 'The try-on gateway or upstream service is temporarily unavailable', aiInvalidResponse: 'The try-on service returned an unrecognized response', aiHttpErr: 'The try-on service returned an error',
@@ -2354,6 +2374,10 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
 
   const aiModel = document.getElementById('aiModel');
   const aiGenerate = document.getElementById('aiGenerate');
+  const aiCustomPrompt = document.getElementById('aiCustomPrompt');
+  aiCustomPrompt.addEventListener('input', ()=>{
+    document.getElementById('aiDescriptionLength').textContent = String(aiCustomPrompt.value.length);
+  });
   const aiResultImg = document.getElementById('aiResultImg');
   const aiResultEmpty = document.getElementById('aiResultEmpty');
   const aiResultBar = document.getElementById('aiResultBar');
@@ -2595,6 +2619,7 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
 
   function setGenerating(b, isGPT = false, isComfy = false){
     aiGenerate.disabled = b;
+    aiCustomPrompt.disabled = b;
     aiGenerate.innerHTML = b
       ? '<span class="ai-spinner"></span>' + (isGPT ? t('aiGeneratingGPT') : (isComfy ? t('aiGeneratingComfy') : t('aiGenerating')))
       : t('aiGenerate');
@@ -2607,6 +2632,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
 
   async function doTryon(){
     // 前置校验
+    if(aiCustomPrompt.value.length > 1000){ showTryonError(t('aiDescriptionTooLong'), {trigger:aiCustomPrompt}); return; }
+    const customPrompt = aiCustomPrompt.value.trim();
     if(!personSrc){ showTryonError(t('aiNeedPhoto')); return; }
     const selectedGarment = getSelectedGarment();
     if(!selectedGarment){
@@ -2652,6 +2679,7 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
         model: isComfy ? 'comfyui' : (tryonSettings.useCustom ? 'browser-custom' : aiModel.value),
         size: '1024x1536',
         lang: LANG,
+        custom_prompt: customPrompt,
       };
       if(tryonSettings.useCustom && !isComfy){
         const base = (location.origin && location.origin !== 'null') ? location.origin : 'http://127.0.0.1';
@@ -2760,6 +2788,8 @@ const qsLang = qs.get('lang');
 if (qsLang==='en' || qsLang==='zh') LANG = qsLang;
 const qsQ = qs.get('q');
 if (qsQ) { S.q = qsQ.trim().toLowerCase(); const qi=$('#q'); qi.value=qsQ.trim(); }
+const qsModel = qs.get('model');
+if (Array.from($('#aiModel').options).some(option => option.value === qsModel)) $('#aiModel').value = qsModel;
 applyLang();
 // 支持 #fitting 直接打开试穿搭配台（便于分享/测试）
 if (location.hash === '#fitting') document.getElementById('fittingToggle').click();

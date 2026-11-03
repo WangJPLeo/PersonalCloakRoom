@@ -1,6 +1,6 @@
-# 拍片哥女装 · AI 换装后端服务
+# 出图图 · AI 换装后端服务
 
-基于 GoFrame v2 的 AI 换装（虚拟试衣）后端，为「拍片哥女装」网站提供 `POST /tryon` 接口。灵感源自 X 推文作者 [@giaaibusi](https://x.com/giaaibusi)。
+基于 GoFrame v2 的 AI 换装（虚拟试衣）后端，为「出图图」网站提供 `POST /tryon` 接口。灵感源自 X 推文作者 [@giaaibusi](https://x.com/giaaibusi)。
 
 ## 效果演示
 
@@ -111,6 +111,7 @@ cp manifest/config/config.example.yaml manifest/config/config.yaml
   "size": "1024x1536",
   "keep_face": true,
   "lang": "zh",
+  "custom_prompt": "白色影棚背景，人物坐在椅子上，柔和侧光",
   "client_config": {
     "provider": "gemini",
     "base_url": "https://generativelanguage.googleapis.com/v1beta",
@@ -127,6 +128,7 @@ cp manifest/config/config.example.yaml manifest/config/config.yaml
 | model | `gemini` / `gpt-image` / `doubao` / `comfyui` | `gemini` |
 | size | 输出尺寸 `1024x1024`/`1024x1536`/`1536x1024` | `1024x1536` |
 | lang | 提示词语言 `zh`/`en` | `zh` |
+| custom_prompt | 可选补充画面描述，最多 1000 字符；可调整姿势、视角、背景、光照和风格，人物与服装保持一致；仅在本次请求内存中使用 | 空（沿用原有提示词） |
 | client_config | 可选的浏览器个人模型配置；仅在当前请求内存中使用，不持久化、不记录 Key/Base URL | 空（使用服务器预设） |
 
 `client_config.provider` 支持 `openai`、`doubao`、`gemini`。个人 Base URL 必须是 HTTP/HTTPS 公网地址，且不能包含账号、查询参数或片段；localhost、内网和保留地址会被拒绝，以降低 SSRF 风险。ComfyUI 不接受 `client_config`，只使用后端本机配置。

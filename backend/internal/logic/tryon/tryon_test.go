@@ -140,7 +140,7 @@ func TestClientConfigOverridesTopLevelModel(t *testing.T) {
 	}
 
 	_, _, _, err := DoTryonWithClientConfig(
-		context.Background(), validB64, validB64, "gemini", "1024x1536", "zh", clientConfig,
+		context.Background(), validB64, validB64, "gemini", "1024x1536", "zh", clientConfig, "",
 	)
 	if err == nil || !strings.Contains(err.Error(), "不支持的协议类型") {
 		t.Fatalf("expected client config validation to override the top-level gemini model, got: %v", err)
