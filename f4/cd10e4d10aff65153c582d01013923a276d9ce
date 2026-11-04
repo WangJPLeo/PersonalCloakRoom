@@ -1,0 +1,16 @@
+data.js
+  h_67733b6978bc78 1-2
+index.html
+  h_67733b6978bc78 685-686,1423-1425,1920,2448,2452,2455
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f4cd10e4d10aff65153c582d01013923a276d9ce",
+  "prompts": {},
+  "humans": {
+    "h_67733b6978bc78": {
+      "author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
