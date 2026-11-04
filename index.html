@@ -673,28 +673,11 @@ footer a:hover{color:var(--tx);text-decoration:underline}
     <div class="settings-head">
       <div>
         <h2 id="aiSettingsTitle" data-i18n="settingsTitle">设置中心</h2>
-        <p data-i18n="settingsSubtitle">配置试穿后端，或使用你自己的模型 API。</p>
+        <p data-i18n="settingsSubtitle">配置你自己的模型 API；换装后端地址由前端配置文件统一指定。</p>
       </div>
       <button type="button" class="settings-close" id="aiSettingsClose" aria-label="关闭">×</button>
     </div>
     <form class="settings-form" id="aiSettingsForm" novalidate>
-      <section class="settings-section">
-        <h3 data-i18n="settingsBackendSection">试穿后端</h3>
-        <label class="settings-field">
-          <span data-i18n="settingsBackendUrl">后端 API 地址</span>
-          <input id="settingsBackendUrl" type="url" inputmode="url" autocomplete="url" placeholder="http://112.126.95.220:8000">
-          <small data-i18n="settingsBackendHelp">留空时使用页面预设、?tryon= 参数或远端默认地址。</small>
-        </label>
-        <label class="settings-field" id="settingsBackendTokenField">
-          <span data-i18n="settingsBackendToken">后端访问 Token</span>
-          <span class="settings-password">
-            <input id="settingsBackendToken" type="password" autocomplete="off" spellcheck="false" placeholder="Bearer Token (32位以上)" data-i18n-placeholder="settingsBackendTokenPlaceholder">
-            <button type="button" id="settingsTokenToggle" data-i18n="settingsShowKey">显示</button>
-          </span>
-          <small data-i18n="settingsBackendTokenHelp">服务端开启接口访问鉴权时必填（与模型 API Key 区分）。仅用于本站请求鉴权，不上传给第三方。</small>
-        </label>
-      </section>
-
       <section class="settings-section">
         <label class="settings-toggle">
           <input id="settingsUseCustom" type="checkbox">
@@ -731,13 +714,13 @@ footer a:hover{color:var(--tx);text-decoration:underline}
             <input id="settingsModel" type="text" autocomplete="off" spellcheck="false" placeholder="gemini-3.1-flash-image">
           </label>
           <div class="settings-comfy-test" id="settingsComfyTestRow" hidden>
-            <span data-i18n="settingsComfyHelp">通过本机换装后端检查 ComfyUI、固定工作流和所需节点，不会上传图片或执行生成。</span>
+            <span data-i18n="settingsComfyHelp">通过换装后端检查 ComfyUI、固定工作流和所需节点，不会上传图片或执行生成。</span>
             <button type="button" id="settingsComfyTest" data-i18n="settingsComfyTest">测试连接</button>
           </div>
         </fieldset>
       </section>
 
-      <div class="settings-note" id="settingsPrivacy" data-i18n="settingsPrivacy">隐私说明：配置只保存在当前浏览器。启用个人配置时，Key 与 Base URL 会随本次请求发送给你填写的试穿后端；后端只在内存中临时使用，不写数据库、配置文件或日志。共享设备使用后请清除。</div>
+      <div class="settings-note" id="settingsPrivacy" data-i18n="settingsPrivacy">隐私说明：配置只保存在当前浏览器。启用个人配置时，Key 与 Base URL 会随本次请求发送给配置文件指定的换装后端；后端只在内存中临时使用，不写数据库、配置文件或日志。共享设备使用后请清除。</div>
       <div class="settings-message" id="settingsMessage" role="status" aria-live="polite"></div>
       <div class="settings-actions">
         <button type="button" class="settings-reset" id="settingsReset" data-i18n="settingsClear">清除本地配置</button>
@@ -775,6 +758,7 @@ footer a:hover{color:var(--tx);text-decoration:underline}
   </div>
 </div>
 
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script>
 // ===== 双语字典 =====
@@ -871,27 +855,23 @@ const I18N = {
     taobaoGuideClose: '知道了', taobaoGuideOpenMobile: '打开手机淘宝', taobaoGuideOpenDesktop: '打开淘宝网页',
     pinduoduoGuideOpenMobile: '打开拼多多', pinduoduoGuideOpenDesktop: '打开拼多多网页',
     fitCostTip: '提示：图库浏览与选款完全免费；AI 换装需连接后端并配置模型 API Key，可能产生第三方调用费用。',
-    settingsTitle: '设置中心', settingsSubtitle: '配置试穿后端，或使用你自己的模型 API。',
+    settingsTitle: '设置中心', settingsSubtitle: '配置你自己的模型 API；换装后端地址由前端配置文件统一指定。',
     settingsCurrent: '当前调用配置', settingsManage: '管理配置',
-    settingsBackendSection: '试穿后端', settingsBackendUrl: '后端 API 地址',
-    settingsBackendHelp: '留空时使用页面预设、?tryon= 参数或本地默认地址。',
     settingsUseCustom: '使用我自己的模型配置', settingsUseCustomHelp: '启用后，本次试穿将使用下方 Base URL、API Key 与模型名。',
     settingsProvider: '接口协议', settingsProviderComfyUI: 'ComfyUI 本地', settingsBaseHelp: '仅填写 API 根地址，不要包含模型路径、查询参数或 Key。',
     settingsModel: '模型名', settingsShowKey: '显示', settingsHideKey: '隐藏',
-    settingsPrivacy: '隐私说明：配置只保存在当前浏览器。启用个人配置时，Key 与 Base URL 会随本次请求发送给你填写的试穿后端；后端只在内存中临时使用，不写数据库、配置文件或日志。共享设备使用后请清除。',
+    settingsPrivacy: '隐私说明：配置只保存在当前浏览器。启用个人配置时，Key 与 Base URL 会随本次请求发送给配置文件指定的换装后端；后端只在内存中临时使用，不写数据库、配置文件或日志。共享设备使用后请清除。',
     settingsComfyPrivacy: '隐私说明：ComfyUI 模式只向你填写的本机换装后端发送人物图和服装图；固定工作流地址与节点由本机后端管理，不会发送 API Key，也不会把本机模型路径写入浏览器记录。',
     settingsClear: '清除本地配置', settingsCancel: '取消', settingsSave: '保存设置',
     settingsSaved: '设置已保存', settingsCleared: '本地配置已清除',
-    settingsComfyHelp: '通过本机换装后端检查 ComfyUI、固定工作流和所需节点，不会上传图片或执行生成。',
+    settingsComfyHelp: '通过换装后端检查 ComfyUI、固定工作流和所需节点，不会上传图片或执行生成。',
     settingsComfyTest: '测试连接', settingsComfyTesting: '检测中…', settingsComfyReady: 'ComfyUI 固定工作流可用', settingsComfyUnavailable: '无法连接 ComfyUI，请确认 ComfyUI 与本机换装后端均已启动',
     settingsInvalidUrl: '请输入有效的 HTTP/HTTPS 地址（公网外部地址须使用 HTTPS）', settingsNeedCustom: '请完整填写 Base URL、API Key 与模型名',
     settingsBackendOutdated: '当前试穿后端版本过旧，未识别个人模型配置。请重新编译并重启后端；Docker 请执行 docker compose up -d --build。',
     settingsServerPreset: '服务器预设模型', settingsPersonal: '个人模型配置',
     settingsServerNote: 'Key 与模型参数由试穿后端管理', settingsPersonalNote: 'Key 仅随本次请求临时发送，后端不保存', settingsComfyNote: '固定工作流与模型路径仅由本机后端管理',
-    settingsBackendToken: '后端访问 Token', settingsBackendTokenPlaceholder: 'Bearer Token (32位以上)',
-    settingsBackendTokenHelp: '服务端开启接口访问鉴权时必填（与模型 API Key 区分）。仅用于本站请求鉴权，不上传给第三方。',
     imageCompressing: '正在压缩处理图片…',
-    errAuthRequired: '请在设置中心填写后端访问 Token', errAuthInvalid: '后端访问 Token 无效',
+    errAuthRequired: '后端要求访问令牌，请联系部署者配置', errAuthInvalid: '后端访问令牌无效，请联系部署者',
     errOriginNotAllowed: '当前页面来源不允许访问后端', errRequestTooLarge: '上传内容过大，请压缩图片后重试',
     errInvalidImageBase64: '图片数据损坏，请重新选择图片', errUnsupportedImageType: '仅支持 JPEG、PNG 和 WebP 格式图片',
     errImageFileTooLarge: '图片文件过大，请压缩后重试', errImageDimensionsInvalid: '图片尺寸无法处理，请使用宽、高不超过 8192 像素的有效图片',
@@ -996,10 +976,8 @@ const I18N = {
     taobaoGuideClose: 'Got it', taobaoGuideOpenMobile: 'Open Taobao App', taobaoGuideOpenDesktop: 'Open Taobao Search',
     pinduoduoGuideOpenMobile: 'Open Pinduoduo', pinduoduoGuideOpenDesktop: 'Open Pinduoduo Website',
     fitCostTip: 'Note: Gallery browsing is free; AI try-on needs a backend and a model API key (provider fees may apply).',
-    settingsTitle: 'Settings', settingsSubtitle: 'Configure the try-on backend or use your own model API.',
+    settingsTitle: 'Settings', settingsSubtitle: 'Configure your own model API; the try-on backend URL is set in the frontend config file.',
     settingsCurrent: 'Active configuration', settingsManage: 'Manage',
-    settingsBackendSection: 'Try-on backend', settingsBackendUrl: 'Backend API URL',
-    settingsBackendHelp: 'Leave blank to use the page preset, ?tryon= parameter, or local default.',
     settingsUseCustom: 'Use my own model configuration', settingsUseCustomHelp: 'Use the Base URL, API key, and model below for try-on requests.',
     settingsProvider: 'API protocol', settingsProviderComfyUI: 'Local ComfyUI', settingsBaseHelp: 'Enter only the API root URL, without model paths, query parameters, or keys.',
     settingsModel: 'Model name', settingsShowKey: 'Show', settingsHideKey: 'Hide',
@@ -1007,16 +985,14 @@ const I18N = {
     settingsComfyPrivacy: 'Privacy: ComfyUI mode sends the person and garment images only to the local try-on backend you configured. The fixed workflow and model paths stay under local backend control; no API key or local model path is stored in browser history.',
     settingsClear: 'Clear local settings', settingsCancel: 'Cancel', settingsSave: 'Save settings',
     settingsSaved: 'Settings saved', settingsCleared: 'Local settings cleared',
-    settingsComfyHelp: 'Checks ComfyUI, the fixed workflow, and required nodes through the local try-on backend. No images are uploaded and no generation is started.',
+    settingsComfyHelp: 'Checks ComfyUI, the fixed workflow, and required nodes through the try-on backend. No images are uploaded and no generation is started.',
     settingsComfyTest: 'Test connection', settingsComfyTesting: 'Checking…', settingsComfyReady: 'The fixed ComfyUI workflow is ready', settingsComfyUnavailable: 'Cannot reach ComfyUI. Make sure ComfyUI and the local try-on backend are running.',
     settingsInvalidUrl: 'Enter a valid HTTP/HTTPS URL (remote public URLs must use HTTPS)', settingsNeedCustom: 'Complete the Base URL, API key, and model name',
     settingsBackendOutdated: 'The try-on backend is outdated and did not recognize the personal model configuration. Rebuild and restart it; for Docker, run docker compose up -d --build.',
     settingsServerPreset: 'Server preset', settingsPersonal: 'Personal model',
     settingsServerNote: 'The backend manages the key and model parameters', settingsPersonalNote: 'The key is sent for this request only and is not stored by the backend', settingsComfyNote: 'The fixed workflow and model paths are managed only by the local backend',
-    settingsBackendToken: 'Backend access token', settingsBackendTokenPlaceholder: 'Bearer Token (at least 32 chars)',
-    settingsBackendTokenHelp: 'Required when the backend enables access authorization (distinct from model API Key). Used only for authorizing requests to your backend.',
     imageCompressing: 'Compressing and processing image…',
-    errAuthRequired: 'Please enter the backend access token in Settings', errAuthInvalid: 'Invalid backend access token',
+    errAuthRequired: 'The backend requires an access token; ask the deployer to configure it', errAuthInvalid: 'Invalid backend access token; ask the deployer to configure it',
     errOriginNotAllowed: 'Current page origin is not allowed to access backend', errRequestTooLarge: 'Upload payload too large, please compress the image and retry',
     errInvalidImageBase64: 'Image data corrupted, please reselect the image', errUnsupportedImageType: 'Only JPEG, PNG, and WebP images are supported',
     errImageFileTooLarge: 'Image file too large, please compress and retry', errImageDimensionsInvalid: 'Image dimensions cannot be processed; use a valid image no larger than 8192 px per side',
@@ -1349,7 +1325,7 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   // ===== 设置中心（仅保存在当前浏览器） =====
   const SETTINGS_KEY = 'PersonalCloakRoom.tryon.settings.v1';
   const SETTINGS_DEFAULTS = {
-    backendUrl: '', backendToken: '', useCustom: false, provider: 'gemini',
+    useCustom: false, provider: 'gemini',
     baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
     apiKey: '', model: 'gemini-3.1-flash-image'
   };
@@ -1361,9 +1337,6 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   };
   const settingsEl = document.getElementById('aiSettings');
   const settingsForm = document.getElementById('aiSettingsForm');
-  const settingsBackendUrl = document.getElementById('settingsBackendUrl');
-  const settingsBackendToken = document.getElementById('settingsBackendToken');
-  const settingsTokenToggle = document.getElementById('settingsTokenToggle');
   const settingsUseCustom = document.getElementById('settingsUseCustom');
   const settingsCustomFields = document.getElementById('settingsCustomFields');
   const settingsProvider = document.getElementById('settingsProvider');
@@ -1420,8 +1393,15 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   }
   let tryonSettings = loadSettings();
 
-  // 本地后端已停用，前端默认统一指向已部署的公网后端实例。
-  const REMOTE_AI_API = 'http://112.126.95.220:8000';
+  // 换装后端地址只由前端配置文件 config.js 注入，页面内不提供修改入口。
+  const REMOTE_AI_API = (()=>{
+    try{
+      const raw = (window.PCR_CONFIG && window.PCR_CONFIG.REMOTE_AI_API) || '';
+      const url = String(raw).trim().replace(/\/+$/,'');
+      if(!url) console.warn('[Config] 未在 config.js 中配置 window.PCR_CONFIG.REMOTE_AI_API，AI 换装不可用。');
+      return url;
+    }catch(_){ return ''; }
+  })();
 
   // 生成图片通常远超 localStorage 容量，因此使用 IndexedDB 保存 Blob。
   // 历史中只存结果、时间、模型和服装 ID，不保存 API Key、Base URL 或上传的人像。
@@ -1736,10 +1716,6 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     }
   }
   function fillSettingsForm(){
-    settingsBackendUrl.value = tryonSettings.backendUrl || '';
-    settingsBackendToken.value = tryonSettings.backendToken || '';
-    settingsBackendToken.type = 'password';
-    settingsTokenToggle.textContent = t('settingsShowKey');
     settingsUseCustom.checked = !!tryonSettings.useCustom;
     settingsProvider.value = tryonSettings.provider || 'gemini';
     settingsBaseUrl.value = tryonSettings.baseUrl || '';
@@ -1779,11 +1755,10 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     fillSettingsForm();
     settingsEl.hidden = false;
     settingsEl.querySelector('.settings-card').scrollTop = 0;
-    requestAnimationFrame(()=>settingsBackendUrl.focus());
+    requestAnimationFrame(()=>settingsUseCustom.focus());
   }
   function closeSettings(){
     settingsEl.hidden = true;
-    settingsBackendToken.type = 'password';
     settingsApiKey.type = 'password';
     if(settingsReturnFocus && settingsReturnFocus.focus) settingsReturnFocus.focus();
   }
@@ -1911,13 +1886,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     settingsApiKey.type = showing ? 'password' : 'text';
     settingsKeyToggle.textContent = t(showing ? 'settingsShowKey' : 'settingsHideKey');
   });
-  settingsTokenToggle.addEventListener('click', ()=>{
-    const showing = settingsBackendToken.type === 'text';
-    settingsBackendToken.type = showing ? 'password' : 'text';
-    settingsTokenToggle.textContent = t(showing ? 'settingsShowKey' : 'settingsHideKey');
-  });
   settingsComfyTest.addEventListener('click', async()=>{
-    const backendUrl = trimUrl(settingsBackendUrl.value) || REMOTE_AI_API;
+    const backendUrl = REMOTE_AI_API;
     if(!validHttpUrl(backendUrl, true)){ setSettingsMessage(t('settingsInvalidUrl')); return; }
     settingsComfyTest.disabled = true;
     settingsComfyTest.textContent = t('settingsComfyTesting');
@@ -1940,16 +1910,13 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   });
   settingsForm.addEventListener('submit', e=>{
     e.preventDefault();
-    const backendUrl = trimUrl(settingsBackendUrl.value);
     const baseUrl = trimUrl(settingsBaseUrl.value);
     const useCustom = settingsUseCustom.checked;
     const isComfy = useCustom && isComfyUIProvider();
-    if(!validHttpUrl(backendUrl, true) || (useCustom && !validHttpUrl(baseUrl, true))){ setSettingsMessage(t('settingsInvalidUrl')); return; }
+    if(useCustom && !validHttpUrl(baseUrl, true)){ setSettingsMessage(t('settingsInvalidUrl')); return; }
     if(useCustom && (!baseUrl || !settingsModel.value.trim() || (!isComfy && !settingsApiKey.value.trim()))){ setSettingsMessage(t('settingsNeedCustom')); return; }
 
     tryonSettings = {
-      backendUrl,
-      backendToken: settingsBackendToken.value.trim(),
       useCustom,
       provider: settingsProvider.value,
       baseUrl,
@@ -2423,36 +2390,12 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     refreshConfigUI();
     if(!historyEl.hidden) renderHistory();
     settingsKeyToggle.textContent = t(settingsApiKey.type === 'text' ? 'settingsHideKey' : 'settingsShowKey');
-    settingsTokenToggle.textContent = t(settingsBackendToken.type === 'text' ? 'settingsHideKey' : 'settingsShowKey');
     if(!settingsEl.hidden) refreshSettingsProviderFields();
   };
 
   // ===== AI 换装 =====
-  function parseSafeTryonParam(){
-    const p = new URLSearchParams(location.search).get('tryon');
-    if(!p) return '';
-    try{
-      const base = (location.origin && location.origin !== 'null') ? location.origin : 'http://127.0.0.1';
-      const u = new URL(p, base);
-      // 严格白名单校验：仅允许同源地址或本地回环地址（开发调试），彻底防止钓鱼窃取 API Key 与图片
-      const isSameOrigin = (location.origin && location.origin !== 'null') && (u.origin === location.origin);
-      const isLoopback = isLoopbackHost(u.hostname);
-      if(isSameOrigin || isLoopback){
-        return u.toString().replace(/\/+$/,'');
-      }
-      console.warn('[Security] 已忽略跨源 ?tryon= 参数以防止 API Key 与图片泄露。如需连接外部后端，请在设置中心手动配置。');
-    }catch(_){}
-    return '';
-  }
-
-  // 默认后端地址：设置中心保存的地址优先；否则依次读取 window.AI_API_URL、安全校验后的 ?tryon= 和远端回退。
-  const DEFAULT_AI_API = (window.AI_API_URL) || (()=>{
-    const safeTryon = parseSafeTryonParam();
-    if(safeTryon) return safeTryon;
-    if(location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.protocol === 'file:') return REMOTE_AI_API;
-    return '';  // 空 = 未配置，点击时提示
-  })();
-  const getAIAPI = () => tryonSettings.backendUrl || ((tryonSettings.useCustom && tryonSettings.provider === 'comfyui') ? REMOTE_AI_API : DEFAULT_AI_API);
+  // 后端地址固定由 config.js 提供，不再支持 ?tryon= 参数或页面内修改。
+  const getAIAPI = () => REMOTE_AI_API;
 
   const aiModel = document.getElementById('aiModel');
   const aiGenerate = document.getElementById('aiGenerate');
@@ -2772,7 +2715,7 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
           targetHost = tu.hostname;
           targetOrigin = tu.origin;
         }catch(_){}
-        const isTrustedTarget = (tryonSettings.backendUrl && aiApi === tryonSettings.backendUrl) ||
+        const isTrustedTarget = aiApi === REMOTE_AI_API ||
           isLoopbackHost(targetHost) ||
           (location.origin && location.origin !== 'null' && targetOrigin === location.origin);
 
@@ -2788,12 +2731,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
         }
       }
 
+      // 后端已免鉴权，请求不再携带 Authorization 头。
       const headers = {'Content-Type':'application/json'};
-      let token = tryonSettings.backendToken ? tryonSettings.backendToken.trim() : '';
-      if(token.toLowerCase().startsWith('bearer ')) token = token.slice(7).trim();
-      if(token){
-        headers['Authorization'] = 'Bearer ' + token;
-      }
 
       let resp;
       try{
