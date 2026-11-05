@@ -254,11 +254,92 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .fit-random{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 15px;border:1px solid rgba(143,180,255,.5);border-radius:9px;background:rgba(143,180,255,.1);color:var(--ac2);font-size:13px;font-weight:700;cursor:pointer}
 .fit-random:hover{background:rgba(143,180,255,.2);border-color:var(--ac)}
 .fit-random:disabled{opacity:.45;cursor:not-allowed}
+/* 独立图库选择页：主界面只保留入口与已选服装。 */
+.catalog-summary{margin:12px 0 2px;color:var(--tx3);font-size:13px;line-height:1.7}
+.garment-source-tab{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px}
+.garment-source-tab svg{width:18px;height:18px;flex-shrink:0}
+.catalog-change{justify-self:start;min-height:36px;padding:0;border:0;background:none;color:var(--ac2);font-size:13px;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.ai-picked[hidden]{display:none}
+.catalog-picker{--picker-ac:#167b57;--picker-soft:rgba(27,161,112,.1);position:fixed;inset:0;box-sizing:border-box;width:min(1080px,calc(100vw - 48px));height:min(820px,calc(100dvh - 48px));max-width:none;max-height:none;margin:auto;padding:0;border:1px solid var(--line2);border-radius:22px;background:var(--bg);color:var(--tx);font-family:var(--f);overflow:hidden;box-shadow:var(--sh)}
+.catalog-picker:not([open]){display:none}
+.catalog-picker[open]{display:flex;flex-direction:column}
+.catalog-picker::backdrop{background:rgba(5,6,8,.7);backdrop-filter:blur(7px)}
+html[data-theme="dark"] .catalog-picker{--picker-ac:#75e5b7;--picker-soft:rgba(117,229,183,.1)}
+.picker-header{flex-shrink:0;padding:20px 24px 16px;background:var(--bg2);border-bottom:1px solid var(--line)}
+.picker-heading{display:flex;align-items:center;gap:14px}
+.picker-back{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex-shrink:0;min-height:44px;padding:0 12px;border:1px solid var(--control-border);border-radius:11px;background:var(--panel);color:var(--tx);cursor:pointer;font-size:14px}
+.picker-titles{min-width:0;flex:1}
+.picker-titles h2{margin:0;font-size:20px;line-height:1.4}
+.picker-titles p{margin:3px 0 0;color:var(--tx3);font-size:12px;line-height:1.5}
+.picker-total{flex-shrink:0;padding:7px 10px;border:1px solid var(--line);border-radius:99px;font-size:12px;font-variant-numeric:tabular-nums;color:var(--tx2)}
+.picker-header .fit-search-row{margin:18px 0 14px}
+.picker-header .fit-search{min-height:46px;font-size:16px;border-radius:12px}
+.picker-header .fit-random{min-height:46px;border-color:var(--line2);background:var(--panel);color:var(--tx);border-radius:12px}
+.picker-categories{display:flex;gap:8px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:2px}
+.picker-categories::-webkit-scrollbar{display:none}
+.picker-category{flex:0 0 auto;min-height:42px;padding:0 15px;border:1px solid var(--line2);border-radius:99px;background:var(--panel);color:var(--tx2);font-size:14px;cursor:pointer;white-space:nowrap}
+.picker-category span{margin-left:6px;font-size:12px;opacity:.7;font-variant-numeric:tabular-nums}
+.picker-category[aria-pressed="true"]{border-color:var(--picker-ac);background:var(--picker-soft);color:var(--picker-ac);font-weight:700}
+.picker-content{display:flex;flex:1;min-height:0}
+.picker-scroll{flex:1;min-width:0;overflow-y:auto;overscroll-behavior:contain;padding:18px 22px 24px;scrollbar-gutter:stable}
+.picker-count{margin:0 0 14px;color:var(--tx3);font-size:12px;line-height:1.5}
+.catalog-picker .garment-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-height:none;overflow:visible;padding:2px}
+.catalog-picker .garment-list .g{display:flex;flex-direction:column;aspect-ratio:auto;min-width:0;padding:0;border:2px solid transparent;border-radius:14px;background:var(--panel);color:var(--tx);text-align:left;opacity:1;filter:none;transform:none;box-shadow:none;transition:border-color .15s,background .15s}
+.catalog-picker .garment-list .g:hover{border-color:var(--control-hover-border)}
+.catalog-picker .garment-list .g img{aspect-ratio:2/3;height:auto;object-fit:contain;border-radius:11px 11px 0 0;background:var(--image-bg)}
+.picker-card-info{display:grid;gap:4px;padding:10px;min-width:0}
+.picker-card-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}
+.picker-card-category{font-size:11px;color:var(--tx3)}
+.picker-check{display:none;position:absolute;top:9px;right:9px;width:25px;height:25px;align-items:center;justify-content:center;border-radius:50%;background:var(--picker-ac);color:var(--bg2);font-size:15px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.catalog-picker .garment-list .g.sel{border-color:var(--picker-ac);background:var(--picker-soft)}
+.catalog-picker .g.sel .picker-check{display:flex}
+.picker-more{display:block;min-height:46px;margin:20px auto 0;padding:0 24px;border:1px solid var(--line2);border-radius:12px;background:var(--panel);color:var(--tx);font-size:14px;cursor:pointer}
+.picker-more[hidden]{display:none}
+.picker-empty{grid-column:1/-1;text-align:center;padding:65px 16px;color:var(--tx3);font-size:14px;line-height:1.7}
+.picker-empty b{display:block;margin-bottom:8px;color:var(--tx);font-size:17px}
+.picker-preview{display:flex;flex-direction:column;gap:12px;flex:0 0 250px;min-width:0;padding:20px;border-left:1px solid var(--line);background:var(--bg2);overflow-y:auto}
+.picker-preview h3{margin:0;font-size:14px}
+.picker-preview-image{display:flex;align-items:center;justify-content:center;aspect-ratio:2/3;border:1px solid var(--line);border-radius:14px;background:var(--image-bg);overflow:hidden}
+.picker-preview-image img{width:100%;height:100%;object-fit:contain}
+.picker-preview-image img[hidden]{display:none}
+.picker-preview-placeholder{padding:20px;color:var(--tx3);font-size:13px;text-align:center}
+.picker-preview-placeholder[hidden]{display:none}
+.picker-preview strong{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px}
+.picker-preview p{margin:0;color:var(--tx2);font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.picker-footer{display:flex;align-items:center;gap:16px;flex-shrink:0;min-height:96px;padding:14px 24px;border-top:1px solid var(--line);background:var(--bg2)}
+.picker-current{display:flex;align-items:center;gap:12px;min-width:0;flex:1;color:var(--tx3);font-size:13px}
+.picker-current img{width:44px;height:64px;object-fit:contain;flex-shrink:0;border:1px solid var(--line);border-radius:8px;background:var(--image-bg)}
+.picker-current-copy{display:grid;gap:5px;min-width:0}
+.picker-current-copy strong{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--tx);font-size:13px}
+.picker-current-copy span{color:var(--tx3);font-size:12px}
+.picker-confirm{flex:0 0 auto;min-height:48px;padding:0 24px;border:0;border-radius:12px;background:var(--picker-ac);color:var(--bg2);font-size:14px;font-weight:750;cursor:pointer}
+.picker-confirm:disabled{background:var(--recessed-bg);color:var(--tx3);cursor:not-allowed}
+.catalog-picker button:focus-visible,.catalog-change:focus-visible{outline:3px solid var(--picker-ac,var(--ac));outline-offset:2px}
+@media (max-width:700px){
+  .catalog-picker{width:100%;height:100dvh;margin:0;border:0;border-radius:0}
+  .picker-header{padding:calc(12px + env(safe-area-inset-top)) 16px 14px}
+  .picker-heading{gap:10px}
+  .picker-titles h2{font-size:18px}
+  .picker-titles p{font-size:11px}
+  .picker-total{padding:6px 8px;font-size:11px}
+  .picker-back{padding:0 10px;font-size:13px}
+  .picker-header .fit-search-row{margin-top:16px}
+  .picker-preview{display:none}
+  .picker-scroll{padding:16px 14px 24px;scrollbar-gutter:auto}
+  .catalog-picker .garment-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .picker-footer{gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));min-height:88px}
+  .picker-confirm{padding:0 16px}
+  .picker-current{gap:9px}
+}
 @media (max-width:560px){
   .custom-garment-preview{grid-template-columns:1fr}
   .custom-garment-items{gap:8px}
   .custom-garment-item img{max-height:260px}
   .custom-garment-actions button{flex:1;min-height:44px}
+  .ai-picked{flex-wrap:wrap;margin:12px 0 0;padding:12px}
+  .ai-picked .ai-picked-copy{flex:1}
+  .ai-picked .same-item-actions{width:100%;margin-left:0;justify-content:stretch}
+  .ai-picked .same-item-actions button{flex:1;justify-content:center;padding:10px 8px}
 }
 /* AI 换装 */
 .ai-model-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
@@ -529,18 +610,20 @@ footer a:hover{color:var(--tx);text-decoration:underline}
       <!-- 步骤 2：选择服装 -->
       <section class="step" data-step="2">
         <div class="step-head"><span class="step-num">2</span><h3 data-i18n="fitGarmentTitle">选择一件服装</h3></div>
-        <div class="garment-source-tabs" role="tablist" aria-label="服装来源" data-i18n-aria-label="garmentSourceLabel">
-          <button type="button" class="garment-source-tab active" id="garmentCatalogTab" role="tab" aria-selected="true" aria-controls="garmentCatalogPanel" tabindex="0" data-i18n="garmentSourceCatalog">图库服装</button>
-          <button type="button" class="garment-source-tab" id="garmentUploadTab" role="tab" aria-selected="false" aria-controls="garmentUploadPanel" tabindex="-1" data-i18n="garmentSourceUpload">上传服装</button>
+        <div class="garment-source-tabs" role="group" aria-label="服装来源" data-i18n-aria-label="garmentSourceLabel">
+          <button type="button" class="garment-source-tab active" id="garmentCatalogTab" aria-haspopup="dialog" aria-controls="garmentPicker">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            <span data-i18n="garmentOpenCatalog">图库选衣</span>
+          </button>
+          <button type="button" class="garment-source-tab" id="garmentUploadTab" aria-pressed="false" aria-controls="garmentUploadPanel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></svg>
+            <span data-i18n="garmentSourceUpload">上传服装</span>
+          </button>
         </div>
-        <div class="garment-source-panel" id="garmentCatalogPanel" role="tabpanel" aria-labelledby="garmentCatalogTab">
-          <div class="fit-search-row">
-            <input class="fit-search" id="fitSearch" type="search" data-i18n-placeholder="fitSearchPh" placeholder="搜索服装…">
-            <button type="button" class="fit-random" id="fitRandom"><span aria-hidden="true">🎲</span><span data-i18n="fitRandom">随机</span></button>
-          </div>
-          <div class="garment-list" id="fitGarmentList"></div>
+        <div class="garment-source-panel" id="garmentCatalogPanel">
+          <p class="catalog-summary" data-i18n="garmentCatalogHint">打开图库，在独立页面中搜索、预览并选择服装。</p>
         </div>
-        <div class="garment-source-panel" id="garmentUploadPanel" role="tabpanel" aria-labelledby="garmentUploadTab" hidden>
+        <div class="garment-source-panel" id="garmentUploadPanel" hidden>
           <label class="upload-zone garment-upload-zone" id="fitGarmentUpload" for="fitGarmentFile">
             <span class="ico" aria-hidden="true">👗</span>
             <span data-i18n="fitGarmentUploadBtn">上传 1 张整套，或 2 张上下装</span>
@@ -561,6 +644,7 @@ footer a:hover{color:var(--tx);text-decoration:underline}
           </div>
           <p class="custom-garment-guide" data-i18n="customGarmentGuide">上传 1 张时会作为完整全身服装；上传 2 张时，第 1 张作为上半身服装，第 2 张作为下半身服装。建议使用正面、完整、清晰、简单背景的图片。</p>
         </div>
+        <div class="ai-picked" id="aiPicked" hidden></div>
       </section>
 
       <!-- 步骤 3：固定模型生成 -->
@@ -571,7 +655,6 @@ footer a:hover{color:var(--tx);text-decoration:underline}
           <strong id="aiFixedModel">doubao-seedream-5-0-flash-260915</strong>
         </div>
         <div class="fit-tip-box" data-i18n="fitCostTip">💡 提示：已配置火山方舟 Seedream，上传照片并选衣即可生成；AI 换装可能产生第三方调用费用。</div>
-        <div class="ai-picked" id="aiPicked" data-i18n="aiPickedNone">未选服装</div>
         <div class="ai-description">
           <label for="aiCustomPrompt" data-i18n="aiDescriptionLabel">补充描述（可选）</label>
           <textarea id="aiCustomPrompt" rows="3" maxlength="1000" aria-describedby="aiDescriptionHelp aiDescriptionCount" data-i18n-placeholder="aiDescriptionPlaceholder" placeholder="例如：白色影棚背景，人物自然站立，双手垂下，全身入镜。"></textarea>
@@ -597,6 +680,45 @@ footer a:hover{color:var(--tx);text-decoration:underline}
     </div>
   </div>
 </div>
+
+<!-- ===== 独立服装图库：选择仅在确认后应用，取消保留原服装 ===== -->
+<dialog class="catalog-picker" id="garmentPicker" aria-labelledby="garmentPickerTitle" aria-describedby="garmentPickerHint">
+  <header class="picker-header">
+    <div class="picker-heading">
+      <button type="button" class="picker-back" id="garmentPickerClose"><span aria-hidden="true">‹</span><span data-i18n="pickerBack">返回</span></button>
+      <div class="picker-titles">
+        <h2 id="garmentPickerTitle" data-i18n="pickerTitle">服装图库</h2>
+        <p id="garmentPickerHint" data-i18n="pickerHint">选好服装，确认后返回试穿</p>
+      </div>
+      <span class="picker-total" id="garmentPickerTotal"></span>
+    </div>
+    <div class="fit-search-row">
+      <input class="fit-search" id="fitSearch" type="search" aria-label="搜索服装" data-i18n-aria-label="fitSearchPh" data-i18n-placeholder="pickerSearchPh" placeholder="搜索编号、旗袍、裙子、blue…">
+      <button type="button" class="fit-random" id="fitRandom"><span aria-hidden="true">⤨</span><span data-i18n="fitRandom">随机</span></button>
+    </div>
+    <div class="picker-categories" id="garmentPickerCategories" role="group" aria-label="服装分类" data-i18n-aria-label="pickerCategories"></div>
+  </header>
+  <div class="picker-content">
+    <div class="picker-scroll" id="garmentPickerScroll">
+      <p class="picker-count" id="garmentPickerCount" aria-live="polite"></p>
+      <div class="garment-list" id="fitGarmentList" role="group" aria-label="选择服装" data-i18n-aria-label="fitGarmentTitle"></div>
+      <button type="button" class="picker-more" id="garmentPickerMore" hidden data-i18n="loadingMore">加载更多</button>
+    </div>
+    <aside class="picker-preview" aria-labelledby="garmentPreviewTitle">
+      <h3 id="garmentPreviewTitle" data-i18n="pickerPreview">服装预览</h3>
+      <div class="picker-preview-image">
+        <img id="garmentPickerPreview" alt="" hidden>
+        <span class="picker-preview-placeholder" id="garmentPickerPlaceholder" data-i18n="pickerEmpty">选择一件喜欢的服装</span>
+      </div>
+      <strong id="garmentPickerPreviewID"></strong>
+      <p id="garmentPickerDescription"></p>
+    </aside>
+  </div>
+  <footer class="picker-footer">
+    <div class="picker-current" id="garmentPickerCurrent" aria-live="polite"></div>
+    <button type="button" class="picker-confirm" id="garmentPickerConfirm" disabled data-i18n="pickerUse">使用这件服装</button>
+  </footer>
+</dialog>
 
 <!-- ===== AI 生成记录：图片仅保存在当前浏览器 IndexedDB ===== -->
 <div class="history-overlay" id="aiHistory" role="dialog" aria-modal="true" aria-labelledby="aiHistoryTitle" hidden>
@@ -704,6 +826,11 @@ const I18N = {
     fitBgNone: '无背景', fitBgWhite: '白底',
     fitGarmentTitle: '选择一件服装', fitSearchPh: '搜索服装…', fitRandom: '随机',
     garmentSourceLabel: '服装来源', garmentSourceCatalog: '图库服装', garmentSourceUpload: '上传服装',
+    garmentOpenCatalog: '图库选衣', garmentCatalogHint: '打开图库，在独立页面中搜索、预览并选择服装。',
+    pickerTitle: '服装图库', pickerHint: '选好服装，确认后返回试穿', pickerBack: '返回', pickerUse: '使用这件服装',
+    pickerSearchPh: '搜索编号、旗袍、裙子、blue…', pickerCategories: '服装分类', pickerPreview: '服装预览',
+    pickerEmpty: '选择一件喜欢的服装', pickerNone: '尚未选择', pickerChange: '更换服装', pickerTotal: '{n} 套',
+    pickerMatches: '找到 {n} 套服装', pickerShowing: '已显示 {shown} / {total} 套',
     fitGarmentUploadBtn: '上传 1 张整套，或 2 张上下装', fitGarmentUploadHint: '1 张＝完整全身服装；2 张＝第 1 张上半身、第 2 张下半身',
     customGarmentLabel: '自定义上传', customGarmentReplace: '重新选择', customGarmentRemove: '全部移除', customGarmentReady: '自定义服装已就绪',
     customGarmentGuide: '上传 1 张时会作为完整全身服装；上传 2 张时，第 1 张作为上半身服装，第 2 张作为下半身服装。建议使用正面、完整、清晰、简单背景的图片。', customGarmentPreviewAlt: '自定义上传服装预览',
@@ -805,6 +932,11 @@ const I18N = {
     fitBgNone: 'No background', fitBgWhite: 'White',
     fitGarmentTitle: 'Choose a garment', fitSearchPh: 'Search outfits…', fitRandom: 'Random',
     garmentSourceLabel: 'Garment source', garmentSourceCatalog: 'Gallery garments', garmentSourceUpload: 'Upload garment',
+    garmentOpenCatalog: 'Browse library', garmentCatalogHint: 'Open the library to search, preview and choose an outfit on a separate screen.',
+    pickerTitle: 'Outfit library', pickerHint: 'Choose an outfit, then confirm to return', pickerBack: 'Back', pickerUse: 'Use this outfit',
+    pickerSearchPh: 'Search ID, dress, blue…', pickerCategories: 'Outfit categories', pickerPreview: 'Outfit preview',
+    pickerEmpty: 'Choose an outfit you like', pickerNone: 'No outfit selected', pickerChange: 'Change outfit', pickerTotal: '{n} outfits',
+    pickerMatches: '{n} outfits found', pickerShowing: 'Showing {shown} of {total}',
     fitGarmentUploadBtn: 'Upload 1 full look or 2 separate pieces', fitGarmentUploadHint: '1 image = full outfit; 2 images = first upper body, second lower body',
     customGarmentLabel: 'Custom upload', customGarmentReplace: 'Choose again', customGarmentRemove: 'Remove all', customGarmentReady: 'Custom garment is ready',
     customGarmentGuide: 'One image is treated as a complete full-body outfit. With two images, the first is the upper-body garment and the second is the lower-body garment. Use clear front views with simple backgrounds.', customGarmentPreviewAlt: 'Custom uploaded garment preview',
@@ -1151,6 +1283,11 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   const garmentList = document.getElementById('fitGarmentList');
   const fitSearch = document.getElementById('fitSearch');
   const fitRandom = document.getElementById('fitRandom');
+  const garmentPicker = document.getElementById('garmentPicker');
+  const pickerCategories = document.getElementById('garmentPickerCategories');
+  const pickerScroll = document.getElementById('garmentPickerScroll');
+  const pickerMore = document.getElementById('garmentPickerMore');
+  const pickerConfirm = document.getElementById('garmentPickerConfirm');
   const garmentCatalogTab = document.getElementById('garmentCatalogTab');
   const garmentUploadTab = document.getElementById('garmentUploadTab');
   const garmentCatalogPanel = document.getElementById('garmentCatalogPanel');
@@ -1173,6 +1310,10 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   let uploadedGarmentCompositeUrl = '';
   let garmentUploadIntent = 'replace';
   let fitSearchQ = '';
+  let pickerCategory = '';
+  let pickerGarment = null;
+  let pickerVisibleCount = 48;
+  let pickerReturnFocus = null;
 
   // 模型由本机服务固定，浏览器不读取或发送旧的个人模型配置。
   const FIXED_MODEL_NAME = window.PCR_CONFIG.MODEL_NAME;
@@ -1762,11 +1903,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     const isCatalog = garmentMode === 'catalog';
     garmentCatalogTab.classList.toggle('active', isCatalog);
     garmentUploadTab.classList.toggle('active', !isCatalog);
-    garmentCatalogTab.setAttribute('aria-selected', String(isCatalog));
-    garmentUploadTab.setAttribute('aria-selected', String(!isCatalog));
-    garmentCatalogTab.tabIndex = isCatalog ? 0 : -1;
-    garmentUploadTab.tabIndex = isCatalog ? -1 : 0;
-    garmentCatalogPanel.hidden = !isCatalog;
+    garmentUploadTab.setAttribute('aria-pressed', String(!isCatalog));
+    garmentCatalogPanel.hidden = !isCatalog || Boolean(pickedGarment);
     garmentUploadPanel.hidden = isCatalog;
     refreshCustomGarmentPreview();
   }
@@ -1781,15 +1919,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     }
   }
 
-  [garmentCatalogTab, garmentUploadTab].forEach((tab, index, tabs)=>{
-    tab.addEventListener('click', ()=>setGarmentMode(index === 0 ? 'catalog' : 'upload'));
-    tab.addEventListener('keydown', e=>{
-      if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      e.preventDefault();
-      const nextIndex = e.key === 'ArrowRight' ? (index + 1) % tabs.length : (index + tabs.length - 1) % tabs.length;
-      setGarmentMode(nextIndex === 0 ? 'catalog' : 'upload', true);
-    });
-  });
+  garmentCatalogTab.addEventListener('click', e=>openGarmentPicker(e.currentTarget));
+  garmentUploadTab.addEventListener('click', ()=>setGarmentMode('upload'));
 
   // 打开/关闭
   const open = () => { fitEl.classList.add('open'); document.body.style.overflow='hidden'; refreshGarmentSourceUI(); refreshGarments(); refreshPicked(); refreshConfigUI(); };
@@ -1798,6 +1929,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   document.getElementById('fitBack').addEventListener('click', close);
   document.addEventListener('keydown', e=>{
     if(e.key!=='Escape') return;
+    // 原生 dialog 处理 Escape，避免同时关闭底下的试穿页。
+    if(garmentPicker.open) return;
     if(!taobaoGuide.hidden){ e.preventDefault(); e.stopImmediatePropagation(); closeTaobaoGuide(); return; }
     if(!serviceDialog.hidden){ e.preventDefault(); e.stopImmediatePropagation(); closeServiceDialog(); return; }
     if(!historyEl.hidden){ e.preventDefault(); e.stopImmediatePropagation(); closeHistory(); return; }
@@ -1943,8 +2076,58 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   });
 
   // ===== 选择服装 =====
+  function openGarmentPicker(trigger){
+    if(garmentPicker.open) return;
+    pickerReturnFocus = trigger || garmentCatalogTab;
+    pickerGarment = garmentMode === 'catalog' ? pickedGarment : null;
+    pickerCategory = '';
+    fitSearchQ = '';
+    fitSearch.value = '';
+    const selectedIndex = pickerGarment ? D.findIndex(d=>d.id===pickerGarment.id) : -1;
+    pickerVisibleCount = Math.max(48, Math.ceil((selectedIndex + 1) / 48) * 48);
+    garmentPicker.showModal();
+    drawPickerCategories();
+    refreshGarments();
+    pickerScroll.scrollTop = 0;
+    // 不自动聚焦搜索框，手机打开图库时保留完整的选衣空间。
+    document.getElementById('garmentPickerClose').focus({preventScroll:true});
+  }
+
+  document.getElementById('garmentPickerClose').addEventListener('click', ()=>garmentPicker.close());
+  garmentPicker.addEventListener('close', ()=>{
+    if(fitEl.classList.contains('open')){
+      const target = pickerReturnFocus?.isConnected ? pickerReturnFocus : garmentCatalogTab;
+      target.focus({preventScroll:true});
+    }
+  });
+  pickerConfirm.addEventListener('click', ()=>{
+    if(!pickerGarment) return;
+    pickedGarment = pickerGarment;
+    setGarmentMode('catalog');
+    garmentPicker.close();
+    showHint(t('aiPicked') + pickedGarment.id);
+  });
+
+  function drawPickerCategories(){
+    document.getElementById('garmentPickerTotal').textContent = t('pickerTotal').replace('{n}', fmtNum(D.length));
+    pickerCategories.innerHTML = ['', ...META.cats].map(category=>
+      `<button type="button" class="picker-category" data-category="${esc(category)}" aria-pressed="${category===pickerCategory}">`+
+      `${esc(category ? catName(category) : t('all'))}<span>${fmtNum(category ? META.counts[category] : D.length)}</span></button>`
+    ).join('');
+  }
+  pickerCategories.addEventListener('click', e=>{
+    const button = e.target.closest('.picker-category');
+    if(!button) return;
+    pickerCategory = button.dataset.category;
+    pickerVisibleCount = 48;
+    pickerCategories.querySelectorAll('button').forEach(item=>item.setAttribute('aria-pressed', String(item===button)));
+    refreshGarments();
+    pickerScroll.scrollTop = 0;
+  });
+
   function getFilteredGarments(){
     return D.filter(d=>{
+      if(pickerCategory && d.カテゴリ!==pickerCategory) return false;
       if(!fitSearchQ) return true;
       const idx=new Set([d.id.toLowerCase()]);
       idx.add(d.カテゴリ);
@@ -1955,34 +2138,78 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   }
 
   function refreshGarments(){
+    if(!garmentPicker.open) return;
     const matches = getFilteredGarments();
-    if(pickedGarment){
-      const pickedIndex = matches.findIndex(d=>d.id===pickedGarment.id);
-      if(pickedIndex>0) matches.unshift(...matches.splice(pickedIndex,1));
-    }
-    const list = matches.slice(0, 60);
-    const hasVisibleSelection = Boolean(garmentMode === 'catalog' && pickedGarment && list.some(d=>d.id===pickedGarment.id));
-    garmentList.classList.toggle('has-selection', hasVisibleSelection);
+    const list = matches.slice(0, pickerVisibleCount);
     fitRandom.disabled = matches.length===0;
-    garmentList.innerHTML = list.map(d=>`<div class="g${garmentMode === 'catalog' && pickedGarment && pickedGarment.id===d.id?' sel':''}" data-id="${esc(d.id)}" title="${esc(d.id)}" role="button" tabindex="0" aria-pressed="${Boolean(garmentMode === 'catalog' && pickedGarment && pickedGarment.id===d.id)}"><img loading="lazy" src="assets/${esc(d.サムネ)}" alt="${esc(d.id)}"><span class="badge">${esc(d.id)}</span></div>`).join('')
-      || `<div style="grid-column:1/-1;color:var(--tx3);font-size:12px;text-align:center;padding:12px 0">${t('noResultTitle')}</div>`;
+    garmentList.innerHTML = list.map(d=>`<button type="button" class="g" data-id="${esc(d.id)}" aria-pressed="false" aria-label="${esc(d.id + ' · ' + catName(d.カテゴリ))}">`+
+      `<img loading="lazy" decoding="async" src="assets/${esc(d.サムネ)}" alt="" width="200" height="300">`+
+      `<span class="picker-check" aria-hidden="true">✓</span>`+
+      `<span class="picker-card-info"><span class="picker-card-id">${esc(d.id)}</span><span class="picker-card-category">${esc(catName(d.カテゴリ))}</span></span></button>`).join('')
+      || `<div class="picker-empty"><b>${t('noResultTitle')}</b>${t('noResultSub')}</div>`;
+    pickerMore.hidden = list.length >= matches.length;
+    pickerMore.textContent = t('moreLeft').replace('{n}', fmtNum(matches.length - list.length));
+    document.getElementById('garmentPickerCount').textContent = list.length < matches.length
+      ? t('pickerShowing').replace('{shown}', fmtNum(list.length)).replace('{total}', fmtNum(matches.length))
+      : t('pickerMatches').replace('{n}', fmtNum(matches.length));
+    refreshPickerSelection();
   }
-  fitSearch.addEventListener('input', e=>{ fitSearchQ=e.target.value.trim(); refreshGarments(); });
+  fitSearch.addEventListener('input', e=>{
+    fitSearchQ=e.target.value.trim();
+    pickerVisibleCount=48;
+    refreshGarments();
+    pickerScroll.scrollTop=0;
+  });
+  pickerMore.addEventListener('click', ()=>{
+    const firstNewIndex = garmentList.children.length;
+    const scrollTop = pickerScroll.scrollTop;
+    pickerVisibleCount += 48;
+    refreshGarments();
+    pickerScroll.scrollTop = scrollTop;
+    if(pickerMore.hidden) garmentList.children[firstNewIndex]?.focus({preventScroll:true});
+  });
 
   function selectGarment(d){
-    pickedGarment = d;
-    garmentMode = 'catalog';
-    refreshGarmentSourceUI();
-    refreshGarments();
-    refreshPicked();
-    requestAnimationFrame(()=>garmentList.querySelector('.g.sel')?.scrollIntoView({block:'nearest'}));
+    // 选择页内先预览，只有“使用这件服装”才提交到试穿页。
+    pickerGarment = d;
+    refreshPickerSelection();
+  }
+
+  function refreshPickerSelection(){
+    garmentList.querySelectorAll('.g').forEach(card=>{
+      const selected = card.dataset.id === pickerGarment?.id;
+      card.classList.toggle('sel', selected);
+      card.setAttribute('aria-pressed', String(selected));
+    });
+    pickerConfirm.disabled = !pickerGarment;
+    const preview = document.getElementById('garmentPickerPreview');
+    const placeholder = document.getElementById('garmentPickerPlaceholder');
+    const current = document.getElementById('garmentPickerCurrent');
+    preview.hidden = !pickerGarment;
+    placeholder.hidden = Boolean(pickerGarment);
+    if(!pickerGarment){
+      preview.removeAttribute('src');
+      document.getElementById('garmentPickerPreviewID').textContent = '';
+      document.getElementById('garmentPickerDescription').textContent = '';
+      current.textContent = t('pickerNone');
+      return;
+    }
+    preview.src = 'assets/' + pickerGarment.画像;
+    preview.alt = pickerGarment.id;
+    document.getElementById('garmentPickerPreviewID').textContent = pickerGarment.id;
+    document.getElementById('garmentPickerDescription').textContent = catName(pickerGarment.カテゴリ) + ' · ' + pickerGarment.キーワード.split(' ').map(wordName).join(' · ');
+    current.innerHTML = `<img src="assets/${esc(pickerGarment.サムネ)}" alt=""><div class="picker-current-copy"><strong>${esc(pickerGarment.id)}</strong><span>${esc(catName(pickerGarment.カテゴリ))}</span></div>`;
   }
 
   fitRandom.addEventListener('click', ()=>{
     const matches = getFilteredGarments();
     if(!matches.length) return;
-    const alternatives = pickedGarment && matches.length>1 ? matches.filter(d=>d.id!==pickedGarment.id) : matches;
-    selectGarment(alternatives[Math.floor(Math.random()*alternatives.length)]);
+    const alternatives = pickerGarment && matches.length>1 ? matches.filter(d=>d.id!==pickerGarment.id) : matches;
+    const next = alternatives[Math.floor(Math.random()*alternatives.length)];
+    pickerGarment = next;
+    pickerVisibleCount = Math.max(pickerVisibleCount, Math.ceil((matches.indexOf(next) + 1) / 48) * 48);
+    refreshGarments();
+    garmentList.querySelector('.g.sel')?.scrollIntoView({block:'nearest'});
   });
 
   garmentList.addEventListener('click', e=>{
@@ -1990,18 +2217,13 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     const d = D.find(x=>x.id===g.dataset.id); if(!d) return;
     selectGarment(d);
   });
-  garmentList.addEventListener('keydown', e=>{
-    if(e.key!=='Enter'&&e.key!==' ') return;
-    const g=e.target.closest('.g'); if(!g) return;
-    e.preventDefault();
-    const d = D.find(x=>x.id===g.dataset.id); if(d) selectGarment(d);
-  });
 
   // 刷新「当前选中服装」提示条
   function refreshPicked(){
     const el = document.getElementById('aiPicked');
     if(!el) return;
     const selected = getSelectedGarment();
+    el.hidden = !selected;
     if(!selected){
       el.className = 'ai-picked';
       el.textContent = garmentMode === 'upload' ? t('aiNeedUploadedGarment') : t('aiPickedNone');
@@ -2010,13 +2232,16 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     el.className = 'ai-picked has';
     const sourceLabel = selected.source === 'upload' ? t('customGarmentLabel') : t('aiPicked');
     el.innerHTML = `<img class="${selected.source === 'upload' ? 'custom' : ''}" src="${esc(selected.previewSource)}" alt="">` +
-      `<div class="ai-picked-copy"><span>${esc(sourceLabel)}</span><b class="gid">${esc(selected.label)}</b></div>` +
+      `<div class="ai-picked-copy"><span>${esc(sourceLabel)}</span><b class="gid">${esc(selected.label)}</b>`+
+      (selected.source === 'catalog' ? `<button type="button" class="catalog-change">${t('pickerChange')}</button>` : '') + `</div>` +
       `<div class="same-item-actions">`+
         `<button type="button" class="btn-buy-tag taobao-search-selected"><span>${t('taobaoSearchSame')}</span></button>`+
         `<button type="button" class="btn-buy-tag pdd pinduoduo-search-selected"><span>${t('pinduoduoSearchSame')}</span></button>`+
       `</div>`;
   }
   document.getElementById('aiPicked').addEventListener('click', e=>{
+    const changeButton = e.target.closest('.catalog-change');
+    if(changeButton){ openGarmentPicker(changeButton); return; }
     const selected = getSelectedGarment();
     if(!selected) return;
     const taobaoButton = e.target.closest('.taobao-search-selected');
@@ -2030,7 +2255,7 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   const _origApplyLang = applyLang;
   applyLang = function(){
     _origApplyLang();
-    if(fitEl.classList.contains('open')) refreshGarments();
+    if(garmentPicker.open){ drawPickerCategories(); refreshGarments(); }
     refreshGarmentSourceUI();
     refreshPicked();
     refreshConfigUI();
