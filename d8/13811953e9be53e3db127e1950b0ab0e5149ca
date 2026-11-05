@@ -1,0 +1,19 @@
+index.html
+  s_643c896ed5d5de::t_3c9ac4385a544a 257-333,339-342,613-621,623-624,626,647,684-722,829-833,935-939,1286-1290,1313-1316,1906-1907,1922-1923,1932-1933,2079-2127,2130,2141,2143,2145-2155,2157-2170,2173-2201,2207-2212,2226,2235-2236,2243-2244,2258
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d813811953e9be53e3db127e1950b0ab0e5149ca",
+  "prompts": {},
+  "sessions": {
+    "s_643c896ed5d5de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ab4f-6c05-7c03-81d1-7d335217d7f4",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
