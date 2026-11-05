@@ -1,0 +1,34 @@
+backend/manifest/config/config.example.yaml
+  s_643c896ed5d5de::t_c15a6354656745 120
+backend/.env.example
+  s_643c896ed5d5de::t_c15a6354656745 8-10
+backend/internal/logic/tryon/doubao_config_test.go
+  s_643c896ed5d5de::t_0f5058d2ec8605 1-169
+docker-compose.yml
+  s_643c896ed5d5de::t_c15a6354656745 16
+backend/docker-compose.yml
+  s_643c896ed5d5de::t_c15a6354656745 14
+backend/DEPLOY.md
+  s_643c896ed5d5de::t_a2ac684e0c2d6f 8,23-24,30,38-63,115,143,147
+backend/internal/logic/tryon/generator.go
+  s_643c896ed5d5de::t_c15a6354656745 45-49,86-97,131,134-140
+backend/internal/deploy/compose_test.go
+  s_643c896ed5d5de::t_49fc6e1073d401 38
+  s_643c896ed5d5de::t_0f5058d2ec8605 1-37,39-74
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5c69623319ba6932278aea43c26d2a324e2d5c6c",
+  "prompts": {},
+  "sessions": {
+    "s_643c896ed5d5de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ab4f-6c05-7c03-81d1-7d335217d7f4",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
