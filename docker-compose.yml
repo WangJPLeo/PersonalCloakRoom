@@ -13,9 +13,5 @@ services:
       - path: ./.env
         required: false
     environment:
-      # 可在根目录或 backend 目录配置 .env 注入对应 Key
+      # 模型变量由上方 env_file 注入，避免空插值覆盖 backend/.env 中的凭据。
       - GF_SERVER_ADDRESS=:8000
-      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
-      - ARK_API_KEY=${ARK_API_KEY:-}
-      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
-      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY:-}

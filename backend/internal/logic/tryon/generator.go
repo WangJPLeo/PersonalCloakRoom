@@ -42,6 +42,11 @@ type ModelConfig struct {
 	ClientProvided bool
 }
 
+const (
+	defaultDoubaoBaseURL = "https://ark.cn-beijing.volces.com/api/v3"
+	defaultDoubaoModel   = "doubao-seedream-5-0-flash-260915"
+)
+
 // loadModelConfig 从配置文件加载指定模型的配置，并允许环境变量覆盖
 func loadModelConfig(ctx context.Context, alias string) (*ModelConfig, error) {
 	// 按列表读取：llm.models.[alias]
@@ -78,6 +83,18 @@ func loadModelConfig(ctx context.Context, alias string) (*ModelConfig, error) {
 	if cfg == nil {
 		return nil, fmt.Errorf("模型 %s 未配置（当前请求可能来自不支持个人模型配置的旧前端或旧后端）", alias)
 	}
+	if alias == "doubao" {
+		// 兼容旧 models 条目未声明 envKey 的部署；显式自定义 envKey 仍优先。
+		if cfg.EnvKey == "" {
+			cfg.EnvKey = "ARK_API_KEY"
+			if v := lookupEnv(cfg.EnvKey); v != "" {
+				cfg.APIKey = v
+			}
+		}
+		if v := strings.TrimSpace(lookupEnv("ARK_MODEL")); v != "" {
+			cfg.Model = v
+		}
+	}
 	if alias == "gemini" {
 		if v := strings.TrimSpace(lookupEnv("GOOGLE_GEMINI_BASE_URL")); v != "" {
 			cfg.BaseURL = strings.TrimRight(v, "/")
@@ -111,9 +128,16 @@ func loadModelConfig(ctx context.Context, alias string) (*ModelConfig, error) {
 	return cfg, nil
 }
 
-// loadLegacyConfig 兼容旧的 llm.openai / llm.gemini 配置写法
+// loadLegacyConfig 兼容旧的模型配置，以及只通过环境变量配置的部署。
 func loadLegacyConfig(ctx context.Context, alias string) *ModelConfig {
 	switch alias {
+	case "doubao":
+		return &ModelConfig{
+			Name: alias, Provider: "doubao", EnvKey: "ARK_API_KEY",
+			APIKey:  getKey("ARK_API_KEY", "llm.doubao.apiKey"),
+			BaseURL: g.Cfg().MustGet(ctx, "llm.doubao.baseURL", defaultDoubaoBaseURL).String(),
+			Model:   g.Cfg().MustGet(ctx, "llm.doubao.model", defaultDoubaoModel).String(),
+		}
 	case "grok":
 		return &ModelConfig{
 			Name: "grok", Provider: "openai", APIKey: lookupEnv("XAI_API_KEY"),

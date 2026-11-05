@@ -5,7 +5,7 @@
 ## 一、前置条件
 
 - 一台能访问对应服务商的服务器（调国外模型需能访问 OpenAI / Google，用豆包等国内模型则只需能访问国内网络即可）
-- 服务器已安装 Go 1.18+ 或 Docker
+- 服务器已安装 Go 1.22+ 或 Docker
 - 已申请 API Key（按需，用哪个模型就配哪个；若使用本地 ComfyUI 则完全不需要申请 Key）：
   - OpenAI GPT-Image：`sk-...`（https://platform.openai.com）
   - 豆包（火山方舟）：`ARK...`（https://console.volcengine.com/ark）
@@ -20,20 +20,46 @@
 ```bash
 cd backend
 
-# 1. 复制环境变量示例文件
-cp .env.example .env
+# 1. 首次部署时复制示例；升级时保留已有的真实 .env
+[ -f .env ] || cp .env.example .env
 
 # 2. 编辑 .env 文件，填入你使用的模型 API Key（按需填写，国内优先推荐豆包 ARK_API_KEY）
 # 例如：ARK_API_KEY=xxxx
 
 # 3. 一键构建并启动后台容器（内置开箱即用自动兜底，默认监听 8000 端口）
-docker compose up -d
+docker compose up -d --build --force-recreate
 
 # 查看日志
 docker compose logs -f
 ```
 
 > 说明：系统默认自动加载配置模板并绑定 `:8000` 端口。若需深度定制模型或路由，可复制配置：`cp manifest/config/config.example.yaml manifest/config/config.yaml`。
+
+### 已有部署修复「模型 doubao 未配置」
+
+网页版使用 `doubao` 作为服务端模型别名。新版本在旧 `config.yaml` 缺少该条目时，也能从 `ARK_API_KEY` 读取 Key，默认使用：
+
+- 接口：`https://ark.cn-beijing.volces.com/api/v3`
+- 模型：`doubao-seedream-5-0-flash-260915`
+
+在服务器的 `backend/.env` 中填写真实 Key，并可用 `ARK_MODEL` 覆盖旧配置中的模型名：
+
+```dotenv
+ARK_API_KEY=你的火山方舟Key
+ARK_MODEL=doubao-seedream-5-0-flash-260915
+```
+
+拉取修复代码后，在项目根目录重新构建并创建后端容器：
+
+```bash
+docker compose up -d --build --force-recreate personalcloakroom
+```
+
+只重启 Nginx 或旧容器不会加载新二进制，也不会更新旧容器的环境变量。根目录 Compose 按 `backend/.env`、根目录 `.env` 的顺序加载，后者的同名项优先；从 `backend/` 启动时只读取该目录的 `.env`。模型变量通过这些文件注入，启动 Shell 中单独 `export` 的变量不会自动透传到 Compose 容器。
+
+直接运行 Go 二进制时，需将 `ARK_API_KEY` 和可选的 `ARK_MODEL` 配置到实际后端进程的环境中，再启动新编译的程序；systemd 服务应在其服务环境中配置这些变量。
+
+显式配置的模型、接口及自定义 `envKey` 会保留；`ARK_MODEL` 仅覆盖 `doubao`，不会改变其他模型。真实 `.env`、Key 和 `config.yaml` 不应提交到 Git。
 
 ### 方式 B：Docker Run 单命令运行
 
@@ -86,7 +112,7 @@ llm:
       provider: doubao    # 火山方舟协议（复用 images/generations，但请求体为火山格式）
       envKey: "ARK_API_KEY"
       baseURL: "https://ark.cn-beijing.volces.com/api/v3"
-      model: "doubao-seedream-3-0-t2i-250415"
+      model: "doubao-seedream-5-0-flash-260915"
     gemini:
       provider: gemini
       envKey: "GEMINI_API_KEY"
@@ -114,21 +140,11 @@ llm:
 > - `provider: openai` 表示走标准的 `POST {baseURL}/images/generations` + `input` 数组协议（OpenAI 官方 GPT-Image、通义万相、智谱 CogView、多数中转站）。把 baseURL 换成服务商地址、model 换成其模型 ID 即可。
 > - `provider: doubao` 走火山方舟协议（同样是 `/images/generations`，但请求体用 `prompt` + `image[]` 多图生图，返回 `url`），适配豆包 Seedream 换装。
 > - `provider: gemini` 走 Google 原生 `generateContent` 协议。
-> 前端模型下拉框在 `index.html` 的 `<select id="aiModel">` 中增减 `<option>` 即可与后端别名对应。
+> 当前网页版固定使用 `doubao` 别名，由服务端配置对应的火山方舟模型与密钥。
 
 ## 三、配置前端指向后端
 
-前端 `index.html` 按以下优先级获取后端地址：
-
-1. **设置中心**：用户在当前浏览器保存的后端 API 地址（公网外部地址须使用 `HTTPS`）
-2. **全局变量**：在页面加载前设置 `window.AI_API_URL = "https://api.你的域名"`
-3. **URL 参数**：`https://你的前端/?tryon=http://127.0.0.1:8000`（安全约束：为防止跨域钓鱼窃取 API Key 与私密照片，`?tryon=` 仅允许同源地址或本机回环 `localhost/127.0.0.1`；外部后端须在设置中心显式保存）
-4. **本地自动回退**：访问宿主为 `localhost` 或 `127.0.0.1` 时，自动尝试回退连接 `http://127.0.0.1:8000`
-
-> 建议：若部署公网，把后端反向代理到 `https://api.你的域名`（Nginx 配置见下），前端部署时在 `index.html` 顶部加一句：
-> ```html
-> <script>window.AI_API_URL="https://api.你的域名";</script>
-> ```
+本机网页版使用同源 `/api/tryon` 代理；GitHub Pages 构建时生成固定 HTTPS 入口和精确来源白名单，配置方式见 [手机网页版部署说明](../docs/github-pages.md)。URL 参数和旧浏览器设置不能改写调用目标，模型密钥由服务端管理。本次模型配置修复只需重新部署后端。
 
 ## 四、Nginx 反向代理（可选但推荐）
 
