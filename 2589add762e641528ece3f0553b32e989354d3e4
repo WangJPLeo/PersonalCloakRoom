@@ -1,0 +1,83 @@
+start-ai.command
+  s_06ba4ca75e872e::t_9aff3c89322401 1-14
+backend/internal/logic/tryon/gpt_image.go
+  s_06ba4ca75e872e::t_4a130de7d2041a 191-193
+  s_06ba4ca75e872e::t_a07ee37e62ce31 201
+.gitignore
+  s_06ba4ca75e872e::t_a38786755da5b1 25-27
+backend/internal/logic/tryon/prompt.go
+  s_06ba4ca75e872e::t_a07ee37e62ce31 4-43
+  s_06ba4ca75e872e::t_f956d84545189d 79,91,107,123
+backend/internal/logic/tryon/tryon.go
+  s_06ba4ca75e872e::t_a07ee37e62ce31 15,20,66-69,80,115-118
+backend/internal/logic/tryon/custom_prompt_test.go
+  s_06ba4ca75e872e::t_2774d9c63669cd 1-90
+README.md
+  s_06ba4ca75e872e::t_c219f56f484dfa 62
+  s_06ba4ca75e872e::t_8bfb682f90215f 221-222
+  s_06ba4ca75e872e::t_5f5985232f1e72 217-220
+  s_06ba4ca75e872e::t_3a72b99189653d 223-224
+  s_06ba4ca75e872e::t_06acf3c7092320 1
+backend/internal/logic/tryon/gemini_test.go
+  s_06ba4ca75e872e::t_8bfb682f90215f 8-10,13-69
+  s_06ba4ca75e872e::t_5f2d94053d8d54 70
+start-free.command
+  s_06ba4ca75e872e::t_5f5985232f1e72 1-16
+backend/internal/controller/tryon/tryon_v1_tryon.go
+  s_06ba4ca75e872e::t_a07ee37e62ce31 78
+scripts/start-ai.mjs
+  s_06ba4ca75e872e::t_9aff3c89322401 1-14
+backend/internal/logic/tryon/grok_image_test.go
+  s_06ba4ca75e872e::t_3a72b99189653d 1-16,18-51,58-87
+  s_06ba4ca75e872e::t_17950cbd065b65 17,52-57
+backend/README.MD
+  s_06ba4ca75e872e::t_c219f56f484dfa 114,131
+  s_06ba4ca75e872e::t_06acf3c7092320 1,3
+index.html
+  s_06ba4ca75e872e::t_4a130de7d2041a 588,831,956
+  s_06ba4ca75e872e::t_3a72b99189653d 589,2791-2792
+  s_06ba4ca75e872e::t_06acf3c7092320 7-8,402,452,468,769-770,799,895-896,925
+  s_06ba4ca75e872e::t_a07ee37e62ce31 278-284,605-612,839-840,964-965,2377-2380,2622,2635-2636,2682
+backend/internal/logic/tryon/doubao.go
+  s_06ba4ca75e872e::t_f956d84545189d 81
+  s_06ba4ca75e872e::t_3a444ddcd646df 49
+backend/internal/logic/tryon/grok_image.go
+  s_06ba4ca75e872e::t_4a130de7d2041a 1-70
+backend/api/tryon/v1/tryon.go
+  s_06ba4ca75e872e::t_a07ee37e62ce31 20-21
+backend/manifest/config/config.example.yaml
+  s_06ba4ca75e872e::t_4a130de7d2041a 98-104
+backend/internal/controller/tryon/tryon_test.go
+  s_06ba4ca75e872e::t_2774d9c63669cd 5,13,20,198-279
+  s_06ba4ca75e872e::t_2ac8005c8ec2e6 280
+backend/.env.example
+  s_06ba4ca75e872e::t_4a130de7d2041a 16-19
+  s_06ba4ca75e872e::t_9aff3c89322401 13-14
+  s_06ba4ca75e872e::t_db78c9cdd3dfc8 15
+backend/internal/logic/tryon/tryon_test.go
+  s_06ba4ca75e872e::t_a07ee37e62ce31 143
+scripts/serve-free.mjs
+  s_06ba4ca75e872e::t_5f5985232f1e72 1-84
+backend/internal/logic/tryon/doubao_test.go
+  s_06ba4ca75e872e::t_f956d84545189d 1-40
+backend/internal/logic/tryon/generator.go
+  s_06ba4ca75e872e::t_9aff3c89322401 81-83,87-91
+  s_06ba4ca75e872e::t_8bfb682f90215f 84-86
+  s_06ba4ca75e872e::t_4a130de7d2041a 92-102,117-121
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2589add762e641528ece3f0553b32e989354d3e4",
+  "prompts": {},
+  "sessions": {
+    "s_06ba4ca75e872e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a19b7b-13bb-7850-9861-45b03a971c45",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}

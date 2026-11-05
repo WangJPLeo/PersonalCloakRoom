@@ -1,0 +1,33 @@
+.github/workflows/pages.yml
+  s_643c896ed5d5de::t_4582c495aa83d6 1-45
+.gitignore
+  s_643c896ed5d5de::t_f404269fe8a572 24,29,47-60
+config.js
+  s_643c896ed5d5de::t_393f187bfddfea 4-5,8-10
+data.js
+  s_643c896ed5d5de::t_ff440d667bfed7 1-2
+docs/github-pages.md
+  s_643c896ed5d5de::t_f467d27ca28609 1-33
+index.html
+  s_643c896ed5d5de::t_77ff2473dd0240 7,186-188,316,319-325,369-376,380,490,495,499,566,571,573,691,700,720,723-724,728,743,792,801,821,824-825,829,844,865-866,1021,1177-1179,1477-1478,1486-1492,1495,1500,2041-2042,2284,2288,2294,2299,2310-2312,2347,2356,2374
+scripts/serve-free.mjs
+  s_643c896ed5d5de::t_31cc035caefa70 7,9,12-26,30-84,86-108,110-112,114
+web.config.example.json
+  s_643c896ed5d5de::t_0282734ffebefa 1-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "63aa28c5c7f8405c18100d1c85d8a3ef3b041c8d",
+  "prompts": {},
+  "sessions": {
+    "s_643c896ed5d5de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ab4f-6c05-7c03-81d1-7d335217d7f4",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
