@@ -1,0 +1,21 @@
+index.html
+  s_643c896ed5d5de::t_13f47702a7eb29 774,852-854,961-963,1287-1305,1659-1662,2295-2296,2563-2564,2590-2591,2597,2601-2602,2605-2606
+config.js
+  s_643c896ed5d5de::t_13f47702a7eb29 1,3-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "09286c05adee5683c2112d32382b1397b9a29361",
+  "prompts": {},
+  "sessions": {
+    "s_643c896ed5d5de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ab4f-6c05-7c03-81d1-7d335217d7f4",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
