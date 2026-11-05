@@ -1,0 +1,21 @@
+.github/workflows/pages.yml
+  s_643c896ed5d5de::t_e5c8cfbcbf4e68 23,36-48
+docs/github-pages.md
+  s_643c896ed5d5de::t_7fdb8254259fb3 21,23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "045db26afcdb0cb02a779097fcf385c55024efba",
+  "prompts": {},
+  "sessions": {
+    "s_643c896ed5d5de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ab4f-6c05-7c03-81d1-7d335217d7f4",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
