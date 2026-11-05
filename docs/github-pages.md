@@ -18,9 +18,9 @@ node scripts/build-pages.mjs
 
 ## 自动发布
 
-源码工作流位于 `.github/workflows/pages.yml`，推送到 `main` 或 `codex/mobile-web` 时触发，也可手动运行。
+源码工作流位于 `.github/workflows/pages.yml`，推送到 `main` 或 `codex/mobile-web` 时验证测试和构建，也可手动运行。自动发布只在 `main` 上执行；开发分支只构建，避免触发发布环境的分支保护限制。
 
-首次在仓库 Settings → Pages 中，将 Source 设为 **GitHub Actions**。然后在 Actions 中运行 **Deploy mobile website**。以后更新源码后会自动重新部署。
+使用自动发布时，在仓库 Settings → Pages 中，将 Source 设为 **GitHub Actions**，并允许 `main` 部署到 `github-pages` 环境。然后在 `main` 上运行 **Deploy mobile website**。以后更新 `main` 后会自动重新部署。
 
 也可将 `dist/pages` 的内容推送到独立的 `gh-pages` 分支，在 Settings → Pages 中选择 **Deploy from a branch**、`gh-pages`、`/ (root)` 并保存。此方式后续需要手动更新发布分支；切换到自动发布时将 Source 改为 GitHub Actions。
 
