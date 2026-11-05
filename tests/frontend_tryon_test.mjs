@@ -115,13 +115,11 @@ const translations = {
   errRateLimited: 'rate limited',
   errDailyQuotaExceeded: 'quota exceeded',
   errConcurrencyLimited: 'concurrency limited',
-  settingsBackendOutdated: 'backend outdated',
 };
 
 const context = {
   atob,
   Uint8Array,
-  tryonSettings: {useCustom: false},
   t: key => translations[key] || key,
 };
 vm.createContext(context);
