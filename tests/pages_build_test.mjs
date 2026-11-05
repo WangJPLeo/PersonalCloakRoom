@@ -20,7 +20,7 @@ async function fixture(t, mutate = item => item) {
   return {dir, source, output};
 }
 
-test('发布只包含允许的公开文件，并在静态站禁用 AI 上传', async t => {
+test('发布只包含公开文件，启用固定 HTTPS 服务且不复制本地凭据', async t => {
   const {source, output} = await fixture(t);
   for (const filename of ['.env', 'web.config.local.json', 'config.js', 'photo.jpg']) {
     await writeFile(join(source, filename), 'private-test-value');
@@ -31,7 +31,15 @@ test('发布只包含允许的公开文件，并在静态站禁用 AI 上传', a
   assert.ok(!config.includes('private-test-value'));
   const context = {window: {}};
   vm.runInNewContext(config, context);
-  assert.equal(context.window.PCR_CONFIG.TRYON_ENABLED, false);
+  const settings = context.window.PCR_CONFIG;
+  assert.equal(settings.TRYON_ENABLED, true);
+  assert.equal(settings.MODEL_ALIAS, 'doubao');
+  const endpoint = new URL(settings.TRYON_ENDPOINT);
+  assert.equal(endpoint.protocol, 'https:');
+  assert.equal(endpoint.pathname, '/tryon');
+  assert.equal(settings.TRUSTED_TRYON_ORIGINS.length, 1);
+  assert.equal(settings.TRUSTED_TRYON_ORIGINS[0], endpoint.origin);
+  assert.deepEqual(Object.keys(settings).sort(), ['MODEL_ALIAS', 'MODEL_NAME', 'TRUSTED_TRYON_ORIGINS', 'TRYON_ENABLED', 'TRYON_ENDPOINT']);
   assert.equal(await readFile(join(output, 'assets/img/QIP-0001.webp'), 'utf8'), 'image');
   // 拒绝重复使用残留目录，避免旧文件随新版本发布。
   await assert.rejects(buildPages({source, output}), /发布目录必须为空/);

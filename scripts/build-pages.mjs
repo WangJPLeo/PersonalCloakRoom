@@ -5,6 +5,14 @@ import vm from 'node:vm';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const destination = join(root, 'dist', 'pages');
+// 公开的固定服务入口；模型密钥与访问控制由后端管理。
+const pagesConfig = Object.freeze({
+  MODEL_NAME: 'doubao-seedream-5-0-flash-260915',
+  MODEL_ALIAS: 'doubao',
+  TRYON_ENABLED: true,
+  TRYON_ENDPOINT: 'https://112.126.95.220/tryon',
+  TRUSTED_TRYON_ORIGINS: ['https://112.126.95.220'],
+});
 
 // 发布包只复制明确允许的文件，不递归复制仓库或本地配置。
 export async function buildPages({source = root, output = destination} = {}) {
@@ -45,7 +53,7 @@ export async function buildPages({source = root, output = destination} = {}) {
     await mkdir(resolve(target, '..'), {recursive: true});
     await copyFile(join(sourceRoot, file), target);
   }
-  await writeFile(join(output, 'config.js'), `// GitHub Pages 仅提供图库，凭据不得写入前端文件。\nwindow.PCR_CONFIG = Object.freeze({\n  MODEL_NAME: 'doubao-seedream-5-0-flash-260915',\n  TRYON_ENABLED: false,\n});\n`);
+  await writeFile(join(output, 'config.js'), `// 公开服务配置；凭据不得写入前端文件。\nwindow.PCR_CONFIG = Object.freeze(${JSON.stringify(pagesConfig, null, 2)});\n`);
   await writeFile(join(output, '.nojekyll'), '');
   return {items: D.length, files: publicFiles.length + 2};
 }

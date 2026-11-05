@@ -771,7 +771,7 @@ html[data-theme="dark"] .catalog-picker{--picker-ac:#75e5b7;--picker-soft:rgba(1
   </div>
 </div>
 
-<script src="config.js"></script>
+<script src="config.js?v=https-v1"></script>
 <script src="data.js"></script>
 <script>
 // ===== 双语字典 =====
@@ -849,6 +849,9 @@ const I18N = {
     aiGenerate: '开始 AI 换装', aiGenerating: '生成中…', aiNeedPhoto: '请先上传你的照片',
     aiStaticAction: 'AI 换装暂未接入',
     fitStaticTip: '当前网页版可浏览、搜索和下载服装图片。AI 换装服务尚未接入，所选照片仅在当前浏览器预览。',
+    fitRemoteTip: '照片与服装将发送到指定的换装服务，使用服务器端配置的火山方舟模型生成。',
+    aiHttpsConnectionErr: '无法连接 HTTPS 换装服务。请检查服务证书是否被浏览器信任、跨域权限及服务是否可用。',
+    aiEndpointInvalid: '换装服务地址未通过安全校验，请检查网站配置。',
     aiDescriptionLabel: '补充描述（可选）', aiDescriptionPlaceholder: '例如：白色影棚背景，人物自然站立，双手垂下，全身入镜。',
     aiDescriptionHelp: '可描述姿势、视角、背景、光线和风格；人物与服装保持一致。留空沿用原图效果。', aiDescriptionTooLong: '补充描述最多1000个字符',
     aiNeedGarment: '请先在「选择一件服装」里点选一件衣服', aiNeedUploadedGarment: '请先上传服装图片', aiNeedBoth: '请先上传照片并选择服装',
@@ -955,6 +958,9 @@ const I18N = {
     aiGenerate: 'Start AI try-on', aiGenerating: 'Generating…', aiNeedPhoto: 'Upload your photo first',
     aiStaticAction: 'AI try-on is not connected',
     fitStaticTip: 'Browse, search and download outfits on this site. AI try-on is not connected yet. Selected photos stay in this browser for preview.',
+    fitRemoteTip: 'Your photo and outfit will be sent to the configured try-on service, using its server-side Ark model settings.',
+    aiHttpsConnectionErr: 'Cannot connect to the HTTPS try-on service. Check certificate trust, cross-origin permissions and service availability.',
+    aiEndpointInvalid: 'The try-on endpoint failed validation. Please check the website configuration.',
     aiDescriptionLabel: 'Additional description (optional)', aiDescriptionPlaceholder: 'For example: a white studio background, standing naturally with arms relaxed, full body in frame.',
     aiDescriptionHelp: 'Describe pose, view, background, lighting and style while keeping the person and garment consistent. Leave blank to keep the original look.', aiDescriptionTooLong: 'The description must be 1000 characters or fewer',
     aiNeedGarment: 'Pick a garment from the "Choose a garment" list first', aiNeedUploadedGarment: 'Upload a garment image first', aiNeedBoth: 'Upload a photo and pick a garment first',
@@ -1278,6 +1284,25 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
 })();
 
 // ===== AI 试穿 =====
+function resolveTrustedTryonEndpoint(config, pageOrigin){
+  if(!config || config.TRYON_ENABLED === false) return '';
+  try{
+    const origin = new URL(pageOrigin).origin;
+    const endpoint = new URL(config.TRYON_ENDPOINT || '/api/tryon', origin);
+    if(endpoint.username || endpoint.password || endpoint.search || endpoint.hash) return '';
+    const isLoopback = ['localhost', '127.0.0.1', '[::1]'].includes(endpoint.hostname);
+    if(endpoint.protocol !== 'https:' && !(endpoint.protocol === 'http:' && isLoopback)) return '';
+    if(endpoint.origin === origin){
+      if(!['/api/tryon', '/tryon'].includes(endpoint.pathname)) return '';
+    }else{
+      if(endpoint.protocol !== 'https:' || endpoint.pathname !== '/tryon' ||
+          !Array.isArray(config.TRUSTED_TRYON_ORIGINS) ||
+          !config.TRUSTED_TRYON_ORIGINS.includes(endpoint.origin)) return '';
+    }
+    return endpoint.href;
+  }catch(_){ return ''; }
+}
+
 (function(){
   const fitEl = document.getElementById('fitting');
   const garmentList = document.getElementById('fitGarmentList');
@@ -1631,6 +1656,10 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
       tip.textContent = t('fitStaticTip');
       aiGenerate.disabled = true;
       aiGenerate.textContent = t('aiStaticAction');
+    }else if(window.PCR_CONFIG.TRYON_ENDPOINT){
+      const tip = document.querySelector('.fit-tip-box');
+      tip.dataset.i18n = 'fitRemoteTip';
+      tip.textContent = t('fitRemoteTip');
     }
   }
   function openServiceDialog(trigger, message){
@@ -2263,8 +2292,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   };
 
   // ===== AI 换装 =====
-  // 固定使用同源代理，URL 参数和旧浏览器设置均不能改变请求目标。
-  const getAIAPI = () => STATIC_GALLERY ? '' : "/api";
+  // 仅接受公开配置指定的可信入口；URL 参数和旧浏览器设置不能改变请求目标。
+  const getTryonEndpoint = () => resolveTrustedTryonEndpoint(window.PCR_CONFIG, location.origin);
 
   const aiGenerate = document.getElementById('aiGenerate');
   const aiCustomPrompt = document.getElementById('aiCustomPrompt');
@@ -2531,8 +2560,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
       showTryonError(t(isUploadMode ? 'aiNeedUploadedGarment' : 'aiNeedGarment'), {trigger:isUploadMode ? fitGarmentUpload : aiGenerate});
       return;
     }
-    const aiApi = getAIAPI();
-    if(!aiApi){ showTryonError(t('aiServerErr')); return; }
+    const endpoint = getTryonEndpoint();
+    if(!endpoint){ showTryonError(t('aiEndpointInvalid')); return; }
 
     setGenerating(true);
     try{
@@ -2558,18 +2587,23 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
         size: '1024x1536',
         lang: LANG,
         custom_prompt: customPrompt,
+        model: window.PCR_CONFIG.MODEL_ALIAS || 'doubao',
+        keep_face: true,
       };
       const headers = {'Content-Type':'application/json'};
 
       let resp;
       try{
-        resp = await fetch(aiApi + '/tryon', {
+        resp = await fetch(endpoint, {
           method: 'POST',
           headers,
           body: JSON.stringify(payload),
+          redirect: 'error',
+          credentials: 'omit',
         });
       }catch(_){
-        showTryonError(t('aiServerErr'));
+        const isRemote = new URL(endpoint).origin !== location.origin;
+        showTryonError(t(isRemote ? 'aiHttpsConnectionErr' : 'aiServerErr'));
         return;
       }
 
