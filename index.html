@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="referrer" content="no-referrer">
-<meta name="description" content="PersonalCloakRoom — AI 服装参考图集，收录 1407 套高品质服装图片（2:3），支持一键 AI 试穿换装与中英文双向检索。">
+<meta name="description" content="PersonalCloakRoom — 服装参考图集，支持手机浏览、服装图片下载和中英文检索。AI 试穿需接入换装服务。">
 <title>PersonalCloakRoom · AI 服装参考图集</title>
 <script>
 try{
@@ -183,9 +183,9 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .fit-top .back:hover{border-color:var(--control-hover-border)}
 .fit-top h2{margin:0;font-size:18px;font-weight:700}
 .fit-top .fit-hint{margin-left:auto;color:var(--tx3);font-size:13px}
-.fit-settings-open{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 14px;border:1px solid var(--control-border);border-radius:10px;background:var(--panel);color:var(--tx);font-size:14px;font-weight:700;cursor:pointer}
-.fit-settings-open:hover{border-color:var(--ac);background:rgba(143,180,255,.08)}
-.fit-settings-open:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.fit-toolbar-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:0 14px;border:1px solid var(--control-border);border-radius:10px;background:var(--panel);color:var(--tx);font-size:14px;font-weight:700;cursor:pointer}
+.fit-toolbar-button:hover{border-color:var(--ac);background:rgba(143,180,255,.08)}
+.fit-toolbar-button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .fit-history-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:99px;background:var(--ac);color:#111;font-size:11px;font-weight:800}
 .fit-history-count[hidden]{display:none}
 .fit-body{flex:1;min-height:0;overflow:hidden;display:flex}
@@ -254,11 +254,92 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .fit-random{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;padding:0 15px;border:1px solid rgba(143,180,255,.5);border-radius:9px;background:rgba(143,180,255,.1);color:var(--ac2);font-size:13px;font-weight:700;cursor:pointer}
 .fit-random:hover{background:rgba(143,180,255,.2);border-color:var(--ac)}
 .fit-random:disabled{opacity:.45;cursor:not-allowed}
+/* 独立图库选择页：主界面只保留入口与已选服装。 */
+.catalog-summary{margin:12px 0 2px;color:var(--tx3);font-size:13px;line-height:1.7}
+.garment-source-tab{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px}
+.garment-source-tab svg{width:18px;height:18px;flex-shrink:0}
+.catalog-change{justify-self:start;min-height:36px;padding:0;border:0;background:none;color:var(--ac2);font-size:13px;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.ai-picked[hidden]{display:none}
+.catalog-picker{--picker-ac:#167b57;--picker-soft:rgba(27,161,112,.1);position:fixed;inset:0;box-sizing:border-box;width:min(1080px,calc(100vw - 48px));height:min(820px,calc(100dvh - 48px));max-width:none;max-height:none;margin:auto;padding:0;border:1px solid var(--line2);border-radius:22px;background:var(--bg);color:var(--tx);font-family:var(--f);overflow:hidden;box-shadow:var(--sh)}
+.catalog-picker:not([open]){display:none}
+.catalog-picker[open]{display:flex;flex-direction:column}
+.catalog-picker::backdrop{background:rgba(5,6,8,.7);backdrop-filter:blur(7px)}
+html[data-theme="dark"] .catalog-picker{--picker-ac:#75e5b7;--picker-soft:rgba(117,229,183,.1)}
+.picker-header{flex-shrink:0;padding:20px 24px 16px;background:var(--bg2);border-bottom:1px solid var(--line)}
+.picker-heading{display:flex;align-items:center;gap:14px}
+.picker-back{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex-shrink:0;min-height:44px;padding:0 12px;border:1px solid var(--control-border);border-radius:11px;background:var(--panel);color:var(--tx);cursor:pointer;font-size:14px}
+.picker-titles{min-width:0;flex:1}
+.picker-titles h2{margin:0;font-size:20px;line-height:1.4}
+.picker-titles p{margin:3px 0 0;color:var(--tx3);font-size:12px;line-height:1.5}
+.picker-total{flex-shrink:0;padding:7px 10px;border:1px solid var(--line);border-radius:99px;font-size:12px;font-variant-numeric:tabular-nums;color:var(--tx2)}
+.picker-header .fit-search-row{margin:18px 0 14px}
+.picker-header .fit-search{min-height:46px;font-size:16px;border-radius:12px}
+.picker-header .fit-random{min-height:46px;border-color:var(--line2);background:var(--panel);color:var(--tx);border-radius:12px}
+.picker-categories{display:flex;gap:8px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:2px}
+.picker-categories::-webkit-scrollbar{display:none}
+.picker-category{flex:0 0 auto;min-height:42px;padding:0 15px;border:1px solid var(--line2);border-radius:99px;background:var(--panel);color:var(--tx2);font-size:14px;cursor:pointer;white-space:nowrap}
+.picker-category span{margin-left:6px;font-size:12px;opacity:.7;font-variant-numeric:tabular-nums}
+.picker-category[aria-pressed="true"]{border-color:var(--picker-ac);background:var(--picker-soft);color:var(--picker-ac);font-weight:700}
+.picker-content{display:flex;flex:1;min-height:0}
+.picker-scroll{flex:1;min-width:0;overflow-y:auto;overscroll-behavior:contain;padding:18px 22px 24px;scrollbar-gutter:stable}
+.picker-count{margin:0 0 14px;color:var(--tx3);font-size:12px;line-height:1.5}
+.catalog-picker .garment-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-height:none;overflow:visible;padding:2px}
+.catalog-picker .garment-list .g{display:flex;flex-direction:column;aspect-ratio:auto;min-width:0;padding:0;border:2px solid transparent;border-radius:14px;background:var(--panel);color:var(--tx);text-align:left;opacity:1;filter:none;transform:none;box-shadow:none;transition:border-color .15s,background .15s}
+.catalog-picker .garment-list .g:hover{border-color:var(--control-hover-border)}
+.catalog-picker .garment-list .g img{aspect-ratio:2/3;height:auto;object-fit:contain;border-radius:11px 11px 0 0;background:var(--image-bg)}
+.picker-card-info{display:grid;gap:4px;padding:10px;min-width:0}
+.picker-card-id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;font-weight:600}
+.picker-card-category{font-size:11px;color:var(--tx3)}
+.picker-check{display:none;position:absolute;top:9px;right:9px;width:25px;height:25px;align-items:center;justify-content:center;border-radius:50%;background:var(--picker-ac);color:var(--bg2);font-size:15px;font-weight:800;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.catalog-picker .garment-list .g.sel{border-color:var(--picker-ac);background:var(--picker-soft)}
+.catalog-picker .g.sel .picker-check{display:flex}
+.picker-more{display:block;min-height:46px;margin:20px auto 0;padding:0 24px;border:1px solid var(--line2);border-radius:12px;background:var(--panel);color:var(--tx);font-size:14px;cursor:pointer}
+.picker-more[hidden]{display:none}
+.picker-empty{grid-column:1/-1;text-align:center;padding:65px 16px;color:var(--tx3);font-size:14px;line-height:1.7}
+.picker-empty b{display:block;margin-bottom:8px;color:var(--tx);font-size:17px}
+.picker-preview{display:flex;flex-direction:column;gap:12px;flex:0 0 250px;min-width:0;padding:20px;border-left:1px solid var(--line);background:var(--bg2);overflow-y:auto}
+.picker-preview h3{margin:0;font-size:14px}
+.picker-preview-image{display:flex;align-items:center;justify-content:center;aspect-ratio:2/3;border:1px solid var(--line);border-radius:14px;background:var(--image-bg);overflow:hidden}
+.picker-preview-image img{width:100%;height:100%;object-fit:contain}
+.picker-preview-image img[hidden]{display:none}
+.picker-preview-placeholder{padding:20px;color:var(--tx3);font-size:13px;text-align:center}
+.picker-preview-placeholder[hidden]{display:none}
+.picker-preview strong{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px}
+.picker-preview p{margin:0;color:var(--tx2);font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.picker-footer{display:flex;align-items:center;gap:16px;flex-shrink:0;min-height:96px;padding:14px 24px;border-top:1px solid var(--line);background:var(--bg2)}
+.picker-current{display:flex;align-items:center;gap:12px;min-width:0;flex:1;color:var(--tx3);font-size:13px}
+.picker-current img{width:44px;height:64px;object-fit:contain;flex-shrink:0;border:1px solid var(--line);border-radius:8px;background:var(--image-bg)}
+.picker-current-copy{display:grid;gap:5px;min-width:0}
+.picker-current-copy strong{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--tx);font-size:13px}
+.picker-current-copy span{color:var(--tx3);font-size:12px}
+.picker-confirm{flex:0 0 auto;min-height:48px;padding:0 24px;border:0;border-radius:12px;background:var(--picker-ac);color:var(--bg2);font-size:14px;font-weight:750;cursor:pointer}
+.picker-confirm:disabled{background:var(--recessed-bg);color:var(--tx3);cursor:not-allowed}
+.catalog-picker button:focus-visible,.catalog-change:focus-visible{outline:3px solid var(--picker-ac,var(--ac));outline-offset:2px}
+@media (max-width:700px){
+  .catalog-picker{width:100%;height:100dvh;margin:0;border:0;border-radius:0}
+  .picker-header{padding:calc(12px + env(safe-area-inset-top)) 16px 14px}
+  .picker-heading{gap:10px}
+  .picker-titles h2{font-size:18px}
+  .picker-titles p{font-size:11px}
+  .picker-total{padding:6px 8px;font-size:11px}
+  .picker-back{padding:0 10px;font-size:13px}
+  .picker-header .fit-search-row{margin-top:16px}
+  .picker-preview{display:none}
+  .picker-scroll{padding:16px 14px 24px;scrollbar-gutter:auto}
+  .catalog-picker .garment-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .picker-footer{gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));min-height:88px}
+  .picker-confirm{padding:0 16px}
+  .picker-current{gap:9px}
+}
 @media (max-width:560px){
   .custom-garment-preview{grid-template-columns:1fr}
   .custom-garment-items{gap:8px}
   .custom-garment-item img{max-height:260px}
   .custom-garment-actions button{flex:1;min-height:44px}
+  .ai-picked{flex-wrap:wrap;margin:12px 0 0;padding:12px}
+  .ai-picked .ai-picked-copy{flex:1}
+  .ai-picked .same-item-actions{width:100%;margin-left:0;justify-content:stretch}
+  .ai-picked .same-item-actions button{flex:1;justify-content:center;padding:10px 8px}
 }
 /* AI 换装 */
 .ai-model-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
@@ -313,47 +394,16 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .btn-pdd{background:linear-gradient(90deg,#e02e24,#ff5a4f);border:0;color:#fff;box-shadow:0 3px 10px rgba(224,46,36,.28);transition:filter .18s,transform .15s}
 .btn-pdd:hover{filter:brightness(1.1);transform:translateY(-1px);color:#fff}
 .btn-pdd:active{transform:translateY(0)}
+#aiFixedModel{font-size:12px;overflow-wrap:anywhere;color:var(--ac2)}
 .ai-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(17,17,17,.35);border-top-color:#111;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* AI 设置中心 / 本机生成记录 */
-.settings-overlay,.history-overlay,.service-dialog-overlay,.taobao-dialog-overlay{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:rgba(5,6,8,.78);backdrop-filter:blur(8px)}
-.settings-overlay[hidden],.history-overlay[hidden],.service-dialog-overlay[hidden],.taobao-dialog-overlay[hidden]{display:none}
-.settings-card{width:min(620px,100%);max-height:calc(100dvh - 32px);overflow:auto;border:1px solid var(--line2);border-radius:18px;background:var(--bg2);box-shadow:var(--sh)}
-.settings-head,.history-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 20px 14px;border-bottom:1px solid var(--line)}
-.settings-head h2,.history-head h2{margin:0 0 5px;font-size:20px}
-.settings-head p,.history-head p{margin:0;color:var(--tx3);font-size:12px;line-height:1.6}
-.settings-close,.history-close{flex:0 0 44px;width:44px;height:44px;border:1px solid var(--line2);border-radius:50%;background:var(--panel);color:var(--tx);font-size:20px;cursor:pointer}
-.settings-form{display:grid;gap:16px;padding:18px 20px 20px}
-.settings-section{display:grid;gap:12px;padding:14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02)}
-.settings-section h3{margin:0;font-size:14px}
-.settings-field{display:grid;gap:6px}
-.settings-field>span,.settings-label{font-size:13px;font-weight:700;color:var(--tx)}
-.settings-field input,.settings-field select{width:100%;min-height:46px;border:1px solid var(--control-border);border-radius:10px;background:var(--panel);color:var(--tx);font-size:15px;padding:0 12px;outline:none}
-.settings-field input:focus,.settings-field select:focus{border-color:var(--ac);box-shadow:0 0 0 2px rgba(143,180,255,.15)}
-.settings-field small{font-size:11px;line-height:1.55;color:var(--tx3)}
-.settings-password{position:relative}
-.settings-password input{padding-right:74px}
-.settings-password button{position:absolute;right:5px;top:5px;min-width:62px;height:36px;border:0;border-radius:8px;background:rgba(255,255,255,.06);color:var(--ac2);font-size:12px;font-weight:700;cursor:pointer}
-.settings-toggle{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
-.settings-toggle input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--ac)}
-.settings-toggle-copy{display:grid;gap:3px}
-.settings-toggle-copy strong{font-size:14px}
-.settings-toggle-copy small{color:var(--tx3);font-size:11px;line-height:1.55}
-.settings-custom-fields{display:grid;gap:12px;margin:0;padding:0;border:0;min-width:0}
-.settings-custom-fields:disabled{opacity:.48}
-.settings-field[hidden],.settings-comfy-test[hidden]{display:none}
-.settings-note{padding:11px 12px;border:1px solid rgba(255,193,92,.24);border-radius:10px;background:rgba(255,193,92,.07);color:#d8c49e;font-size:12px;line-height:1.65}
-.settings-message{min-height:20px;font-size:12px;color:#ff9f9f}
-.settings-message.ok{color:#8ee6b1}
-.settings-comfy-test{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border:1px solid rgba(143,180,255,.25);border-radius:10px;background:rgba(143,180,255,.06)}
-.settings-comfy-test span{font-size:12px;line-height:1.55;color:var(--tx2)}
-.settings-comfy-test button{flex:0 0 auto;min-height:38px;padding:0 13px;border:1px solid rgba(143,180,255,.45);border-radius:9px;background:rgba(143,180,255,.12);color:var(--ac2);font-size:12px;font-weight:800;cursor:pointer}
-.settings-comfy-test button:disabled{opacity:.5;cursor:wait}
-.settings-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-.settings-actions button{min-height:44px;padding:0 16px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}
-.settings-reset{margin-right:auto;border:1px solid #70434c;background:rgba(255,82,119,.08);color:#ff9aae}
-.settings-cancel{border:1px solid var(--control-border);background:var(--panel);color:var(--tx)}
-.settings-save{border:0;background:linear-gradient(90deg,var(--ac),#b39dff);color:#111}
+/* 本机生成记录与提示对话框 */
+.history-overlay,.service-dialog-overlay,.taobao-dialog-overlay{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:rgba(5,6,8,.78);backdrop-filter:blur(8px)}
+.history-overlay[hidden],.service-dialog-overlay[hidden],.taobao-dialog-overlay[hidden]{display:none}
+.history-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 20px 14px;border-bottom:1px solid var(--line)}
+.history-head h2{margin:0 0 5px;font-size:20px}
+.history-head p{margin:0;color:var(--tx3);font-size:12px;line-height:1.6}
+.history-close{flex:0 0 44px;width:44px;height:44px;border:1px solid var(--line2);border-radius:50%;background:var(--panel);color:var(--tx);font-size:20px;cursor:pointer}
 .history-card{width:min(920px,100%);max-height:calc(100dvh - 32px);overflow:auto;border:1px solid var(--line2);border-radius:18px;background:var(--bg2);box-shadow:var(--sh)}
 .history-body{padding:16px 20px 22px}
 .history-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
@@ -383,7 +433,6 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .service-dialog-actions{display:flex;justify-content:center;gap:10px;margin-top:20px}
 .service-dialog-actions button{flex:1;min-height:46px;padding:0 16px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}
 .service-dialog-actions .service-dialog-cancel{border:1px solid var(--control-border);background:var(--panel);color:var(--tx)}
-.service-dialog-actions .service-dialog-settings{border:0;background:linear-gradient(90deg,var(--ac),#b39dff);color:#111}
 .taobao-dialog-overlay{z-index:96}
 .taobao-dialog-card{width:min(460px,100%);padding:24px;border:1px solid rgba(255,122,69,.35);border-radius:18px;background:var(--bg2);box-shadow:var(--sh);text-align:center}
 .taobao-dialog-icon{display:flex;align-items:center;justify-content:center;width:64px;height:64px;margin:0 auto 15px;border-radius:50%;background:linear-gradient(135deg,rgba(255,82,119,.16),rgba(255,122,69,.2));border:1px solid rgba(255,122,69,.35);font-size:30px}
@@ -398,12 +447,18 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .history-empty[hidden]{display:none}
 .history-close:focus-visible,.history-clear:focus-visible,.history-actions button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 @media (max-width:560px){
+  .hero-top{flex-direction:column}
+  .hero-top .eyebrow{padding-top:0}
+  .hero-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;margin-left:0}
+  .hero-controls>.github-link,.hero-controls>.fitting-toggle,.hero-controls>.theme-toggle{justify-content:center;padding:0 10px;font-size:14px}
+  .hero-controls .langswitch{justify-content:center}
+  .hero-controls .langswitch button{padding:0 10px;font-size:14px}
+  .hero-controls .infotabs{justify-content:center;gap:0}
+  .hero-controls .itab{padding:0 8px;font-size:14px}
   .step-photo-row{flex-direction:column}
   .fit-top .fit-hint{order:4;width:100%;margin-left:0}
   #fitHistoryOpen{margin-left:auto}
-  .settings-head,.settings-form,.history-head,.history-body{padding-left:16px;padding-right:16px}
-  .settings-actions button{flex:1 1 auto}
-  .settings-reset{margin-right:0;flex-basis:100%!important}
+  .history-head,.history-body{padding-left:16px;padding-right:16px}
   .history-toolbar{align-items:flex-start;flex-direction:column}
   .history-clear{width:100%}
   .history-grid{grid-template-columns:1fr}
@@ -513,20 +568,16 @@ footer a:hover{color:var(--tx);text-decoration:underline}
   <div class="fit-top">
     <button type="button" class="back" id="fitBack">‹ <span data-i18n="fitBack">返回图库</span></button>
     <h2 data-i18n="fitTitle">AI 试穿</h2>
-    <button type="button" class="fit-settings-open" id="fitHistoryOpen" aria-haspopup="dialog" aria-controls="aiHistory">
+    <button type="button" class="fit-toolbar-button" id="fitHistoryOpen" aria-haspopup="dialog" aria-controls="aiHistory">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
       <span data-i18n="historyTitle">生成记录</span>
       <b class="fit-history-count" id="aiHistoryCount" hidden>0</b>
     </button>
-    <button type="button" class="fit-settings-open" id="fitSettingsOpen" aria-haspopup="dialog">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3v-4h.1A1.7 1.7 0 0 0 4.6 8.6a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V3h4v.1A1.7 1.7 0 0 0 15.4 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9c.4.2.75.55 1 .95.16.27.25.59.25.91V11h.1v4h-.1c-.32 0-.64.09-.91.25-.4.25-.75.6-.95 1Z"/></svg>
-      <span data-i18n="settingsTitle">设置中心</span>
-    </button>
-    <button type="button" class="fit-settings-open" id="fitThemeToggle" data-theme-toggle aria-pressed="false">
+    <button type="button" class="fit-toolbar-button" id="fitThemeToggle" data-theme-toggle aria-pressed="false">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
       <span data-theme-label>黑色主题</span>
     </button>
-    <span class="fit-hint" data-i18n="fitHint">上传头像 → 选衣服 → 选模型 → 生成效果</span>
+    <span class="fit-hint" data-i18n="fitHint">上传头像 → 选衣服 → 生成效果</span>
   </div>
   <div class="fit-body">
     <div class="fit-scroll">
@@ -559,18 +610,20 @@ footer a:hover{color:var(--tx);text-decoration:underline}
       <!-- 步骤 2：选择服装 -->
       <section class="step" data-step="2">
         <div class="step-head"><span class="step-num">2</span><h3 data-i18n="fitGarmentTitle">选择一件服装</h3></div>
-        <div class="garment-source-tabs" role="tablist" aria-label="服装来源" data-i18n-aria-label="garmentSourceLabel">
-          <button type="button" class="garment-source-tab active" id="garmentCatalogTab" role="tab" aria-selected="true" aria-controls="garmentCatalogPanel" tabindex="0" data-i18n="garmentSourceCatalog">图库服装</button>
-          <button type="button" class="garment-source-tab" id="garmentUploadTab" role="tab" aria-selected="false" aria-controls="garmentUploadPanel" tabindex="-1" data-i18n="garmentSourceUpload">上传服装</button>
+        <div class="garment-source-tabs" role="group" aria-label="服装来源" data-i18n-aria-label="garmentSourceLabel">
+          <button type="button" class="garment-source-tab active" id="garmentCatalogTab" aria-haspopup="dialog" aria-controls="garmentPicker">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            <span data-i18n="garmentOpenCatalog">图库选衣</span>
+          </button>
+          <button type="button" class="garment-source-tab" id="garmentUploadTab" aria-pressed="false" aria-controls="garmentUploadPanel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 16V3m-5 5 5-5 5 5M4 15v5a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></svg>
+            <span data-i18n="garmentSourceUpload">上传服装</span>
+          </button>
         </div>
-        <div class="garment-source-panel" id="garmentCatalogPanel" role="tabpanel" aria-labelledby="garmentCatalogTab">
-          <div class="fit-search-row">
-            <input class="fit-search" id="fitSearch" type="search" data-i18n-placeholder="fitSearchPh" placeholder="搜索服装…">
-            <button type="button" class="fit-random" id="fitRandom"><span aria-hidden="true">🎲</span><span data-i18n="fitRandom">随机</span></button>
-          </div>
-          <div class="garment-list" id="fitGarmentList"></div>
+        <div class="garment-source-panel" id="garmentCatalogPanel">
+          <p class="catalog-summary" data-i18n="garmentCatalogHint">打开图库，在独立页面中搜索、预览并选择服装。</p>
         </div>
-        <div class="garment-source-panel" id="garmentUploadPanel" role="tabpanel" aria-labelledby="garmentUploadTab" hidden>
+        <div class="garment-source-panel" id="garmentUploadPanel" hidden>
           <label class="upload-zone garment-upload-zone" id="fitGarmentUpload" for="fitGarmentFile">
             <span class="ico" aria-hidden="true">👗</span>
             <span data-i18n="fitGarmentUploadBtn">上传 1 张整套，或 2 张上下装</span>
@@ -591,31 +644,17 @@ footer a:hover{color:var(--tx);text-decoration:underline}
           </div>
           <p class="custom-garment-guide" data-i18n="customGarmentGuide">上传 1 张时会作为完整全身服装；上传 2 张时，第 1 张作为上半身服装，第 2 张作为下半身服装。建议使用正面、完整、清晰、简单背景的图片。</p>
         </div>
+        <div class="ai-picked" id="aiPicked" hidden></div>
       </section>
 
-      <!-- 步骤 3：选模型 + 生成 -->
+      <!-- 步骤 3：固定模型生成 -->
       <section class="step" data-step="3">
         <div class="step-head"><span class="step-num">3</span><h3 data-i18n="aiTitle">生成效果</h3></div>
         <div class="ai-model-row">
           <span class="lbl" data-i18n="aiModel">换装模型</span>
-          <select id="aiModel">
-            <option value="grok" data-i18n="aiModelGrok">Grok Imagine Image 2.0</option>
-            <option value="gemini" data-i18n="aiModelGemini" selected>Nano Banana 2（默认）</option>
-            <option value="gpt-image" data-i18n="aiModelGPT">GPT Image 2</option>
-            <option value="doubao" data-i18n="aiModelDoubao">豆包 Seedream（国内）</option>
-          </select>
+          <strong id="aiFixedModel">doubao-seedream-5-0-flash-260915</strong>
         </div>
-        <div class="fit-tip-box ai-gpt-notice" id="aiGptNotice" style="display:none;background:rgba(234,179,8,.08);border-color:rgba(234,179,8,.25);color:var(--tx2);" data-i18n="gptModelNotice">💡 提示：GPT Image 2 已启用防封控安全提示词；生成时将以端庄商用型录风格合成服装，人物面部将保持神貌相似。</div>
-        <div class="ai-config-strip">
-          <div class="ai-config-copy">
-            <span data-i18n="settingsCurrent">当前调用配置</span>
-            <strong id="aiConfigName"></strong>
-            <small id="aiConfigNote"></small>
-          </div>
-          <button type="button" class="ai-config-btn" id="aiSettingsOpen" data-i18n="settingsManage">管理配置</button>
-        </div>
-        <div class="fit-tip-box" data-i18n="fitCostTip">💡 提示：图库浏览与选款完全免费；AI 换装需自建后端并配置模型 API Key，可能产生第三方调用费用。</div>
-        <div class="ai-picked" id="aiPicked" data-i18n="aiPickedNone">未选服装</div>
+        <div class="fit-tip-box" data-i18n="fitCostTip">💡 提示：已配置火山方舟 Seedream，上传照片并选衣即可生成；AI 换装可能产生第三方调用费用。</div>
         <div class="ai-description">
           <label for="aiCustomPrompt" data-i18n="aiDescriptionLabel">补充描述（可选）</label>
           <textarea id="aiCustomPrompt" rows="3" maxlength="1000" aria-describedby="aiDescriptionHelp aiDescriptionCount" data-i18n-placeholder="aiDescriptionPlaceholder" placeholder="例如：白色影棚背景，人物自然站立，双手垂下，全身入镜。"></textarea>
@@ -642,6 +681,45 @@ footer a:hover{color:var(--tx);text-decoration:underline}
   </div>
 </div>
 
+<!-- ===== 独立服装图库：选择仅在确认后应用，取消保留原服装 ===== -->
+<dialog class="catalog-picker" id="garmentPicker" aria-labelledby="garmentPickerTitle" aria-describedby="garmentPickerHint">
+  <header class="picker-header">
+    <div class="picker-heading">
+      <button type="button" class="picker-back" id="garmentPickerClose"><span aria-hidden="true">‹</span><span data-i18n="pickerBack">返回</span></button>
+      <div class="picker-titles">
+        <h2 id="garmentPickerTitle" data-i18n="pickerTitle">服装图库</h2>
+        <p id="garmentPickerHint" data-i18n="pickerHint">选好服装，确认后返回试穿</p>
+      </div>
+      <span class="picker-total" id="garmentPickerTotal"></span>
+    </div>
+    <div class="fit-search-row">
+      <input class="fit-search" id="fitSearch" type="search" aria-label="搜索服装" data-i18n-aria-label="fitSearchPh" data-i18n-placeholder="pickerSearchPh" placeholder="搜索编号、旗袍、裙子、blue…">
+      <button type="button" class="fit-random" id="fitRandom"><span aria-hidden="true">⤨</span><span data-i18n="fitRandom">随机</span></button>
+    </div>
+    <div class="picker-categories" id="garmentPickerCategories" role="group" aria-label="服装分类" data-i18n-aria-label="pickerCategories"></div>
+  </header>
+  <div class="picker-content">
+    <div class="picker-scroll" id="garmentPickerScroll">
+      <p class="picker-count" id="garmentPickerCount" aria-live="polite"></p>
+      <div class="garment-list" id="fitGarmentList" role="group" aria-label="选择服装" data-i18n-aria-label="fitGarmentTitle"></div>
+      <button type="button" class="picker-more" id="garmentPickerMore" hidden data-i18n="loadingMore">加载更多</button>
+    </div>
+    <aside class="picker-preview" aria-labelledby="garmentPreviewTitle">
+      <h3 id="garmentPreviewTitle" data-i18n="pickerPreview">服装预览</h3>
+      <div class="picker-preview-image">
+        <img id="garmentPickerPreview" alt="" hidden>
+        <span class="picker-preview-placeholder" id="garmentPickerPlaceholder" data-i18n="pickerEmpty">选择一件喜欢的服装</span>
+      </div>
+      <strong id="garmentPickerPreviewID"></strong>
+      <p id="garmentPickerDescription"></p>
+    </aside>
+  </div>
+  <footer class="picker-footer">
+    <div class="picker-current" id="garmentPickerCurrent" aria-live="polite"></div>
+    <button type="button" class="picker-confirm" id="garmentPickerConfirm" disabled data-i18n="pickerUse">使用这件服装</button>
+  </footer>
+</dialog>
+
 <!-- ===== AI 生成记录：图片仅保存在当前浏览器 IndexedDB ===== -->
 <div class="history-overlay" id="aiHistory" role="dialog" aria-modal="true" aria-labelledby="aiHistoryTitle" hidden>
   <div class="history-card">
@@ -667,70 +745,6 @@ footer a:hover{color:var(--tx);text-decoration:underline}
   </div>
 </div>
 
-<!-- ===== AI 设置中心：配置仅保存在当前浏览器 ===== -->
-<div class="settings-overlay" id="aiSettings" role="dialog" aria-modal="true" aria-labelledby="aiSettingsTitle" hidden>
-  <div class="settings-card">
-    <div class="settings-head">
-      <div>
-        <h2 id="aiSettingsTitle" data-i18n="settingsTitle">设置中心</h2>
-        <p data-i18n="settingsSubtitle">配置你自己的模型 API；换装后端地址由前端配置文件统一指定。</p>
-      </div>
-      <button type="button" class="settings-close" id="aiSettingsClose" aria-label="关闭">×</button>
-    </div>
-    <form class="settings-form" id="aiSettingsForm" novalidate>
-      <section class="settings-section">
-        <label class="settings-toggle">
-          <input id="settingsUseCustom" type="checkbox">
-          <span class="settings-toggle-copy">
-            <strong data-i18n="settingsUseCustom">使用我自己的模型配置</strong>
-            <small data-i18n="settingsUseCustomHelp">启用后，本次试穿将使用下方 Base URL、API Key 与模型名。</small>
-          </span>
-        </label>
-
-        <fieldset class="settings-custom-fields" id="settingsCustomFields">
-          <label class="settings-field">
-            <span data-i18n="settingsProvider">接口协议</span>
-            <select id="settingsProvider">
-              <option value="gemini">Google Gemini</option>
-              <option value="openai">OpenAI Images 兼容</option>
-              <option value="doubao">豆包 / 火山方舟</option>
-              <option value="comfyui" data-i18n="settingsProviderComfyUI">ComfyUI 本地</option>
-            </select>
-          </label>
-          <label class="settings-field" id="settingsBaseField">
-            <span>Base URL</span>
-            <input id="settingsBaseUrl" type="url" inputmode="url" autocomplete="url" placeholder="https://generativelanguage.googleapis.com/v1beta">
-            <small data-i18n="settingsBaseHelp">仅填写 API 根地址，不要包含模型路径、查询参数或 Key。</small>
-          </label>
-          <label class="settings-field" id="settingsKeyField">
-            <span>API Key</span>
-            <span class="settings-password">
-              <input id="settingsApiKey" type="password" autocomplete="off" spellcheck="false" placeholder="sk-...">
-              <button type="button" id="settingsKeyToggle" data-i18n="settingsShowKey">显示</button>
-            </span>
-          </label>
-          <label class="settings-field" id="settingsModelField">
-            <span data-i18n="settingsModel">模型名</span>
-            <input id="settingsModel" type="text" autocomplete="off" spellcheck="false" placeholder="gemini-3.1-flash-image">
-          </label>
-          <div class="settings-comfy-test" id="settingsComfyTestRow" hidden>
-            <span data-i18n="settingsComfyHelp">通过换装后端检查 ComfyUI、固定工作流和所需节点，不会上传图片或执行生成。</span>
-            <button type="button" id="settingsComfyTest" data-i18n="settingsComfyTest">测试连接</button>
-          </div>
-        </fieldset>
-      </section>
-
-      <div class="settings-note" id="settingsPrivacy" data-i18n="settingsPrivacy">隐私说明：配置只保存在当前浏览器。启用个人配置时，Key 与 Base URL 会随本次请求发送给配置文件指定的换装后端；后端只在内存中临时使用，不写数据库、配置文件或日志。共享设备使用后请清除。</div>
-      <div class="settings-message" id="settingsMessage" role="status" aria-live="polite"></div>
-      <div class="settings-actions">
-        <button type="button" class="settings-reset" id="settingsReset" data-i18n="settingsClear">清除本地配置</button>
-        <button type="button" class="settings-cancel" id="settingsCancel" data-i18n="settingsCancel">取消</button>
-        <button type="submit" class="settings-save" data-i18n="settingsSave">保存设置</button>
-      </div>
-    </form>
-  </div>
-</div>
-
 <!-- ===== AI 换装问题提示 ===== -->
 <div class="service-dialog-overlay" id="aiServiceDialog" role="dialog" aria-modal="true" aria-labelledby="aiServiceDialogTitle" hidden>
   <div class="service-dialog-card">
@@ -739,7 +753,6 @@ footer a:hover{color:var(--tx);text-decoration:underline}
     <p id="aiServiceDialogMessage">请根据提示修改后重试。</p>
     <div class="service-dialog-actions">
       <button type="button" class="service-dialog-cancel" id="aiServiceDialogCancel" data-i18n="errorDialogClose">知道了</button>
-      <button type="button" class="service-dialog-settings" id="aiServiceDialogSettings" data-i18n="serviceDialogSettings">前往设置</button>
     </div>
   </div>
 </div>
@@ -758,7 +771,7 @@ footer a:hover{color:var(--tx);text-decoration:underline}
   </div>
 </div>
 
-<script src="config.js"></script>
+<script src="config.js?v=https-v1"></script>
 <script src="data.js"></script>
 <script>
 // ===== 双语字典 =====
@@ -797,7 +810,7 @@ const I18N = {
     footerNote: 'PersonalCloakRoom · 基于 MIT 协议开源 · 完全可商用与作品创作',
     // 分类名（中文）
     catSpring: '春', catSummer: '夏', catAutumn: '秋', catWinter: '冬',
-    catLingerie: '内衣', catParty: '派对', catSwimwear: '泳装', catSexy: '性感',
+    catLingerie: '内衣', catParty: '派对', catSwimwear: '泳装', catSexy: '性感', catChinese: '中式',
     // AI 试穿
     fittingTab: 'AI 试穿',
     themeToDark: '黑色主题', themeToLight: '白色主题',
@@ -806,13 +819,18 @@ const I18N = {
     footerCredit: '灵感来源与原作者 X 推文：',
     footerCommunity: '社区友链：',
     fitBack: '返回图库', fitTitle: 'AI 试穿',
-    fitHint: '上传头像 → 选衣服 → 选模型 → 生成效果',
+    fitHint: '上传头像 → 选衣服 → 生成效果',
     fitEmptyTitle: '先上传一张人像照片', fitEmptySub: '也可以先在右侧选衣服摆上去',
     fitPhotoTitle: '上传你的照片', fitUploadBtn: '点击上传照片', fitUploadHint: '支持 JPG / PNG / WebP（单图最大 8MB，小图自动放大）',
     fitCompressLabel: '上传前压缩（推荐，防 413 / 更快）', fitCompressHint: '最长边缩至 1280px，有效规避第三方模型中转网关 1MB 限制；未勾选时采用高清模式（最大 2048px）。',
     fitBgNone: '无背景', fitBgWhite: '白底',
     fitGarmentTitle: '选择一件服装', fitSearchPh: '搜索服装…', fitRandom: '随机',
     garmentSourceLabel: '服装来源', garmentSourceCatalog: '图库服装', garmentSourceUpload: '上传服装',
+    garmentOpenCatalog: '图库选衣', garmentCatalogHint: '打开图库，在独立页面中搜索、预览并选择服装。',
+    pickerTitle: '服装图库', pickerHint: '选好服装，确认后返回试穿', pickerBack: '返回', pickerUse: '使用这件服装',
+    pickerSearchPh: '搜索编号、旗袍、裙子、blue…', pickerCategories: '服装分类', pickerPreview: '服装预览',
+    pickerEmpty: '选择一件喜欢的服装', pickerNone: '尚未选择', pickerChange: '更换服装', pickerTotal: '{n} 套',
+    pickerMatches: '找到 {n} 套服装', pickerShowing: '已显示 {shown} / {total} 套',
     fitGarmentUploadBtn: '上传 1 张整套，或 2 张上下装', fitGarmentUploadHint: '1 张＝完整全身服装；2 张＝第 1 张上半身、第 2 张下半身',
     customGarmentLabel: '自定义上传', customGarmentReplace: '重新选择', customGarmentRemove: '全部移除', customGarmentReady: '自定义服装已就绪',
     customGarmentGuide: '上传 1 张时会作为完整全身服装；上传 2 张时，第 1 张作为上半身服装，第 2 张作为下半身服装。建议使用正面、完整、清晰、简单背景的图片。', customGarmentPreviewAlt: '自定义上传服装预览',
@@ -826,22 +844,20 @@ const I18N = {
     fitAutoCut: '自动去背景（抠图）', fitLayerUp: '置顶', fitLayerDown: '置底',
     // AI 换装
     aiTitle: '生成效果', aiDesc: '用大模型把衣服真实穿到人像上',
-    aiModel: '换装模型', aiModelGrok: 'Grok Imagine Image 2.0', aiModelGPT: 'GPT Image 2', aiModelDoubao: '豆包 Seedream（国内）', aiModelGemini: 'Nano Banana 2（默认）',
-    gptModelNotice: '💡 提示：GPT Image 2 已启用防封控安全提示词；生成时将以端庄商用型录风格合成服装，人物面部将保持神貌相似。',
-    aiGeneratingGPT: '正在使用 GPT Image 2 安全模式换装生成中…',
-    aiSuccessGPT: '换装完成（已使用 GPT Image 2 防封控安全模式生成并保存）',
-    aiGeneratingComfy: '正在使用本机 ComfyUI 固定工作流生成，中间帧将在完成后作为结果图…',
-    aiSuccessComfy: '本机 ComfyUI 生成完成，结果已保存到浏览器生成记录',
+    aiModel: '换装模型',
     aiPickedNone: '未选服装 — 请在下方「选择一件服装」点选一件', aiPicked: '已选服装：',
     aiGenerate: '开始 AI 换装', aiGenerating: '生成中…', aiNeedPhoto: '请先上传你的照片',
+    aiStaticAction: 'AI 换装暂未接入',
+    fitStaticTip: '当前网页版可浏览、搜索和下载服装图片。AI 换装服务尚未接入，所选照片仅在当前浏览器预览。',
+    fitRemoteTip: '照片与服装将发送到指定的换装服务，使用服务器端配置的火山方舟模型生成。',
+    aiHttpsConnectionErr: '无法连接 HTTPS 换装服务。请检查服务证书是否被浏览器信任、跨域权限及服务是否可用。',
+    aiEndpointInvalid: '换装服务地址未通过安全校验，请检查网站配置。',
     aiDescriptionLabel: '补充描述（可选）', aiDescriptionPlaceholder: '例如：白色影棚背景，人物自然站立，双手垂下，全身入镜。',
     aiDescriptionHelp: '可描述姿势、视角、背景、光线和风格；人物与服装保持一致。留空沿用原图效果。', aiDescriptionTooLong: '补充描述最多1000个字符',
     aiNeedGarment: '请先在「选择一件服装」里点选一件衣服', aiNeedUploadedGarment: '请先上传服装图片', aiNeedBoth: '请先上传照片并选择服装',
-    aiFailed: '换装失败，请稍后重试', aiServerErr: '无法连接换装服务，请确认后端已部署并配置',
+    aiFailed: '换装失败，请稍后重试', aiServerErr: '无法连接换装服务，请确认服务已启动后重试',
     aiGatewayErr: '换装服务的网关或上游暂时不可用', aiInvalidResponse: '换装服务返回了无法识别的响应', aiHttpErr: '换装服务返回异常',
     tryonErrorTitle: 'AI 换装遇到问题', errorDialogClose: '知道了',
-    serviceDialogTitle: '无法连接换装服务', serviceDialogMessage: '请在设置中心填写正确的后端 API 地址，或检查换装后端是否已经启动。',
-    serviceDialogCancel: '暂不设置', serviceDialogSettings: '前往设置',
     aiResult: '换装完成', aiDownload: '下载结果图', aiRegenerate: '重新生成',
     aiResultNone: '生成结果会显示在这里',
     aiTryThis: 'AI 试穿这套', aiTryCard: 'AI 试穿',
@@ -854,22 +870,7 @@ const I18N = {
     taobaoGuideCopied: '图片同时已复制到剪贴板。', taobaoGuideDownloaded: '图片已触发下载。', taobaoGuideFailed: '图片自动保存失败，请长按或右键图片手动保存后再上传。',
     taobaoGuideClose: '知道了', taobaoGuideOpenMobile: '打开手机淘宝', taobaoGuideOpenDesktop: '打开淘宝网页',
     pinduoduoGuideOpenMobile: '打开拼多多', pinduoduoGuideOpenDesktop: '打开拼多多网页',
-    fitCostTip: '提示：图库浏览与选款完全免费；AI 换装需连接后端并配置模型 API Key，可能产生第三方调用费用。',
-    settingsTitle: '设置中心', settingsSubtitle: '配置你自己的模型 API；换装后端地址由前端配置文件统一指定。',
-    settingsCurrent: '当前调用配置', settingsManage: '管理配置',
-    settingsUseCustom: '使用我自己的模型配置', settingsUseCustomHelp: '启用后，本次试穿将使用下方 Base URL、API Key 与模型名。',
-    settingsProvider: '接口协议', settingsProviderComfyUI: 'ComfyUI 本地', settingsBaseHelp: '仅填写 API 根地址，不要包含模型路径、查询参数或 Key。',
-    settingsModel: '模型名', settingsShowKey: '显示', settingsHideKey: '隐藏',
-    settingsPrivacy: '隐私说明：配置只保存在当前浏览器。启用个人配置时，Key 与 Base URL 会随本次请求发送给配置文件指定的换装后端；后端只在内存中临时使用，不写数据库、配置文件或日志。共享设备使用后请清除。',
-    settingsComfyPrivacy: '隐私说明：ComfyUI 模式只向你填写的本机换装后端发送人物图和服装图；固定工作流地址与节点由本机后端管理，不会发送 API Key，也不会把本机模型路径写入浏览器记录。',
-    settingsClear: '清除本地配置', settingsCancel: '取消', settingsSave: '保存设置',
-    settingsSaved: '设置已保存', settingsCleared: '本地配置已清除',
-    settingsComfyHelp: '通过换装后端检查 ComfyUI、固定工作流和所需节点，不会上传图片或执行生成。',
-    settingsComfyTest: '测试连接', settingsComfyTesting: '检测中…', settingsComfyReady: 'ComfyUI 固定工作流可用', settingsComfyUnavailable: '无法连接 ComfyUI，请确认 ComfyUI 与本机换装后端均已启动',
-    settingsInvalidUrl: '请输入有效的 HTTP/HTTPS 地址（公网外部地址须使用 HTTPS）', settingsNeedCustom: '请完整填写 Base URL、API Key 与模型名',
-    settingsBackendOutdated: '当前试穿后端版本过旧，未识别个人模型配置。请重新编译并重启后端；Docker 请执行 docker compose up -d --build。',
-    settingsServerPreset: '服务器预设模型', settingsPersonal: '个人模型配置',
-    settingsServerNote: 'Key 与模型参数由试穿后端管理', settingsPersonalNote: 'Key 仅随本次请求临时发送，后端不保存', settingsComfyNote: '固定工作流与模型路径仅由本机后端管理',
+    fitCostTip: '已配置火山方舟 Seedream，上传照片并选衣即可生成；AI 换装可能产生第三方调用费用。',
     imageCompressing: '正在压缩处理图片…',
     errAuthRequired: '后端要求访问令牌，请联系部署者配置', errAuthInvalid: '后端访问令牌无效，请联系部署者',
     errOriginNotAllowed: '当前页面来源不允许访问后端', errRequestTooLarge: '上传内容过大，请压缩图片后重试',
@@ -918,7 +919,7 @@ const I18N = {
     keywordsLabel: 'Keywords',
     footerNote: 'PersonalCloakRoom · Open Source under MIT License · Free for Commercial Use',
     catSpring: 'Spring', catSummer: 'Summer', catAutumn: 'Autumn', catWinter: 'Winter',
-    catLingerie: 'Lingerie', catParty: 'Party', catSwimwear: 'Swimwear', catSexy: 'Sexy',
+    catLingerie: 'Lingerie', catParty: 'Party', catSwimwear: 'Swimwear', catSexy: 'Sexy', catChinese: 'Chinese style',
     // AI try-on
     fittingTab: 'AI Try-On',
     themeToDark: 'Dark theme', themeToLight: 'Light theme',
@@ -927,13 +928,18 @@ const I18N = {
     footerCredit: 'Inspired by & original X author: ',
     footerCommunity: 'Community: ',
     fitBack: 'Back to gallery', fitTitle: 'AI Try-On',
-    fitHint: 'Upload photo → pick garment → choose model → generate',
+    fitHint: 'Upload photo → pick garment → generate',
     fitEmptyTitle: 'Upload a person photo first', fitEmptySub: 'Or pick outfits on the right to start',
     fitPhotoTitle: 'Upload your photo', fitUploadBtn: 'Click to upload', fitUploadHint: 'JPG / PNG / WebP supported (max 8MB; small images are enlarged automatically)',
     fitCompressLabel: 'Compress before upload (Recommended, avoids 413 / Faster)', fitCompressHint: 'Scales max edge to 1280px to bypass 1MB proxy limits; uncheck for HD mode (max 2048px).',
     fitBgNone: 'No background', fitBgWhite: 'White',
     fitGarmentTitle: 'Choose a garment', fitSearchPh: 'Search outfits…', fitRandom: 'Random',
     garmentSourceLabel: 'Garment source', garmentSourceCatalog: 'Gallery garments', garmentSourceUpload: 'Upload garment',
+    garmentOpenCatalog: 'Browse library', garmentCatalogHint: 'Open the library to search, preview and choose an outfit on a separate screen.',
+    pickerTitle: 'Outfit library', pickerHint: 'Choose an outfit, then confirm to return', pickerBack: 'Back', pickerUse: 'Use this outfit',
+    pickerSearchPh: 'Search ID, dress, blue…', pickerCategories: 'Outfit categories', pickerPreview: 'Outfit preview',
+    pickerEmpty: 'Choose an outfit you like', pickerNone: 'No outfit selected', pickerChange: 'Change outfit', pickerTotal: '{n} outfits',
+    pickerMatches: '{n} outfits found', pickerShowing: 'Showing {shown} of {total}',
     fitGarmentUploadBtn: 'Upload 1 full look or 2 separate pieces', fitGarmentUploadHint: '1 image = full outfit; 2 images = first upper body, second lower body',
     customGarmentLabel: 'Custom upload', customGarmentReplace: 'Choose again', customGarmentRemove: 'Remove all', customGarmentReady: 'Custom garment is ready',
     customGarmentGuide: 'One image is treated as a complete full-body outfit. With two images, the first is the upper-body garment and the second is the lower-body garment. Use clear front views with simple backgrounds.', customGarmentPreviewAlt: 'Custom uploaded garment preview',
@@ -947,22 +953,20 @@ const I18N = {
     fitAutoCut: 'Auto remove background', fitLayerUp: 'Bring to front', fitLayerDown: 'Send to back',
     // AI try-on
     aiTitle: 'Generate result', aiDesc: 'Dress the person with the garment using a large model',
-    aiModel: 'Model', aiModelGrok: 'Grok Imagine Image 2.0', aiModelGPT: 'GPT Image 2', aiModelDoubao: 'Doubao Seedream (CN)', aiModelGemini: 'Nano Banana 2 (default)',
-    gptModelNotice: '💡 Notice: GPT Image 2 uses a safety-optimized prompt to prevent moderation rejection; generated with modest commercial styling and likeness preservation.',
-    aiGeneratingGPT: 'Generating try-on with GPT Image 2 (safety mode), please wait…',
-    aiSuccessGPT: 'Try-on complete (generated via GPT Image 2 safety mode)',
-    aiGeneratingComfy: 'Generating with the fixed local ComfyUI workflow. The middle frame will be returned as the result image…',
-    aiSuccessComfy: 'Local ComfyUI generation completed and was saved to browser history',
+    aiModel: 'Model',
     aiPickedNone: 'No garment picked — pick one below', aiPicked: 'Picked garment: ',
     aiGenerate: 'Start AI try-on', aiGenerating: 'Generating…', aiNeedPhoto: 'Upload your photo first',
+    aiStaticAction: 'AI try-on is not connected',
+    fitStaticTip: 'Browse, search and download outfits on this site. AI try-on is not connected yet. Selected photos stay in this browser for preview.',
+    fitRemoteTip: 'Your photo and outfit will be sent to the configured try-on service, using its server-side Ark model settings.',
+    aiHttpsConnectionErr: 'Cannot connect to the HTTPS try-on service. Check certificate trust, cross-origin permissions and service availability.',
+    aiEndpointInvalid: 'The try-on endpoint failed validation. Please check the website configuration.',
     aiDescriptionLabel: 'Additional description (optional)', aiDescriptionPlaceholder: 'For example: a white studio background, standing naturally with arms relaxed, full body in frame.',
     aiDescriptionHelp: 'Describe pose, view, background, lighting and style while keeping the person and garment consistent. Leave blank to keep the original look.', aiDescriptionTooLong: 'The description must be 1000 characters or fewer',
     aiNeedGarment: 'Pick a garment from the "Choose a garment" list first', aiNeedUploadedGarment: 'Upload a garment image first', aiNeedBoth: 'Upload a photo and pick a garment first',
-    aiFailed: 'Try-on failed, please retry', aiServerErr: 'Cannot reach try-on service — make sure the backend is deployed and configured',
+    aiFailed: 'Try-on failed, please retry', aiServerErr: 'Cannot reach the try-on service. Restart the local web service and try again.',
     aiGatewayErr: 'The try-on gateway or upstream service is temporarily unavailable', aiInvalidResponse: 'The try-on service returned an unrecognized response', aiHttpErr: 'The try-on service returned an error',
     tryonErrorTitle: 'AI try-on needs attention', errorDialogClose: 'Got it',
-    serviceDialogTitle: 'Cannot reach the try-on service', serviceDialogMessage: 'Enter the correct backend API URL in Settings, or check that the try-on backend is running.',
-    serviceDialogCancel: 'Not now', serviceDialogSettings: 'Open Settings',
     aiResult: 'Done', aiDownload: 'Download result', aiRegenerate: 'Regenerate',
     aiResultNone: 'The result will appear here',
     aiTryThis: 'AI try-on this look', aiTryCard: 'AI try-on',
@@ -975,22 +979,7 @@ const I18N = {
     taobaoGuideCopied: 'The image was also copied to the clipboard.', taobaoGuideDownloaded: 'The image download was started.', taobaoGuideFailed: 'Automatic image saving failed. Save the image manually, then upload it to Taobao.',
     taobaoGuideClose: 'Got it', taobaoGuideOpenMobile: 'Open Taobao App', taobaoGuideOpenDesktop: 'Open Taobao Search',
     pinduoduoGuideOpenMobile: 'Open Pinduoduo', pinduoduoGuideOpenDesktop: 'Open Pinduoduo Website',
-    fitCostTip: 'Note: Gallery browsing is free; AI try-on needs a backend and a model API key (provider fees may apply).',
-    settingsTitle: 'Settings', settingsSubtitle: 'Configure your own model API; the try-on backend URL is set in the frontend config file.',
-    settingsCurrent: 'Active configuration', settingsManage: 'Manage',
-    settingsUseCustom: 'Use my own model configuration', settingsUseCustomHelp: 'Use the Base URL, API key, and model below for try-on requests.',
-    settingsProvider: 'API protocol', settingsProviderComfyUI: 'Local ComfyUI', settingsBaseHelp: 'Enter only the API root URL, without model paths, query parameters, or keys.',
-    settingsModel: 'Model name', settingsShowKey: 'Show', settingsHideKey: 'Hide',
-    settingsPrivacy: 'Privacy: Settings stay in this browser. When personal configuration is enabled, the key and Base URL are sent to your selected try-on backend for that request only. The backend uses them in memory and does not write them to a database, config file, or logs. Clear them after use on a shared device.',
-    settingsComfyPrivacy: 'Privacy: ComfyUI mode sends the person and garment images only to the local try-on backend you configured. The fixed workflow and model paths stay under local backend control; no API key or local model path is stored in browser history.',
-    settingsClear: 'Clear local settings', settingsCancel: 'Cancel', settingsSave: 'Save settings',
-    settingsSaved: 'Settings saved', settingsCleared: 'Local settings cleared',
-    settingsComfyHelp: 'Checks ComfyUI, the fixed workflow, and required nodes through the try-on backend. No images are uploaded and no generation is started.',
-    settingsComfyTest: 'Test connection', settingsComfyTesting: 'Checking…', settingsComfyReady: 'The fixed ComfyUI workflow is ready', settingsComfyUnavailable: 'Cannot reach ComfyUI. Make sure ComfyUI and the local try-on backend are running.',
-    settingsInvalidUrl: 'Enter a valid HTTP/HTTPS URL (remote public URLs must use HTTPS)', settingsNeedCustom: 'Complete the Base URL, API key, and model name',
-    settingsBackendOutdated: 'The try-on backend is outdated and did not recognize the personal model configuration. Rebuild and restart it; for Docker, run docker compose up -d --build.',
-    settingsServerPreset: 'Server preset', settingsPersonal: 'Personal model',
-    settingsServerNote: 'The backend manages the key and model parameters', settingsPersonalNote: 'The key is sent for this request only and is not stored by the backend', settingsComfyNote: 'The fixed workflow and model paths are managed only by the local backend',
+    fitCostTip: 'Seedream is configured. Upload a photo and pick an outfit to generate (provider fees may apply).',
     imageCompressing: 'Compressing and processing image…',
     errAuthRequired: 'The backend requires an access token; ask the deployer to configure it', errAuthInvalid: 'Invalid backend access token; ask the deployer to configure it',
     errOriginNotAllowed: 'Current page origin is not allowed to access backend', errRequestTooLarge: 'Upload payload too large, please compress the image and retry',
@@ -1011,7 +1000,8 @@ const I18N = {
 // ===== 分类名映射（数据里是日文，需要映射到当前语言）=====
 const CAT_KEY = {
   '春': 'catSpring', '夏': 'catSummer', '秋': 'catAutumn', '冬': 'catWinter',
-  'ランジェリー': 'catLingerie', 'パーティ': 'catParty', '水着': 'catSwimwear', 'セクシー': 'catSexy'
+  'ランジェリー': 'catLingerie', 'パーティ': 'catParty', '水着': 'catSwimwear', 'セクシー': 'catSexy',
+  '中式': 'catChinese'
 };
 
 // ===== 关键词翻译映射：以英文关键词为基准（数据里的キーワード是英文）=====
@@ -1166,7 +1156,7 @@ function buildIndex(d){
   // 当前语言分类名
   idx.add(catName(d.カテゴリ).toLowerCase());
   // 英文分类名（始终收录，方便英文搜索）
-  const enCat = { '春':'spring','夏':'summer','秋':'autumn','冬':'winter','ランジェリー':'lingerie','パーティ':'party','水着':'swimwear','セクシー':'sexy' }[d.カテゴリ];
+  const enCat = { '春':'spring','夏':'summer','秋':'autumn','冬':'winter','ランジェリー':'lingerie','パーティ':'party','水着':'swimwear','セクシー':'sexy','中式':'chinese' }[d.カテゴリ];
   if (enCat) idx.add(enCat);
   // 关键词词元（英文）
   d.キーワード.split(' ').forEach(w=>{
@@ -1294,11 +1284,35 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
 })();
 
 // ===== AI 试穿 =====
+function resolveTrustedTryonEndpoint(config, pageOrigin){
+  if(!config || config.TRYON_ENABLED === false) return '';
+  try{
+    const origin = new URL(pageOrigin).origin;
+    const endpoint = new URL(config.TRYON_ENDPOINT || '/api/tryon', origin);
+    if(endpoint.username || endpoint.password || endpoint.search || endpoint.hash) return '';
+    const isLoopback = ['localhost', '127.0.0.1', '[::1]'].includes(endpoint.hostname);
+    if(endpoint.protocol !== 'https:' && !(endpoint.protocol === 'http:' && isLoopback)) return '';
+    if(endpoint.origin === origin){
+      if(!['/api/tryon', '/tryon'].includes(endpoint.pathname)) return '';
+    }else{
+      if(endpoint.protocol !== 'https:' || endpoint.pathname !== '/tryon' ||
+          !Array.isArray(config.TRUSTED_TRYON_ORIGINS) ||
+          !config.TRUSTED_TRYON_ORIGINS.includes(endpoint.origin)) return '';
+    }
+    return endpoint.href;
+  }catch(_){ return ''; }
+}
+
 (function(){
   const fitEl = document.getElementById('fitting');
   const garmentList = document.getElementById('fitGarmentList');
   const fitSearch = document.getElementById('fitSearch');
   const fitRandom = document.getElementById('fitRandom');
+  const garmentPicker = document.getElementById('garmentPicker');
+  const pickerCategories = document.getElementById('garmentPickerCategories');
+  const pickerScroll = document.getElementById('garmentPickerScroll');
+  const pickerMore = document.getElementById('garmentPickerMore');
+  const pickerConfirm = document.getElementById('garmentPickerConfirm');
   const garmentCatalogTab = document.getElementById('garmentCatalogTab');
   const garmentUploadTab = document.getElementById('garmentUploadTab');
   const garmentCatalogPanel = document.getElementById('garmentCatalogPanel');
@@ -1321,42 +1335,17 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   let uploadedGarmentCompositeUrl = '';
   let garmentUploadIntent = 'replace';
   let fitSearchQ = '';
+  let pickerCategory = '';
+  let pickerGarment = null;
+  let pickerVisibleCount = 48;
+  let pickerReturnFocus = null;
 
-  // ===== 设置中心（仅保存在当前浏览器） =====
-  const SETTINGS_KEY = 'PersonalCloakRoom.tryon.settings.v1';
-  const SETTINGS_DEFAULTS = {
-    useCustom: false, provider: 'gemini',
-    baseUrl: 'https://generativelanguage.googleapis.com/v1beta',
-    apiKey: '', model: 'gemini-3.1-flash-image'
-  };
-  const PROVIDER_DEFAULTS = {
-    gemini: {baseUrl:'https://generativelanguage.googleapis.com/v1beta', model:'gemini-3.1-flash-image'},
-    openai: {baseUrl:'https://api.openai.com/v1', model:'gpt-image-2'},
-    doubao: {baseUrl:'https://ark.cn-beijing.volces.com/api/v3', model:'doubao-seedream-3-0-t2i-250415'},
-    comfyui: {baseUrl:'http://127.0.0.1:8188', model:'qwen-image-edit-2511'}
-  };
-  const settingsEl = document.getElementById('aiSettings');
-  const settingsForm = document.getElementById('aiSettingsForm');
-  const settingsUseCustom = document.getElementById('settingsUseCustom');
-  const settingsCustomFields = document.getElementById('settingsCustomFields');
-  const settingsProvider = document.getElementById('settingsProvider');
-  const settingsBaseField = document.getElementById('settingsBaseField');
-  const settingsKeyField = document.getElementById('settingsKeyField');
-  const settingsModelField = document.getElementById('settingsModelField');
-  const settingsBaseUrl = document.getElementById('settingsBaseUrl');
-  const settingsApiKey = document.getElementById('settingsApiKey');
-  const settingsModel = document.getElementById('settingsModel');
-  const settingsKeyToggle = document.getElementById('settingsKeyToggle');
-  const settingsComfyTestRow = document.getElementById('settingsComfyTestRow');
-  const settingsComfyTest = document.getElementById('settingsComfyTest');
-  const settingsPrivacy = document.getElementById('settingsPrivacy');
-  const settingsMessage = document.getElementById('settingsMessage');
-  const aiConfigName = document.getElementById('aiConfigName');
-  const aiConfigNote = document.getElementById('aiConfigNote');
+  // 模型由本机服务固定，浏览器不读取或发送旧的个人模型配置。
+  const FIXED_MODEL_NAME = window.PCR_CONFIG.MODEL_NAME;
+  const STATIC_GALLERY = window.PCR_CONFIG.TRYON_ENABLED === false;
   const serviceDialog = document.getElementById('aiServiceDialog');
   const serviceDialogMessage = document.getElementById('aiServiceDialogMessage');
   const serviceDialogCancel = document.getElementById('aiServiceDialogCancel');
-  const serviceDialogSettings = document.getElementById('aiServiceDialogSettings');
   const taobaoGuide = document.getElementById('taobaoGuide');
   const taobaoGuideMessage = document.getElementById('taobaoGuideMessage');
   const taobaoGuideStatus = document.getElementById('taobaoGuideStatus');
@@ -1368,7 +1357,6 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   const historyMessage = document.getElementById('aiHistoryMessage');
   const historyClear = document.getElementById('aiHistoryClear');
   const historyCount = document.getElementById('aiHistoryCount');
-  let settingsReturnFocus = null;
   let serviceDialogReturnFocus = null;
   let taobaoGuideReturnFocus = null;
   let taobaoGuideIsMobile = false;
@@ -1382,26 +1370,6 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   const HISTORY_STORE = 'generations';
   const HISTORY_META_STORE = 'metadata';
   let historyDbPromise = null;
-
-  function loadSettings(){
-    try{
-      const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || 'null');
-      const merged = saved && typeof saved === 'object' ? {...SETTINGS_DEFAULTS, ...saved} : {...SETTINGS_DEFAULTS};
-      if(!Object.prototype.hasOwnProperty.call(PROVIDER_DEFAULTS, merged.provider)) merged.provider = 'gemini';
-      return merged;
-    }catch(_){ return {...SETTINGS_DEFAULTS}; }
-  }
-  let tryonSettings = loadSettings();
-
-  // 换装后端地址只由前端配置文件 config.js 注入，页面内不提供修改入口。
-  const REMOTE_AI_API = (()=>{
-    try{
-      const raw = (window.PCR_CONFIG && window.PCR_CONFIG.REMOTE_AI_API) || '';
-      const url = String(raw).trim().replace(/\/+$/,'');
-      if(!url) console.warn('[Config] 未在 config.js 中配置 window.PCR_CONFIG.REMOTE_AI_API，AI 换装不可用。');
-      return url;
-    }catch(_){ return ''; }
-  })();
 
   // 生成图片通常远超 localStorage 容量，因此使用 IndexedDB 保存 Blob。
   // 历史中只存结果、时间、模型和服装 ID，不保存 API Key、Base URL 或上传的人像。
@@ -1672,103 +1640,34 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
       garmentSource: isUpload ? 'upload' : 'catalog',
       garmentId: !isUpload && selectedGarment ? selectedGarment.id : '',
       garmentLabel: isUpload ? t('customGarmentLabel') : (selectedGarment ? selectedGarment.id : ''),
-      provider: tryonSettings.useCustom ? tryonSettings.provider : '',
-      model: tryonSettings.useCustom ? tryonSettings.model : (responseData.model || aiModel.value),
+      provider: 'doubao',
+      model: FIXED_MODEL_NAME,
       image: b64ToBlob(imageB64, imageMime),
     };
     await putHistoryRecord(record);
     await updateHistoryCount();
   }
 
-  function isLoopbackHost(hostname){
-    return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]';
-  }
-
-  function validHttpUrl(value, requireHttpsForRemote = false){
-    if(!value) return true;
-    try{
-      const base = (location.origin && location.origin !== 'null') ? location.origin : 'http://127.0.0.1';
-      const u = new URL(value, base);
-      if(u.protocol !== 'http:' && u.protocol !== 'https:') return false;
-      if(requireHttpsForRemote && !isLoopbackHost(u.hostname)){
-        const isSameOrigin = (location.origin && location.origin !== 'null') && (u.origin === location.origin);
-        if(!isSameOrigin && u.protocol !== 'https:') return false;
-      }
-      return true;
-    }catch(_){ return false; }
-  }
-  function trimUrl(value){ return value.trim().replace(/\/+$/,''); }
-  function isComfyUIProvider(){ return settingsProvider.value === 'comfyui'; }
-  function refreshSettingsProviderFields(){
-    const isComfy = isComfyUIProvider();
-    settingsBaseField.hidden = false;
-    settingsKeyField.hidden = isComfy;
-    settingsModelField.hidden = false;
-    settingsBaseUrl.readOnly = isComfy;
-    settingsModel.readOnly = isComfy;
-    settingsComfyTestRow.hidden = !isComfy;
-    settingsPrivacy.textContent = t(isComfy ? 'settingsComfyPrivacy' : 'settingsPrivacy');
-    if(isComfy){
-      const preset = PROVIDER_DEFAULTS.comfyui;
-      settingsBaseUrl.value = preset.baseUrl;
-      settingsModel.value = preset.model;
-      settingsApiKey.value = '';
-    }
-  }
-  function fillSettingsForm(){
-    settingsUseCustom.checked = !!tryonSettings.useCustom;
-    settingsProvider.value = tryonSettings.provider || 'gemini';
-    settingsBaseUrl.value = tryonSettings.baseUrl || '';
-    settingsApiKey.value = tryonSettings.apiKey || '';
-    settingsModel.value = tryonSettings.model || '';
-    settingsApiKey.type = 'password';
-    settingsKeyToggle.textContent = t('settingsShowKey');
-    settingsCustomFields.disabled = !settingsUseCustom.checked;
-    refreshSettingsProviderFields();
-    settingsMessage.textContent = '';
-    settingsMessage.className = 'settings-message';
-  }
   function refreshConfigUI(){
-    const aiModelEl = document.getElementById('aiModel');
-    const aiGptNotice = document.getElementById('aiGptNotice');
-    const isGPT = tryonSettings.useCustom
-      ? /gpt-image/i.test(tryonSettings.model || '')
-      : aiModelEl.value === 'gpt-image';
-    if(aiGptNotice){
-      aiGptNotice.style.display = isGPT ? 'block' : 'none';
-    }
-    if(tryonSettings.useCustom){
-      const providerOption = Array.from(settingsProvider.options).find(option=>option.value===tryonSettings.provider);
-      const providerLabel = providerOption ? providerOption.textContent : tryonSettings.provider;
-      aiConfigName.textContent = `${t('settingsPersonal')} · ${providerLabel} · ${tryonSettings.model}`;
-      aiConfigNote.textContent = t(tryonSettings.provider === 'comfyui' ? 'settingsComfyNote' : 'settingsPersonalNote');
-      aiModelEl.disabled = true;
-    }else{
-      const selected = aiModelEl.options[aiModelEl.selectedIndex];
-      aiConfigName.textContent = `${t('settingsServerPreset')} · ${selected ? selected.textContent : aiModelEl.value}`;
-      aiConfigNote.textContent = t('settingsServerNote');
-      aiModelEl.disabled = false;
+    document.getElementById('aiFixedModel').textContent = FIXED_MODEL_NAME;
+    if(STATIC_GALLERY){
+      const tip = document.querySelector('.fit-tip-box');
+      tip.dataset.i18n = 'fitStaticTip';
+      tip.textContent = t('fitStaticTip');
+      aiGenerate.disabled = true;
+      aiGenerate.textContent = t('aiStaticAction');
+    }else if(window.PCR_CONFIG.TRYON_ENDPOINT){
+      const tip = document.querySelector('.fit-tip-box');
+      tip.dataset.i18n = 'fitRemoteTip';
+      tip.textContent = t('fitRemoteTip');
     }
   }
-  function openSettings(trigger){
-    settingsReturnFocus = trigger || document.activeElement;
-    fillSettingsForm();
-    settingsEl.hidden = false;
-    settingsEl.querySelector('.settings-card').scrollTop = 0;
-    requestAnimationFrame(()=>settingsUseCustom.focus());
-  }
-  function closeSettings(){
-    settingsEl.hidden = true;
-    settingsApiKey.type = 'password';
-    if(settingsReturnFocus && settingsReturnFocus.focus) settingsReturnFocus.focus();
-  }
-  function openServiceDialog(trigger, message, showSettings=false){
+  function openServiceDialog(trigger, message){
     serviceDialogReturnFocus = trigger || document.activeElement;
     serviceDialogMessage.textContent = message || t('aiFailed');
-    serviceDialogSettings.hidden = !showSettings;
     serviceDialog.hidden = false;
     requestAnimationFrame(()=>{
-      (showSettings ? serviceDialogSettings : serviceDialogCancel).focus();
+      serviceDialogCancel.focus();
     });
   }
   function closeServiceDialog(restoreFocus=true){
@@ -1792,11 +1691,6 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     taobaoGuide.hidden = true;
     if(taobaoGuideReturnFocus && taobaoGuideReturnFocus.focus) taobaoGuideReturnFocus.focus();
   }
-  function setSettingsMessage(message, ok=false){
-    settingsMessage.textContent = message;
-    settingsMessage.className = 'settings-message' + (ok ? ' ok' : '');
-  }
-
   document.getElementById('fitHistoryOpen').addEventListener('click', e=>openHistory(e.currentTarget));
   document.getElementById('aiHistoryClose').addEventListener('click', closeHistory);
   historyEl.addEventListener('pointerdown', e=>{ if(e.target===historyEl) closeHistory(); });
@@ -1848,14 +1742,7 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     }catch(_){ historyMessage.textContent = t('historyLoadFailed'); }
   });
 
-  document.getElementById('fitSettingsOpen').addEventListener('click', e=>openSettings(e.currentTarget));
-  document.getElementById('aiSettingsOpen').addEventListener('click', e=>openSettings(e.currentTarget));
   serviceDialogCancel.addEventListener('click', ()=>closeServiceDialog());
-  serviceDialogSettings.addEventListener('click', ()=>{
-    const returnFocus = serviceDialogReturnFocus;
-    closeServiceDialog(false);
-    openSettings(returnFocus);
-  });
   serviceDialog.addEventListener('pointerdown', e=>{ if(e.target===serviceDialog) closeServiceDialog(); });
   taobaoGuideClose.addEventListener('click', closeTaobaoGuide);
   taobaoGuideOpen.addEventListener('click', ()=>{
@@ -1868,76 +1755,6 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     else window.open('https://s.taobao.com', '_blank', 'noopener,noreferrer');
   });
   taobaoGuide.addEventListener('pointerdown', e=>{ if(e.target===taobaoGuide) closeTaobaoGuide(); });
-  document.getElementById('aiSettingsClose').addEventListener('click', closeSettings);
-  document.getElementById('settingsCancel').addEventListener('click', closeSettings);
-  settingsEl.addEventListener('pointerdown', e=>{ if(e.target===settingsEl) closeSettings(); });
-  settingsUseCustom.addEventListener('change', ()=>{
-    settingsCustomFields.disabled = !settingsUseCustom.checked;
-    refreshSettingsProviderFields();
-  });
-  settingsProvider.addEventListener('change', ()=>{
-    const preset = PROVIDER_DEFAULTS[settingsProvider.value];
-    if(preset){ settingsBaseUrl.value=preset.baseUrl; settingsModel.value=preset.model; }
-    if(isComfyUIProvider()) settingsApiKey.value = '';
-    refreshSettingsProviderFields();
-  });
-  settingsKeyToggle.addEventListener('click', ()=>{
-    const showing = settingsApiKey.type === 'text';
-    settingsApiKey.type = showing ? 'password' : 'text';
-    settingsKeyToggle.textContent = t(showing ? 'settingsShowKey' : 'settingsHideKey');
-  });
-  settingsComfyTest.addEventListener('click', async()=>{
-    const backendUrl = REMOTE_AI_API;
-    if(!validHttpUrl(backendUrl, true)){ setSettingsMessage(t('settingsInvalidUrl')); return; }
-    settingsComfyTest.disabled = true;
-    settingsComfyTest.textContent = t('settingsComfyTesting');
-    setSettingsMessage('');
-    try{
-      const resp = await fetch(backendUrl + '/comfyui/health', {headers:{'Accept':'application/json'}});
-      const body = await resp.json();
-      const result = body && body.data ? body.data : body;
-      if(!resp.ok || !result || result.available !== true) throw new Error('unavailable');
-      if(result.model){
-        settingsModel.value = result.model;
-      }
-      setSettingsMessage(`${t('settingsComfyReady')} (${result.model || 'qwen-image-edit-2511'})`, true);
-    }catch(_){
-      setSettingsMessage(t('settingsComfyUnavailable'));
-    }finally{
-      settingsComfyTest.disabled = false;
-      settingsComfyTest.textContent = t('settingsComfyTest');
-    }
-  });
-  settingsForm.addEventListener('submit', e=>{
-    e.preventDefault();
-    const baseUrl = trimUrl(settingsBaseUrl.value);
-    const useCustom = settingsUseCustom.checked;
-    const isComfy = useCustom && isComfyUIProvider();
-    if(useCustom && !validHttpUrl(baseUrl, true)){ setSettingsMessage(t('settingsInvalidUrl')); return; }
-    if(useCustom && (!baseUrl || !settingsModel.value.trim() || (!isComfy && !settingsApiKey.value.trim()))){ setSettingsMessage(t('settingsNeedCustom')); return; }
-
-    tryonSettings = {
-      useCustom,
-      provider: settingsProvider.value,
-      baseUrl,
-      apiKey: isComfy ? '' : settingsApiKey.value.trim(),
-      model: settingsModel.value.trim(),
-    };
-    try{
-      localStorage.setItem(SETTINGS_KEY, JSON.stringify(tryonSettings));
-    }catch(_){ setSettingsMessage(t('aiFailed')); return; }
-    refreshConfigUI();
-    setSettingsMessage(t('settingsSaved'), true);
-    setTimeout(closeSettings, 350);
-  });
-  document.getElementById('settingsReset').addEventListener('click', ()=>{
-    try{ localStorage.removeItem(SETTINGS_KEY); }catch(_){}
-    tryonSettings = {...SETTINGS_DEFAULTS};
-    fillSettingsForm();
-    refreshConfigUI();
-    setSettingsMessage(t('settingsCleared'), true);
-  });
-
   function cleanCustomGarmentName(value){
     const cleaned = String(value || '').replace(/[\u0000-\u001f\u007f]/g, '').trim();
     return (cleaned || t('customGarmentLabel')).slice(0, 80);
@@ -2115,11 +1932,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     const isCatalog = garmentMode === 'catalog';
     garmentCatalogTab.classList.toggle('active', isCatalog);
     garmentUploadTab.classList.toggle('active', !isCatalog);
-    garmentCatalogTab.setAttribute('aria-selected', String(isCatalog));
-    garmentUploadTab.setAttribute('aria-selected', String(!isCatalog));
-    garmentCatalogTab.tabIndex = isCatalog ? 0 : -1;
-    garmentUploadTab.tabIndex = isCatalog ? -1 : 0;
-    garmentCatalogPanel.hidden = !isCatalog;
+    garmentUploadTab.setAttribute('aria-pressed', String(!isCatalog));
+    garmentCatalogPanel.hidden = !isCatalog || Boolean(pickedGarment);
     garmentUploadPanel.hidden = isCatalog;
     refreshCustomGarmentPreview();
   }
@@ -2134,15 +1948,8 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     }
   }
 
-  [garmentCatalogTab, garmentUploadTab].forEach((tab, index, tabs)=>{
-    tab.addEventListener('click', ()=>setGarmentMode(index === 0 ? 'catalog' : 'upload'));
-    tab.addEventListener('keydown', e=>{
-      if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      e.preventDefault();
-      const nextIndex = e.key === 'ArrowRight' ? (index + 1) % tabs.length : (index + tabs.length - 1) % tabs.length;
-      setGarmentMode(nextIndex === 0 ? 'catalog' : 'upload', true);
-    });
-  });
+  garmentCatalogTab.addEventListener('click', e=>openGarmentPicker(e.currentTarget));
+  garmentUploadTab.addEventListener('click', ()=>setGarmentMode('upload'));
 
   // 打开/关闭
   const open = () => { fitEl.classList.add('open'); document.body.style.overflow='hidden'; refreshGarmentSourceUI(); refreshGarments(); refreshPicked(); refreshConfigUI(); };
@@ -2151,10 +1958,11 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   document.getElementById('fitBack').addEventListener('click', close);
   document.addEventListener('keydown', e=>{
     if(e.key!=='Escape') return;
+    // 原生 dialog 处理 Escape，避免同时关闭底下的试穿页。
+    if(garmentPicker.open) return;
     if(!taobaoGuide.hidden){ e.preventDefault(); e.stopImmediatePropagation(); closeTaobaoGuide(); return; }
     if(!serviceDialog.hidden){ e.preventDefault(); e.stopImmediatePropagation(); closeServiceDialog(); return; }
     if(!historyEl.hidden){ e.preventDefault(); e.stopImmediatePropagation(); closeHistory(); return; }
-    if(!settingsEl.hidden){ e.preventDefault(); e.stopImmediatePropagation(); closeSettings(); return; }
     if(fitEl.classList.contains('open')) close();
   });
 
@@ -2297,8 +2105,58 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   });
 
   // ===== 选择服装 =====
+  function openGarmentPicker(trigger){
+    if(garmentPicker.open) return;
+    pickerReturnFocus = trigger || garmentCatalogTab;
+    pickerGarment = garmentMode === 'catalog' ? pickedGarment : null;
+    pickerCategory = '';
+    fitSearchQ = '';
+    fitSearch.value = '';
+    const selectedIndex = pickerGarment ? D.findIndex(d=>d.id===pickerGarment.id) : -1;
+    pickerVisibleCount = Math.max(48, Math.ceil((selectedIndex + 1) / 48) * 48);
+    garmentPicker.showModal();
+    drawPickerCategories();
+    refreshGarments();
+    pickerScroll.scrollTop = 0;
+    // 不自动聚焦搜索框，手机打开图库时保留完整的选衣空间。
+    document.getElementById('garmentPickerClose').focus({preventScroll:true});
+  }
+
+  document.getElementById('garmentPickerClose').addEventListener('click', ()=>garmentPicker.close());
+  garmentPicker.addEventListener('close', ()=>{
+    if(fitEl.classList.contains('open')){
+      const target = pickerReturnFocus?.isConnected ? pickerReturnFocus : garmentCatalogTab;
+      target.focus({preventScroll:true});
+    }
+  });
+  pickerConfirm.addEventListener('click', ()=>{
+    if(!pickerGarment) return;
+    pickedGarment = pickerGarment;
+    setGarmentMode('catalog');
+    garmentPicker.close();
+    showHint(t('aiPicked') + pickedGarment.id);
+  });
+
+  function drawPickerCategories(){
+    document.getElementById('garmentPickerTotal').textContent = t('pickerTotal').replace('{n}', fmtNum(D.length));
+    pickerCategories.innerHTML = ['', ...META.cats].map(category=>
+      `<button type="button" class="picker-category" data-category="${esc(category)}" aria-pressed="${category===pickerCategory}">`+
+      `${esc(category ? catName(category) : t('all'))}<span>${fmtNum(category ? META.counts[category] : D.length)}</span></button>`
+    ).join('');
+  }
+  pickerCategories.addEventListener('click', e=>{
+    const button = e.target.closest('.picker-category');
+    if(!button) return;
+    pickerCategory = button.dataset.category;
+    pickerVisibleCount = 48;
+    pickerCategories.querySelectorAll('button').forEach(item=>item.setAttribute('aria-pressed', String(item===button)));
+    refreshGarments();
+    pickerScroll.scrollTop = 0;
+  });
+
   function getFilteredGarments(){
     return D.filter(d=>{
+      if(pickerCategory && d.カテゴリ!==pickerCategory) return false;
       if(!fitSearchQ) return true;
       const idx=new Set([d.id.toLowerCase()]);
       idx.add(d.カテゴリ);
@@ -2309,34 +2167,78 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   }
 
   function refreshGarments(){
+    if(!garmentPicker.open) return;
     const matches = getFilteredGarments();
-    if(pickedGarment){
-      const pickedIndex = matches.findIndex(d=>d.id===pickedGarment.id);
-      if(pickedIndex>0) matches.unshift(...matches.splice(pickedIndex,1));
-    }
-    const list = matches.slice(0, 60);
-    const hasVisibleSelection = Boolean(garmentMode === 'catalog' && pickedGarment && list.some(d=>d.id===pickedGarment.id));
-    garmentList.classList.toggle('has-selection', hasVisibleSelection);
+    const list = matches.slice(0, pickerVisibleCount);
     fitRandom.disabled = matches.length===0;
-    garmentList.innerHTML = list.map(d=>`<div class="g${garmentMode === 'catalog' && pickedGarment && pickedGarment.id===d.id?' sel':''}" data-id="${esc(d.id)}" title="${esc(d.id)}" role="button" tabindex="0" aria-pressed="${Boolean(garmentMode === 'catalog' && pickedGarment && pickedGarment.id===d.id)}"><img loading="lazy" src="assets/${esc(d.サムネ)}" alt="${esc(d.id)}"><span class="badge">${esc(d.id)}</span></div>`).join('')
-      || `<div style="grid-column:1/-1;color:var(--tx3);font-size:12px;text-align:center;padding:12px 0">${t('noResultTitle')}</div>`;
+    garmentList.innerHTML = list.map(d=>`<button type="button" class="g" data-id="${esc(d.id)}" aria-pressed="false" aria-label="${esc(d.id + ' · ' + catName(d.カテゴリ))}">`+
+      `<img loading="lazy" decoding="async" src="assets/${esc(d.サムネ)}" alt="" width="200" height="300">`+
+      `<span class="picker-check" aria-hidden="true">✓</span>`+
+      `<span class="picker-card-info"><span class="picker-card-id">${esc(d.id)}</span><span class="picker-card-category">${esc(catName(d.カテゴリ))}</span></span></button>`).join('')
+      || `<div class="picker-empty"><b>${t('noResultTitle')}</b>${t('noResultSub')}</div>`;
+    pickerMore.hidden = list.length >= matches.length;
+    pickerMore.textContent = t('moreLeft').replace('{n}', fmtNum(matches.length - list.length));
+    document.getElementById('garmentPickerCount').textContent = list.length < matches.length
+      ? t('pickerShowing').replace('{shown}', fmtNum(list.length)).replace('{total}', fmtNum(matches.length))
+      : t('pickerMatches').replace('{n}', fmtNum(matches.length));
+    refreshPickerSelection();
   }
-  fitSearch.addEventListener('input', e=>{ fitSearchQ=e.target.value.trim(); refreshGarments(); });
+  fitSearch.addEventListener('input', e=>{
+    fitSearchQ=e.target.value.trim();
+    pickerVisibleCount=48;
+    refreshGarments();
+    pickerScroll.scrollTop=0;
+  });
+  pickerMore.addEventListener('click', ()=>{
+    const firstNewIndex = garmentList.children.length;
+    const scrollTop = pickerScroll.scrollTop;
+    pickerVisibleCount += 48;
+    refreshGarments();
+    pickerScroll.scrollTop = scrollTop;
+    if(pickerMore.hidden) garmentList.children[firstNewIndex]?.focus({preventScroll:true});
+  });
 
   function selectGarment(d){
-    pickedGarment = d;
-    garmentMode = 'catalog';
-    refreshGarmentSourceUI();
-    refreshGarments();
-    refreshPicked();
-    requestAnimationFrame(()=>garmentList.querySelector('.g.sel')?.scrollIntoView({block:'nearest'}));
+    // 选择页内先预览，只有“使用这件服装”才提交到试穿页。
+    pickerGarment = d;
+    refreshPickerSelection();
+  }
+
+  function refreshPickerSelection(){
+    garmentList.querySelectorAll('.g').forEach(card=>{
+      const selected = card.dataset.id === pickerGarment?.id;
+      card.classList.toggle('sel', selected);
+      card.setAttribute('aria-pressed', String(selected));
+    });
+    pickerConfirm.disabled = !pickerGarment;
+    const preview = document.getElementById('garmentPickerPreview');
+    const placeholder = document.getElementById('garmentPickerPlaceholder');
+    const current = document.getElementById('garmentPickerCurrent');
+    preview.hidden = !pickerGarment;
+    placeholder.hidden = Boolean(pickerGarment);
+    if(!pickerGarment){
+      preview.removeAttribute('src');
+      document.getElementById('garmentPickerPreviewID').textContent = '';
+      document.getElementById('garmentPickerDescription').textContent = '';
+      current.textContent = t('pickerNone');
+      return;
+    }
+    preview.src = 'assets/' + pickerGarment.画像;
+    preview.alt = pickerGarment.id;
+    document.getElementById('garmentPickerPreviewID').textContent = pickerGarment.id;
+    document.getElementById('garmentPickerDescription').textContent = catName(pickerGarment.カテゴリ) + ' · ' + pickerGarment.キーワード.split(' ').map(wordName).join(' · ');
+    current.innerHTML = `<img src="assets/${esc(pickerGarment.サムネ)}" alt=""><div class="picker-current-copy"><strong>${esc(pickerGarment.id)}</strong><span>${esc(catName(pickerGarment.カテゴリ))}</span></div>`;
   }
 
   fitRandom.addEventListener('click', ()=>{
     const matches = getFilteredGarments();
     if(!matches.length) return;
-    const alternatives = pickedGarment && matches.length>1 ? matches.filter(d=>d.id!==pickedGarment.id) : matches;
-    selectGarment(alternatives[Math.floor(Math.random()*alternatives.length)]);
+    const alternatives = pickerGarment && matches.length>1 ? matches.filter(d=>d.id!==pickerGarment.id) : matches;
+    const next = alternatives[Math.floor(Math.random()*alternatives.length)];
+    pickerGarment = next;
+    pickerVisibleCount = Math.max(pickerVisibleCount, Math.ceil((matches.indexOf(next) + 1) / 48) * 48);
+    refreshGarments();
+    garmentList.querySelector('.g.sel')?.scrollIntoView({block:'nearest'});
   });
 
   garmentList.addEventListener('click', e=>{
@@ -2344,18 +2246,13 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     const d = D.find(x=>x.id===g.dataset.id); if(!d) return;
     selectGarment(d);
   });
-  garmentList.addEventListener('keydown', e=>{
-    if(e.key!=='Enter'&&e.key!==' ') return;
-    const g=e.target.closest('.g'); if(!g) return;
-    e.preventDefault();
-    const d = D.find(x=>x.id===g.dataset.id); if(d) selectGarment(d);
-  });
 
   // 刷新「当前选中服装」提示条
   function refreshPicked(){
     const el = document.getElementById('aiPicked');
     if(!el) return;
     const selected = getSelectedGarment();
+    el.hidden = !selected;
     if(!selected){
       el.className = 'ai-picked';
       el.textContent = garmentMode === 'upload' ? t('aiNeedUploadedGarment') : t('aiPickedNone');
@@ -2364,13 +2261,16 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     el.className = 'ai-picked has';
     const sourceLabel = selected.source === 'upload' ? t('customGarmentLabel') : t('aiPicked');
     el.innerHTML = `<img class="${selected.source === 'upload' ? 'custom' : ''}" src="${esc(selected.previewSource)}" alt="">` +
-      `<div class="ai-picked-copy"><span>${esc(sourceLabel)}</span><b class="gid">${esc(selected.label)}</b></div>` +
+      `<div class="ai-picked-copy"><span>${esc(sourceLabel)}</span><b class="gid">${esc(selected.label)}</b>`+
+      (selected.source === 'catalog' ? `<button type="button" class="catalog-change">${t('pickerChange')}</button>` : '') + `</div>` +
       `<div class="same-item-actions">`+
         `<button type="button" class="btn-buy-tag taobao-search-selected"><span>${t('taobaoSearchSame')}</span></button>`+
         `<button type="button" class="btn-buy-tag pdd pinduoduo-search-selected"><span>${t('pinduoduoSearchSame')}</span></button>`+
       `</div>`;
   }
   document.getElementById('aiPicked').addEventListener('click', e=>{
+    const changeButton = e.target.closest('.catalog-change');
+    if(changeButton){ openGarmentPicker(changeButton); return; }
     const selected = getSelectedGarment();
     if(!selected) return;
     const taobaoButton = e.target.closest('.taobao-search-selected');
@@ -2384,20 +2284,17 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   const _origApplyLang = applyLang;
   applyLang = function(){
     _origApplyLang();
-    if(fitEl.classList.contains('open')) refreshGarments();
+    if(garmentPicker.open){ drawPickerCategories(); refreshGarments(); }
     refreshGarmentSourceUI();
     refreshPicked();
     refreshConfigUI();
     if(!historyEl.hidden) renderHistory();
-    settingsKeyToggle.textContent = t(settingsApiKey.type === 'text' ? 'settingsHideKey' : 'settingsShowKey');
-    if(!settingsEl.hidden) refreshSettingsProviderFields();
   };
 
   // ===== AI 换装 =====
-  // 后端地址固定由 config.js 提供，不再支持 ?tryon= 参数或页面内修改。
-  const getAIAPI = () => REMOTE_AI_API;
+  // 仅接受公开配置指定的可信入口；URL 参数和旧浏览器设置不能改变请求目标。
+  const getTryonEndpoint = () => resolveTrustedTryonEndpoint(window.PCR_CONFIG, location.origin);
 
-  const aiModel = document.getElementById('aiModel');
   const aiGenerate = document.getElementById('aiGenerate');
   const aiCustomPrompt = document.getElementById('aiCustomPrompt');
   aiCustomPrompt.addEventListener('input', ()=>{
@@ -2411,7 +2308,6 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   const aiTaobaoResult = document.getElementById('aiTaobaoResult');
   const aiPinduoduoResult = document.getElementById('aiPinduoduoResult');
   let aiResultInfo = null;
-  aiModel.addEventListener('change', refreshConfigUI);
 
   // 检测浏览器 Canvas 是否支持 WebP 编码
   let isWebpSupported = null;
@@ -2536,9 +2432,6 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
     if(errCode === 'CONCURRENCY_LIMITED' || bizCode === 42903) return { code: 'CONCURRENCY_LIMITED', text: t('errConcurrencyLimited') };
 
     if(data && data.message){
-      if(tryonSettings.useCustom && /browser-custom/i.test(data.message)){
-        return { code: '', text: t('settingsBackendOutdated') };
-      }
       return { code: '', text: t('aiFailed') + '：' + data.message };
     }
     const status = resp ? Number(resp.status) || 0 : 0;
@@ -2642,21 +2535,22 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
   window.searchTaobaoByImage = searchTaobaoByImage;
   window.searchPinduoduoByImage = searchPinduoduoByImage;
 
-  function setGenerating(b, isGPT = false, isComfy = false){
+  function setGenerating(b){
     aiGenerate.disabled = b;
     aiCustomPrompt.disabled = b;
     aiGenerate.innerHTML = b
-      ? '<span class="ai-spinner"></span>' + (isGPT ? t('aiGeneratingGPT') : (isComfy ? t('aiGeneratingComfy') : t('aiGenerating')))
+      ? '<span class="ai-spinner"></span>' + t('aiGenerating')
       : t('aiGenerate');
   }
   function showHint(msg){ document.querySelector('.fit-hint').textContent = msg; }
   function showTryonError(msg, options={}){
     showHint(msg);
-    openServiceDialog(options.trigger || aiGenerate, msg, Boolean(options.settings));
+    openServiceDialog(options.trigger || aiGenerate, msg);
   }
 
   async function doTryon(){
     // 前置校验
+    if(STATIC_GALLERY){ showTryonError(t('fitStaticTip')); return; }
     if(aiCustomPrompt.value.length > 1000){ showTryonError(t('aiDescriptionTooLong'), {trigger:aiCustomPrompt}); return; }
     const customPrompt = aiCustomPrompt.value.trim();
     if(!personSrc){ showTryonError(t('aiNeedPhoto')); return; }
@@ -2666,20 +2560,10 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
       showTryonError(t(isUploadMode ? 'aiNeedUploadedGarment' : 'aiNeedGarment'), {trigger:isUploadMode ? fitGarmentUpload : aiGenerate});
       return;
     }
-    const aiApi = getAIAPI();
-    if(!aiApi){ showTryonError(t('aiServerErr'), {settings:true}); return; }
+    const endpoint = getTryonEndpoint();
+    if(!endpoint){ showTryonError(t('aiEndpointInvalid')); return; }
 
-    const isGPT = tryonSettings.useCustom
-      ? /gpt-image/i.test(tryonSettings.model || '')
-      : aiModel.value === 'gpt-image';
-    const isComfy = tryonSettings.useCustom && tryonSettings.provider === 'comfyui';
-
-    setGenerating(true, isGPT, isComfy);
-    if(isGPT){
-      showHint(t('aiGeneratingGPT'));
-    }else if(isComfy){
-      showHint(t('aiGeneratingComfy'));
-    }
+    setGenerating(true);
     try{
       let personB64, garmentB64;
       const shouldCompress = fitCompressEl ? fitCompressEl.checked : true;
@@ -2700,49 +2584,26 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
       const payload = {
         person_image: personB64,
         garment_image: garmentB64,
-        // 个人配置由 client_config 决定。这里使用不可回退的标记，避免旧后端静默调用 Gemini。
-        model: isComfy ? 'comfyui' : (tryonSettings.useCustom ? 'browser-custom' : aiModel.value),
         size: '1024x1536',
         lang: LANG,
         custom_prompt: customPrompt,
+        model: window.PCR_CONFIG.MODEL_ALIAS || 'doubao',
+        keep_face: true,
       };
-      if(tryonSettings.useCustom && !isComfy){
-        const base = (location.origin && location.origin !== 'null') ? location.origin : 'http://127.0.0.1';
-        let targetHost = '';
-        let targetOrigin = '';
-        try{
-          const tu = new URL(aiApi, base);
-          targetHost = tu.hostname;
-          targetOrigin = tu.origin;
-        }catch(_){}
-        const isTrustedTarget = aiApi === REMOTE_AI_API ||
-          isLoopbackHost(targetHost) ||
-          (location.origin && location.origin !== 'null' && targetOrigin === location.origin);
-
-        if(isTrustedTarget){
-          payload.client_config = {
-            provider: tryonSettings.provider,
-            base_url: tryonSettings.baseUrl,
-            api_key: tryonSettings.apiKey,
-            model: tryonSettings.model,
-          };
-        } else {
-          console.warn('[Security] 未信任的目标后端，已拦截 client_config 凭据外发。');
-        }
-      }
-
-      // 后端已免鉴权，请求不再携带 Authorization 头。
       const headers = {'Content-Type':'application/json'};
 
       let resp;
       try{
-        resp = await fetch(aiApi + '/tryon', {
+        resp = await fetch(endpoint, {
           method: 'POST',
           headers,
           body: JSON.stringify(payload),
+          redirect: 'error',
+          credentials: 'omit',
         });
       }catch(_){
-        showTryonError(t('aiServerErr'), {settings:true});
+        const isRemote = new URL(endpoint).origin !== location.origin;
+        showTryonError(t(isRemote ? 'aiHttpsConnectionErr' : 'aiServerErr'));
         return;
       }
 
@@ -2751,7 +2612,7 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
       const ok = resp.ok && data && data.code === 0 && data.data && data.data.image;
       if(!ok){
         const errInfo = getErrorMessageFromResponse(resp, data);
-        showTryonError(errInfo.text, {settings:errInfo.code === 'AUTH_REQUIRED'});
+        showTryonError(errInfo.text);
         if(errInfo.code === 'REQUEST_TOO_LARGE' && fitCompressEl && !fitCompressEl.checked){
           fitCompressEl.checked = true;
           localStorage.setItem(COMPRESS_STORAGE_KEY, '1');
@@ -2769,7 +2630,7 @@ $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.change
       aiResultImg.scrollIntoView({behavior:'smooth', block:'center'});
       try{
         await saveHistoryResult(aiResultInfo.b64, aiResultInfo.mime, data.data, selectedGarment);
-        showHint(isGPT ? t('aiSuccessGPT') : (isComfy ? t('aiSuccessComfy') : t('historySaved')));
+        showHint(t('historySaved'));
       }catch(_){
         // 本机存储失败不影响本次生成结果的查看和下载。
         showTryonError(t('historySaveFailed'));
@@ -2809,8 +2670,6 @@ const qsLang = qs.get('lang');
 if (qsLang==='en' || qsLang==='zh') LANG = qsLang;
 const qsQ = qs.get('q');
 if (qsQ) { S.q = qsQ.trim().toLowerCase(); const qi=$('#q'); qi.value=qsQ.trim(); }
-const qsModel = qs.get('model');
-if (Array.from($('#aiModel').options).some(option => option.value === qsModel)) $('#aiModel').value = qsModel;
 applyLang();
 // 支持 #fitting 直接打开试穿搭配台（便于分享/测试）
 if (location.hash === '#fitting') document.getElementById('fittingToggle').click();

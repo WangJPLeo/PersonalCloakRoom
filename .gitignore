@@ -21,10 +21,12 @@ id_rsa*
 # 本地配置文件与日志（禁止提交任何真实 Key 与凭据）
 config.yaml
 **/config/config.yaml
+web.config.local.json
 *.log
 
 # 本机推理环境、下载模型和运行产物
 .runtime/
+dist/
 
 # Go 编译产物、测试和覆盖率文件
 *.exe
@@ -42,3 +44,17 @@ profile.cov
 # Go 本地工作区
 go.work
 go.work.sum
+
+# macOS 本地桌面工具：产物与仅本机使用的服务地址
+macos/.build/
+macos/dist/
+macos/Config.local.plist
+macos/.swiftpm/
+
+# iPhone 本地产物、签名身份及服务配置
+ios/.generated/
+ios/.build/
+ios/dist/
+ios/Config.local.plist
+ios/Signing.local.xcconfig
+ios/**/xcuserdata/

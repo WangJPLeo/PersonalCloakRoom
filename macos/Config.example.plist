@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+    <key>ServiceURL</key><string>http://127.0.0.1:8000</string>
+    <key>AllowHTTPForService</key><false/>
+    <key>ServerModel</key><string>doubao</string>
+    <key>AccessToken</key><string></string>
+    <!-- 复制为 Config.local.plist 后填写 Key；真实配置不进入 Git。 -->
+    <key>PersonalModel</key><dict>
+        <key>provider</key><string>doubao</string>
+        <key>base_url</key><string>https://ark.cn-beijing.volces.com/api/v3</string>
+        <key>api_key</key><string></string>
+        <key>model</key><string>doubao-seedream-5-0-flash-260915</string>
+    </dict>
+</dict></plist>

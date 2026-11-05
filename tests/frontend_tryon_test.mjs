@@ -87,6 +87,24 @@ function extractFunction(name) {
   throw new Error(`unterminated function ${name}`);
 }
 
+const resolveEndpoint = vm.runInNewContext(`(${extractFunction('resolveTrustedTryonEndpoint')})`, {URL});
+const siteOrigin = 'https://gallery.example';
+const remoteOrigin = 'https://tryon.example';
+const remoteSettings = {TRYON_ENDPOINT: remoteOrigin + '/tryon', TRUSTED_TRYON_ORIGINS: [remoteOrigin]};
+assert.equal(resolveEndpoint({}, 'http://127.0.0.1:3000'), 'http://127.0.0.1:3000/api/tryon');
+assert.equal(resolveEndpoint({}, siteOrigin), siteOrigin + '/api/tryon');
+assert.equal(resolveEndpoint(remoteSettings, siteOrigin), remoteOrigin + '/tryon');
+assert.equal(resolveEndpoint({...remoteSettings, TRYON_ENABLED: false}, siteOrigin), '');
+assert.equal(resolveEndpoint({TRYON_ENDPOINT: remoteOrigin + '/tryon'}, siteOrigin), '');
+for(const TRYON_ENDPOINT of [
+  'http://tryon.example/tryon', 'https://untrusted.example/tryon',
+  'https://user:password@tryon.example/tryon', remoteOrigin + '/tryon?redirect=other',
+  remoteOrigin + '/tryon#private', remoteOrigin + '/other', '//untrusted.example/tryon',
+  'javascript:alert(1)', 'https://tryon.example.untrusted.example/tryon',
+]) assert.equal(resolveEndpoint({...remoteSettings, TRYON_ENDPOINT}, siteOrigin), '', 'reject an unsafe endpoint');
+assert.equal(resolveEndpoint({...remoteSettings, TRYON_ENDPOINT: 'http://127.0.0.1:3000/api/tryon'}, siteOrigin), '');
+assert.equal(resolveEndpoint({}, 'http://gallery.example'), '', 'remote HTTP must be rejected');
+
 const helperNames = [
   'detectImageMimeFromBytes',
   'detectImageMimeFromBase64',
@@ -115,13 +133,11 @@ const translations = {
   errRateLimited: 'rate limited',
   errDailyQuotaExceeded: 'quota exceeded',
   errConcurrencyLimited: 'concurrency limited',
-  settingsBackendOutdated: 'backend outdated',
 };
 
 const context = {
   atob,
   Uint8Array,
-  tryonSettings: {useCustom: false},
   t: key => translations[key] || key,
 };
 vm.createContext(context);

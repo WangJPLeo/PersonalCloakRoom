@@ -1,0 +1,4 @@
+// Copy to Signing.local.xcconfig; keep real team identifiers out of Git.
+DEVELOPMENT_TEAM =
+APP_BUNDLE_ID = app.personalcloakroom.ios
+APP_GROUP_ID = group.app.personalcloakroom.ios
