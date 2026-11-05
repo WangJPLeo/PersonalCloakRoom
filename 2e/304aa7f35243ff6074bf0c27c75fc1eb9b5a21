@@ -1,0 +1,29 @@
+config.js
+  s_643c896ed5d5de::t_88ae40a4ce1283 6
+docs/github-pages.md
+  s_643c896ed5d5de::t_8ff92101bdece3 3,31,33-37
+index.html
+  s_643c896ed5d5de::t_c79e7879b03ccf 774,852-854,961-963,1287-1305,1659-1662,2295-2296,2563-2564,2590-2591,2597,2601-2602,2605-2606
+scripts/build-pages.mjs
+  s_643c896ed5d5de::t_9db8459545ef3d 8-15,56
+tests/frontend_tryon_test.mjs
+  s_643c896ed5d5de::t_bb51c02fe73c0d 90-107
+tests/pages_build_test.mjs
+  s_643c896ed5d5de::t_c03b6b72810ca3 23,34-42
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2e304aa7f35243ff6074bf0c27c75fc1eb9b5a21",
+  "prompts": {},
+  "sessions": {
+    "s_643c896ed5d5de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ab4f-6c05-7c03-81d1-7d335217d7f4",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
