@@ -1,0 +1,23 @@
+config.js
+  s_643c896ed5d5de::t_50a8b0bbb66ed8 1-5
+data.js
+  s_643c896ed5d5de::t_d96811da84772f 1-2
+index.html
+  s_643c896ed5d5de::t_71fcec76ba0538 1-2419
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4a93bb68b30112bb1a49172f15a1fda502f029f9",
+  "prompts": {},
+  "sessions": {
+    "s_643c896ed5d5de": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ab4f-6c05-7c03-81d1-7d335217d7f4",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
