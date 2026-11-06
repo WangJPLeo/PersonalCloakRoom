@@ -49,44 +49,6 @@ html[data-theme="dark"]{
 html,body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--f);-webkit-font-smoothing:antialiased}
 body{min-height:100vh;background:radial-gradient(1200px 500px at 15% -10%,var(--body-glow1) 0,transparent 60%),radial-gradient(900px 400px at 100% 0,var(--body-glow2) 0,transparent 55%),var(--bg)}
 button,select,input{font:inherit;color:inherit}
-/* 头部 */
-.hero{padding:34px clamp(16px,4vw,48px) 18px;max-width:1600px;margin:0 auto}
-.eyebrow{font-size:12px;letter-spacing:.12em;color:var(--tx3)}
-.hero h1{margin:6px 0 4px;font-size:clamp(24px,3.4vw,38px);font-weight:700;letter-spacing:.02em}
-.hero h1 span{background:linear-gradient(90deg,var(--ac2),#e3c8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{color:var(--tx2);font-size:14px;margin:0}
-.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px 16px;flex-wrap:wrap}
-.hero-top .eyebrow{padding-top:18px}
-.hero-controls{display:flex;align-items:center;gap:8px;margin-left:auto;flex-wrap:wrap}
-/* 语言切换 */
-.langswitch{display:flex;border:1px solid var(--control-border);border-radius:12px;padding:4px;background:var(--control-bg)}
-.langswitch button{min-height:44px;padding:0 16px;border:0;border-radius:9px;background:transparent;color:var(--control-text);font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.15s}
-.langswitch button[aria-pressed=true]{background:var(--selected-bg);color:var(--selected-text)}
-.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:52px;padding:0 15px;border:1px solid var(--control-border);border-radius:12px;background:var(--control-bg);color:var(--control-text);font-size:14px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.15s}
-.theme-toggle:hover{border-color:var(--ac);color:var(--tx)}
-.theme-toggle:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.theme-toggle svg{width:18px;height:18px}
-/* 信息标签 */
-.infotabs{position:relative;display:flex;gap:6px;padding:4px;border:1px solid var(--control-border);border-radius:12px;background:var(--control-bg)}
-.itab{min-height:52px;padding:0 20px;border:0;border-radius:10px;background:transparent;color:var(--control-text);font-size:16px;font-weight:700;letter-spacing:.03em;cursor:pointer;white-space:nowrap;transition:background .15s,color .15s}
-.itab:hover{background:var(--recessed-bg);color:var(--tx)}
-.itab[aria-expanded="true"]{background:var(--selected-bg);color:var(--selected-text)}
-.itab:focus-visible,.ipclose:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.ipanel{position:absolute;right:0;top:calc(100% + 8px);z-index:30;width:min(460px,calc(100vw - 32px));max-height:min(70vh,560px);overflow:auto;
-  border:1px solid var(--line2);background:var(--panel);border-radius:var(--r);box-shadow:var(--sh);padding:16px 20px 18px}
-.ipanel[hidden]{display:none}
-.ipanel:focus{outline:none}
-.ipanel-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
-.ipanel h2{margin:0;font-size:17px;letter-spacing:.04em;color:var(--tx)}
-.ipclose{width:48px;height:48px;flex:0 0 48px;font-size:20px!important;border-radius:50%;border:1px solid var(--line2);background:var(--bg2);color:var(--tx);font-size:16px;line-height:1;cursor:pointer}
-.ipanel ul{margin:0;padding-left:1.3em;color:#cfd4dc;font-size:15px;line-height:1.85}
-.ipanel li+li{margin-top:2px}
-@media (max-width:560px){
-  .hero-top{flex-direction:column-reverse;align-items:stretch;gap:12px}
-  .hero-controls{justify-content:flex-end}
-  .itab{min-height:52px;padding:0 18px;font-size:16px}
-  .ipanel{position:fixed;left:16px;right:16px;top:auto;width:auto;margin-top:8px}
-}
 /* 工具栏 */
 .tools{position:sticky;top:0;z-index:20;background:var(--tools-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .tools-in{max-width:1600px;margin:0 auto;padding:10px clamp(16px,4vw,48px)}
@@ -165,7 +127,7 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .btn2:hover{border-color:var(--control-hover-border)}.btn2:focus-visible{outline:3px solid var(--ac);outline-offset:3px}
 .morebtn{display:flex;margin:26px auto 0;min-width:260px;padding:0 28px}
 @media (max-width:860px){.mbox{grid-template-columns:1fr;overflow:auto;padding:12px}.mimg{height:58vh}.keys{display:none}}
-@media (max-width:560px){.hero{padding-top:22px}.grid{grid-template-columns:repeat(2,1fr);gap:10px}.meta{padding:9px 10px 10px}
+@media (max-width:560px){.grid{grid-template-columns:repeat(2,1fr);gap:10px}.meta{padding:9px 10px 10px}
   .search{flex:1 1 0}.count{font-size:12px}.tab{padding:0 16px;font-size:16px}.tab em{font-size:13px}.morebtn{min-width:0;width:100%}}
 @media (max-width:560px){.meta .desc{font-size:12px;-webkit-line-clamp:2}.meta .cat{display:block;font-size:12px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -173,9 +135,6 @@ footer a:hover{color:var(--tx);text-decoration:underline}
 .fitting-toggle{display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 18px;border:1px solid var(--control-border);border-radius:12px;background:var(--control-bg);color:var(--control-text);font-size:16px;font-weight:700;cursor:pointer;white-space:nowrap;transition:.15s}
 .fitting-toggle:hover{border-color:var(--ac);color:var(--tx)}
 .fitting-toggle svg{opacity:.8}
-.github-link{display:inline-flex;align-items:center;gap:8px;min-height:52px;padding:0 18px;border:1px solid var(--control-border);border-radius:12px;background:var(--control-bg);color:var(--control-text);font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;white-space:nowrap;transition:.15s}
-.github-link:hover{border-color:var(--ac);color:var(--tx)}
-.github-link svg{opacity:.85}
 .fitting{position:fixed;inset:0;z-index:60;background:var(--bg);display:none;flex-direction:column}
 .fitting.open{display:flex}
 .fit-top{display:flex;align-items:center;gap:12px;padding:12px clamp(16px,3vw,32px);border-bottom:1px solid var(--line);flex-wrap:wrap;flex:0 0 auto}
@@ -397,6 +356,9 @@ html[data-theme="dark"] .catalog-picker{--picker-ac:#75e5b7;--picker-soft:rgba(1
 #aiFixedModel{font-size:12px;overflow-wrap:anywhere;color:var(--ac2)}
 .ai-spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(17,17,17,.35);border-top-color:#111;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-3px;margin-right:6px}
 @keyframes spin{to{transform:rotate(360deg)}}
+.history-save-notice{margin-top:12px;padding:12px 14px;border:1px solid var(--control-border);border-radius:12px;background:var(--panel)}
+.history-save-notice[hidden]{display:none}
+.history-save-notice p{margin:0 0 10px;font-size:14px;line-height:1.6;color:var(--tx2)}
 /* 本机生成记录与提示对话框 */
 .history-overlay,.service-dialog-overlay,.taobao-dialog-overlay{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom));background:rgba(5,6,8,.78);backdrop-filter:blur(8px)}
 .history-overlay[hidden],.service-dialog-overlay[hidden],.taobao-dialog-overlay[hidden]{display:none}
@@ -447,14 +409,8 @@ html[data-theme="dark"] .catalog-picker{--picker-ac:#75e5b7;--picker-soft:rgba(1
 .history-empty[hidden]{display:none}
 .history-close:focus-visible,.history-clear:focus-visible,.history-actions button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 @media (max-width:560px){
-  .hero-top{flex-direction:column}
-  .hero-top .eyebrow{padding-top:0}
-  .hero-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;margin-left:0}
-  .hero-controls>.github-link,.hero-controls>.fitting-toggle,.hero-controls>.theme-toggle{justify-content:center;padding:0 10px;font-size:14px}
-  .hero-controls .langswitch{justify-content:center}
-  .hero-controls .langswitch button{padding:0 10px;font-size:14px}
-  .hero-controls .infotabs{justify-content:center;gap:0}
-  .hero-controls .itab{padding:0 8px;font-size:14px}
+  .row2 .search{flex-basis:calc(100% - 124px);min-width:0}
+  .row2 .fitting-toggle{padding:0 12px;font-size:14px}
   .step-photo-row{flex-direction:column}
   .fit-top .fit-hint{order:4;width:100%;margin-left:0}
   #fitHistoryOpen{margin-left:auto}
@@ -466,72 +422,20 @@ html[data-theme="dark"] .catalog-picker{--picker-ac:#75e5b7;--picker-soft:rgba(1
 </style>
 </head>
 <body>
-<header class="hero">
-  <div class="hero-top">
-    <div class="eyebrow" data-i18n="eyebrow">PersonalCloakRoom · AI 服装参考图集</div>
-    <div class="hero-controls">
-      <a class="github-link" href="https://x.com/giaaibusi" target="_blank" rel="noopener noreferrer" aria-label="原作者/灵感来源 @giaaibusi">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        <span data-i18n="inspiration">灵感来源</span>
-      </a>
-      <a class="github-link" href="https://github.com/WangJPLeo/PersonalCloakRoom" target="_blank" rel="noopener noreferrer" aria-label="源代码">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.73.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.04.77 2.1v3.11c0 .3.21.66.8.55A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
-        <span data-i18n="sourceCode">源代码</span>
-      </a>
-      <button type="button" class="fitting-toggle" id="fittingToggle" aria-haspopup="dialog">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg>
-        <span data-i18n="fittingTab">AI 试穿搭配</span>
-      </button>
-      <button type="button" class="theme-toggle" id="themeToggle" data-theme-toggle aria-pressed="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
-        <span data-theme-label>黑色主题</span>
-      </button>
-      <div class="langswitch" id="langswitch" role="group" aria-label="语言切换">
-        <button type="button" data-lang="zh" aria-pressed="true">中文</button>
-        <button type="button" data-lang="en" aria-pressed="false">English</button>
-      </div>
-      <nav class="infotabs" id="infotabs" aria-label="使用提示・注意事项">
-        <button type="button" class="itab" id="itab0" aria-haspopup="dialog" aria-expanded="false" aria-controls="ipanel0" data-i18n="tipsTab">使用提示</button>
-        <button type="button" class="itab" id="itab1" aria-haspopup="dialog" aria-expanded="false" aria-controls="ipanel1" data-i18n="noticeTab">注意事项</button>
-        <div class="ipanel" id="ipanel0" role="dialog" aria-labelledby="ipt0" tabindex="-1" hidden>
-          <div class="ipanel-hd"><h2 id="ipt0" data-i18n="tipsTitle">使用提示</h2><button type="button" class="ipclose" aria-label="关闭">×</button></div>
-          <ul>
-            <li data-i18n="tips1">作为参照图像，加载到各类 AI 工具的服装参照・图像参照功能中。</li>
-            <li data-i18n="tips2">点击分类按钮可筛选，在搜索框中可按 ID 或服装关键词（例：denim、lace、白）查找。</li>
-            <li data-i18n="tips3">下载原尺寸 PNG 使用，可查看细节。</li>
-            <li data-i18n="tips4">这是没有人物的纯服装图像。脸部、体型、背景请用其他参照图像或指令补充。</li>
-          </ul>
-        </div>
-        <div class="ipanel" id="ipanel1" role="dialog" aria-labelledby="ipt1" tabindex="-1" hidden>
-          <div class="ipanel-hd"><h2 id="ipt1" data-i18n="noticeTitle">注意事项</h2><button type="button" class="ipclose" aria-label="关闭">×</button></div>
-          <ul>
-            <li data-i18n="notice1">基于 MIT 开源协议，完全免费开源，允许商业使用、修改与作品创作。</li>
-            <li data-i18n="notice2">代码与素材全量开放，可自由用于设计参考、AI 试衣或商业项目。</li>
-            <li data-i18n="notice3">无需署名（可自愿）。图像元数据已删除。请无保使用。</li>
-            <li data-i18n="notice4">这是 AI 生成的虚构服装，并非真实商品照片。</li>
-            <li data-i18n="notice5">本页所有服装图像均由文字生成图像（t2i）方式制作，未使用任何真实商品图片。</li>
-            <li data-i18n="notice6">发布前已与现有品牌做相似性检查，但不保证不侵犯第三方权利。</li>
-            <li data-i18n="notice7">使用时请自行负责确认与判断。因使用本数据产生的问题，本站概不负责。</li>
-            <li data-i18n="notice8">请勿用于表现真实人物或未成年人的用途，以及违背公序良俗的用途。</li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </div>
-  <h1><span data-i18n="titleWord">PersonalCloakRoom</span> <span data-i18n="titleDb">图库</span></h1>
-  <p class="sub" data-i18n="subtitle">人物不入镜的纯服装图像（2:3）。可按春・夏・秋・冬・内衣・派对・泳装・性感分类浏览。</p>
-</header>
-
 <div class="tools"><div class="tools-in">
   <div class="tabs" id="tabs" role="tablist" aria-label="分类"></div>
   <div class="row2">
     <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
       <input id="q" type="search" data-i18n-placeholder="searchPh" placeholder="按 ID・关键词搜索　例：denim、白" autocomplete="off" aria-label="搜索"></label>
+    <button type="button" class="fitting-toggle" id="fittingToggle" aria-haspopup="dialog">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg>
+      <span data-i18n="fittingTab">AI 试穿</span>
+    </button>
     <span class="count" id="count"></span>
   </div>
 </div></div>
 
-<main><div class="grid" id="grid"></div><button type="button" class="btn2 morebtn" id="more" hidden>加载更多</button></main>
+<main aria-label="服装图库" data-i18n-aria-label="pickerTitle"><div class="grid" id="grid"></div><button type="button" class="btn2 morebtn" id="more" hidden>加载更多</button></main>
 
 <footer id="foot">
   <div data-i18n="footerNote">PersonalCloakRoom · 基于 MIT 协议开源 · 完全可商用与作品创作</div>
@@ -668,6 +572,10 @@ html[data-theme="dark"] .catalog-picker{--picker-ac:#75e5b7;--picker-soft:rgba(1
           <div class="ai-result-box" id="aiResultBox">
             <div class="ai-empty" id="aiResultEmpty" data-i18n="aiResultNone">生成结果会显示在这里</div>
             <img id="aiResultImg" alt="" style="display:none">
+          </div>
+          <div class="history-save-notice" id="aiHistorySaveNotice" role="status" hidden>
+            <p id="aiHistorySaveMessage"></p>
+            <button type="button" class="btn-ghost" id="aiHistoryRetry" data-i18n="historyRetry">重试保存记录</button>
           </div>
           <div class="ai-result-bar" id="aiResultBar" style="display:none">
             <button type="button" class="btn-ghost" id="aiRegenerate" data-i18n="aiRegenerate">重新生成</button>
@@ -883,7 +791,11 @@ const I18N = {
     historyEmpty: '还没有生成记录', historyEmptyHint: '完成一次 AI 换装后，结果会自动保存在这里。',
     historyClear: '清空全部', historyClearConfirm: '确定删除当前浏览器里的全部生成记录吗？此操作无法撤销。',
     historyDelete: '删除', historyDeleteConfirm: '确定删除这条生成记录吗？', historyView: '查看', historyDownload: '下载',
-    historySaved: '换装完成，已保存到本机生成记录', historySaveFailed: '换装完成，但浏览器无法保存生成记录',
+    historySaved: '换装完成，已保存到本机生成记录', historySaveFailed: '图片已生成，记录尚未保存。可重试保存，或先下载结果图。',
+    historySaveQuota: '浏览器存储空间不足，请先下载结果图，再删除不需要的生成记录后重试。',
+    historySaveBlocked: '其他页面正在使用旧版记录，请关闭本站其他标签页后重试保存。',
+    historySaveUnavailable: '浏览器未允许本地存储，请检查隐私或存储设置，也可先下载结果图。',
+    historyRetry: '重试保存记录',
     historyLoadFailed: '无法读取本机生成记录，请检查浏览器存储权限。', historyGarment: '服装',
   },
   en: {
@@ -992,7 +904,11 @@ const I18N = {
     historyEmpty: 'No generation history yet', historyEmptyHint: 'Completed AI try-on results will be saved here automatically.',
     historyClear: 'Clear all', historyClearConfirm: 'Delete all generation history from this browser? This cannot be undone.',
     historyDelete: 'Delete', historyDeleteConfirm: 'Delete this generation record?', historyView: 'View', historyDownload: 'Download',
-    historySaved: 'Try-on complete and saved to local history', historySaveFailed: 'Try-on complete, but the browser could not save it locally',
+    historySaved: 'Try-on complete and saved to local history', historySaveFailed: 'Your image is ready, but history was not saved. Retry saving or download the image first.',
+    historySaveQuota: 'Browser storage is full. Download the image, delete unneeded history, then retry saving.',
+    historySaveBlocked: 'Another tab is using an older history database. Close other tabs for this site, then retry saving.',
+    historySaveUnavailable: 'Local storage is unavailable. Check browser privacy or storage settings, or download the image first.',
+    historyRetry: 'Retry saving history',
     historyLoadFailed: 'Cannot read local generation history. Check browser storage permissions.', historyGarment: 'Garment',
   }
 };
@@ -1119,18 +1035,11 @@ function applyLang(){
   document.querySelectorAll('[data-i18n-aria-label]').forEach(el=>{
     el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria-label')));
   });
-  // 语言按钮状态
-  document.querySelectorAll('#langswitch button').forEach(b=>{
-    b.setAttribute('aria-pressed', String(b.dataset.lang===LANG));
-  });
   updateThemeUI();
   // 重新绘制
   drawTabs();
   draw();
 }
-document.querySelectorAll('#langswitch button').forEach(b=>{
-  b.addEventListener('click', ()=>{ LANG=b.dataset.lang; applyLang(); });
-});
 document.querySelectorAll('[data-theme-toggle]').forEach(toggle=>{
   toggle.addEventListener('click', ()=>setTheme(THEME === 'dark' ? 'light' : 'dark'));
 });
@@ -1266,23 +1175,6 @@ document.addEventListener('keydown',e=>{
 let tx=null;$('#mimg').addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
 $('#mimg').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40)step(dx<0?1:-1);tx=null});
 
-// ===== 信息面板（右上角）=====
-(()=>{const nav=document.getElementById('infotabs');if(!nav)return;
-  const tabs=[...nav.querySelectorAll('.itab')];let cur=null;
-  const close=(back)=>{if(!cur)return;const tt=cur;tt.setAttribute('aria-expanded','false');document.getElementById(tt.getAttribute('aria-controls')).hidden=true;cur=null;if(back)tt.focus()};
-  const open=tt=>{if(cur===tt){close(true);return}close(false);cur=tt;tt.setAttribute('aria-expanded','true');const p=document.getElementById(tt.getAttribute('aria-controls'));p.hidden=false;
-    if(innerWidth<=560){const r=tt.getBoundingClientRect();p.style.top=(r.bottom+8)+'px'}else p.style.top='';p.focus({preventScroll:true})};
-  tabs.forEach((tt,i)=>{tt.addEventListener('click',()=>open(tt));tt.addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const nn=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];nn.focus();if(cur)open(nn)}})});
-  nav.querySelectorAll('.ipclose').forEach(b=>b.addEventListener('click',()=>close(true)));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&cur){e.stopPropagation();close(true)}},true);
-  let swallow=false;
-  document.addEventListener('pointerdown',e=>{if(cur&&!nav.contains(e.target)){close(false);swallow=true;setTimeout(()=>swallow=false,600)}},true);
-  document.addEventListener('click',e=>{if(swallow){swallow=false;e.preventDefault();e.stopPropagation()}},true);
-  addEventListener('scroll',()=>{if(cur&&innerWidth<=560)close(false)},{passive:true});
-  addEventListener('resize',()=>close(false));
-})();
-
 // ===== AI 试穿 =====
 function resolveTrustedTryonEndpoint(config, pageOrigin){
   if(!config || config.TRYON_ENABLED === false) return '';
@@ -1366,12 +1258,12 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
 
   const HISTORY_DB_NAME = 'PersonalCloakRoom.tryon.history';
   const LEGACY_HISTORY_DB_NAMES = ['CinlyCloakRoom.tryon.history', 'paipiange.tryon.history'];
-  const HISTORY_DB_VERSION = 1;
+  const HISTORY_DB_VERSION = 2;
   const HISTORY_STORE = 'generations';
   const HISTORY_META_STORE = 'metadata';
   let historyDbPromise = null;
 
-  // 生成图片通常远超 localStorage 容量，因此使用 IndexedDB 保存 Blob。
+  // 生成图片通常远超 localStorage 容量，因此使用 IndexedDB 保存二进制数据。
   // 历史中只存结果、时间、模型和服装 ID，不保存 API Key、Base URL 或上传的人像。
   function readLegacyHistoryRecords(name){
     return new Promise((resolve, reject)=>{
@@ -1421,7 +1313,11 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
       // 图片和完成标记在同一个事务内写入；清空历史后不会重新导入旧记录。
       const tx = db.transaction([HISTORY_STORE, HISTORY_META_STORE], 'readwrite');
       const store = tx.objectStore(HISTORY_STORE);
-      records.forEach(record=>store.put(record));
+      records.forEach(record=>{
+        // 重试迁移时不覆盖当前数据库中已经保存的结果。
+        const existing = store.get(record.id);
+        existing.onsuccess = ()=>{ if(!existing.result) store.put(record); };
+      });
       tx.objectStore(HISTORY_META_STORE).put(true, 'legacyHistoryMigrated');
       tx.oncomplete = ()=>resolve();
       tx.onabort = tx.onerror = ()=>reject(tx.error || new Error('History migration failed'));
@@ -1430,9 +1326,14 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
 
   function openHistoryDB(){
     if(historyDbPromise) return historyDbPromise;
-    historyDbPromise = new Promise((resolve, reject)=>{
+    const opening = new Promise((resolve, reject)=>{
       if(!('indexedDB' in window)){ reject(new Error('IndexedDB unavailable')); return; }
+      let finished = false;
+      let timer;
+      const fail = error=>{ clearTimeout(timer); finished = true; reject(error); };
       const request = indexedDB.open(HISTORY_DB_NAME, HISTORY_DB_VERSION);
+      // 排在其他升级请求后面的 open 不一定触发 blocked，必须限制等待时间。
+      timer = setTimeout(()=>fail(new DOMException('IndexedDB open timed out', 'HistoryBlockedError')), 5000);
       request.onupgradeneeded = ()=>{
         const db = request.result;
         if(!db.objectStoreNames.contains(HISTORY_STORE)){
@@ -1443,15 +1344,25 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
       };
       request.onsuccess = ()=>{
         const db = request.result;
-        migrateLegacyHistory(db).then(()=>resolve(db), error=>{
+        clearTimeout(timer);
+        // blocked 后的请求仍可能稍后成功，必须释放迟到的连接。
+        if(finished){ db.close(); return; }
+        db.onversionchange = ()=>{
           db.close();
           historyDbPromise = null;
-          reject(error);
-        });
+        };
+        db.onclose = ()=>{ historyDbPromise = null; };
+        // 旧库不可读或旧记录损坏时仍允许保存新结果；不标记迁移完成，
+        // 下次打开页面会重试，源数据库与已有记录均保留。
+        finished = true;
+        resolve(db);
+        migrateLegacyHistory(db).then(()=>updateHistoryCount()).catch(()=>{});
       };
-      request.onerror = ()=>{ historyDbPromise = null; reject(request.error || new Error('IndexedDB open failed')); };
-      request.onblocked = ()=>{ historyDbPromise = null; reject(new Error('IndexedDB upgrade blocked')); };
+      request.onerror = ()=>fail(request.error || new Error('IndexedDB open failed'));
+      request.onblocked = ()=>fail(new DOMException('IndexedDB upgrade blocked', 'HistoryBlockedError'));
     });
+    // 同步抛错、权限拒绝与异步打开失败都不能缓存成永久失败的 Promise。
+    historyDbPromise = opening.catch(error=>{ historyDbPromise = null; throw error; });
     return historyDbPromise;
   }
 
@@ -1468,6 +1379,13 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
       tx.oncomplete = ()=>resolve(result);
       tx.onerror = ()=>reject(tx.error || new Error('IndexedDB transaction failed'));
       tx.onabort = ()=>reject(tx.error || new Error('IndexedDB transaction aborted'));
+    }).catch(error=>{
+      // 移动端回到前台时连接可能已经失效；重试必须重新打开数据库。
+      if(error && ['InvalidStateError', 'UnknownError', 'AbortError'].includes(error.name)){
+        db.close();
+        historyDbPromise = null;
+      }
+      throw error;
     });
   }
 
@@ -1532,8 +1450,12 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
     return 'data:' + imageInfo.mime + ';base64,' + imageInfo.b64;
   }
 
-  async function normalizeResultImageBlob(blob){
-    if(!(blob instanceof Blob)) throw new Error('unsupported result image');
+  async function normalizeResultImageBlob(value, declaredMime){
+    // 新记录使用 ArrayBuffer，兼容移动端的 Blob 写入限制；旧 Blob 记录继续可读。
+    const blob = value instanceof Blob ? value :
+      (value instanceof ArrayBuffer || ArrayBuffer.isView(value)) ?
+        new Blob([value], {type:normalizeImageMime(declaredMime)}) : null;
+    if(!blob) throw new Error('unsupported result image');
     const bytes = new Uint8Array(await blob.slice(0, 16).arrayBuffer());
     const mime = detectImageMimeFromBytes(bytes);
     if(!mime) throw new Error('unsupported result image');
@@ -1584,14 +1506,16 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
       const records = await getHistoryRecords();
       const displayRecords = await Promise.all(records.map(async record=>{
         try{
-          return {...record, image: await normalizeResultImageBlob(record.image)};
+          return {...record, image: await normalizeResultImageBlob(record.image, record.imageMime)};
         }catch(_){
-          return record;
+          return null;
         }
       }));
       historyClear.disabled = records.length === 0;
-      historyEmpty.hidden = records.length !== 0;
-      historyGrid.innerHTML = displayRecords.map(record=>{
+      const readable = displayRecords.filter(Boolean);
+      historyEmpty.hidden = readable.length !== 0 || records.length !== 0;
+      if(readable.length !== records.length) historyMessage.textContent = t('historyLoadFailed');
+      historyGrid.innerHTML = readable.map(record=>{
         const imageUrl = URL.createObjectURL(record.image);
         historyObjectUrls.push(imageUrl);
         const model = record.provider ? `${record.provider} · ${record.model}` : record.model;
@@ -1630,11 +1554,44 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
     if(historyReturnFocus && historyReturnFocus.focus) historyReturnFocus.focus();
   }
 
-  async function saveHistoryResult(imageB64, imageMime, responseData, selectedGarment){
+  let pendingHistoryRecord = null;
+  const historySaveNotice = document.getElementById('aiHistorySaveNotice');
+  const historySaveMessage = document.getElementById('aiHistorySaveMessage');
+  const historyRetry = document.getElementById('aiHistoryRetry');
+
+  function historySaveErrorMessage(error){
+    if(error && error.name === 'QuotaExceededError') return t('historySaveQuota');
+    if(error && error.name === 'HistoryBlockedError') return t('historySaveBlocked');
+    if(error && ['SecurityError', 'NotAllowedError'].includes(error.name)) return t('historySaveUnavailable');
+    return t('historySaveFailed');
+  }
+
+  async function persistPendingHistory(){
+    if(!pendingHistoryRecord) return;
+    historyRetry.hidden = false;
+    historyRetry.disabled = true;
+    try{
+      await putHistoryRecord(pendingHistoryRecord);
+      pendingHistoryRecord = null;
+      historySaveNotice.hidden = true;
+      await updateHistoryCount();
+      showHint(t('historySaved'));
+    }catch(error){
+      historySaveMessage.textContent = historySaveErrorMessage(error);
+      historySaveNotice.hidden = false;
+      showHint(historySaveMessage.textContent);
+    }finally{
+      historyRetry.disabled = false;
+    }
+  }
+  historyRetry.addEventListener('click', persistPendingHistory);
+
+  async function saveHistoryResult(imageB64, imageMime, selectedGarment){
+    pendingHistoryRecord = null;
     const createdAt = Date.now();
     const randomId = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
     const isUpload = selectedGarment && selectedGarment.source === 'upload';
-    const record = {
+    pendingHistoryRecord = {
       id: `${createdAt}-${randomId}`,
       createdAt,
       garmentSource: isUpload ? 'upload' : 'catalog',
@@ -1642,10 +1599,10 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
       garmentLabel: isUpload ? t('customGarmentLabel') : (selectedGarment ? selectedGarment.id : ''),
       provider: 'doubao',
       model: FIXED_MODEL_NAME,
-      image: b64ToBlob(imageB64, imageMime),
+      imageMime,
+      image: await b64ToBlob(imageB64, imageMime).arrayBuffer(),
     };
-    await putHistoryRecord(record);
-    await updateHistoryCount();
+    await persistPendingHistory();
   }
 
   function refreshConfigUI(){
@@ -1716,9 +1673,9 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
         return;
       }
       const record = await getHistoryRecord(id);
-      if(!record || !(record.image instanceof Blob)) throw new Error('History image missing');
+      if(!record) throw new Error('History image missing');
       if(button.dataset.action === 'download'){
-        const imageBlob = await normalizeResultImageBlob(record.image);
+        const imageBlob = await normalizeResultImageBlob(record.image, record.imageMime);
         const url = URL.createObjectURL(imageBlob);
         const a = document.createElement('a');
         a.href = url;
@@ -1728,7 +1685,7 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
         return;
       }
       if(button.dataset.action === 'view'){
-        const imageBlob = await normalizeResultImageBlob(record.image);
+        const imageBlob = await normalizeResultImageBlob(record.image, record.imageMime);
         const dataUrl = await blobToDataUrl(imageBlob);
         aiResultInfo = resolveResultImageInfo(String(dataUrl).split(',')[1] || '', imageBlob.type);
         aiResultImg.src = dataUrl;
@@ -2537,7 +2494,9 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
 
   function setGenerating(b){
     aiGenerate.disabled = b;
+    aiRegenerate.disabled = b;
     aiCustomPrompt.disabled = b;
+    historyRetry.disabled = b;
     aiGenerate.innerHTML = b
       ? '<span class="ai-spinner"></span>' + t('aiGenerating')
       : t('aiGenerate');
@@ -2629,11 +2588,13 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
       // 滚动到结果
       aiResultImg.scrollIntoView({behavior:'smooth', block:'center'});
       try{
-        await saveHistoryResult(aiResultInfo.b64, aiResultInfo.mime, data.data, selectedGarment);
-        showHint(t('historySaved'));
-      }catch(_){
+        await saveHistoryResult(aiResultInfo.b64, aiResultInfo.mime, selectedGarment);
+      }catch(error){
         // 本机存储失败不影响本次生成结果的查看和下载。
-        showTryonError(t('historySaveFailed'));
+        historySaveMessage.textContent = historySaveErrorMessage(error);
+        historySaveNotice.hidden = false;
+        historyRetry.hidden = !pendingHistoryRecord;
+        showHint(historySaveMessage.textContent);
       }
     }catch(_){
       // 不把包含第三方响应细节的错误写入浏览器控制台，避免误带敏感配置。

@@ -60,8 +60,8 @@ assert.equal(previousBrandQuotaFailure.values.get('CinlyCloakRoom.theme'), 'dark
 
 function extractFunction(name) {
   const patterns = [`function ${name}(`, `async function ${name}(`];
-  const start = patterns.map(pattern => html.indexOf(pattern)).find(index => index >= 0);
-  assert.notEqual(start, undefined, `missing function ${name}`);
+  const start = Math.min(...patterns.map(pattern => html.indexOf(pattern)).filter(index => index >= 0));
+  assert.ok(Number.isFinite(start), `missing function ${name}`);
   const bodyStart = html.indexOf('{', start);
   let depth = 0;
   let quote = '';
@@ -184,5 +184,112 @@ assert.equal(context.getErrorMessageFromResponse({status: 401, ok: false}, null)
 assert.equal(context.getErrorMessageFromResponse({status: 403, ok: false}, null).code, 'ORIGIN_NOT_ALLOWED');
 assert.match(context.getErrorMessageFromResponse({status: 502, ok: false}, null).text, /502/);
 assert.match(context.getErrorMessageFromResponse({status: 200, ok: true}, null).text, /invalid response/);
+
+// 移动端以二进制保存新结果，同时兼容已有 Blob 记录与声明错误的图片类型。
+const historyContext = vm.createContext({Blob, ArrayBuffer, Uint8Array, t:key=>key});
+vm.runInContext([
+  'detectImageMimeFromBytes', 'normalizeImageMime', 'normalizeResultImageBlob', 'historySaveErrorMessage',
+].map(extractFunction).join('\n'), historyContext);
+const pngBytes = Uint8Array.from(atob(png), char=>char.charCodeAt(0));
+const oldBlob = new Blob([pngBytes], {type:'image/jpeg'});
+for(const value of [oldBlob, pngBytes, pngBytes.buffer]) {
+  const restored = await historyContext.normalizeResultImageBlob(value, 'image/jpeg');
+  assert.equal(restored.type, 'image/png');
+  assert.deepEqual(new Uint8Array(await restored.arrayBuffer()), pngBytes);
+}
+await assert.rejects(historyContext.normalizeResultImageBlob(new Uint8Array([1,2,3]).buffer), /unsupported/);
+assert.equal(historyContext.historySaveErrorMessage({name:'QuotaExceededError'}), 'historySaveQuota');
+assert.equal(historyContext.historySaveErrorMessage({name:'HistoryBlockedError'}), 'historySaveBlocked');
+assert.equal(historyContext.historySaveErrorMessage({name:'SecurityError'}), 'historySaveUnavailable');
+
+// 同步打开失败不能永久缓存失败状态；旧库迁移失败不能阻止保存新结果。
+let openCalls = 0, closed = 0;
+const db = {close:()=>{closed++;}};
+const indexedDB = {open:()=>{
+  if(++openCalls === 1) throw new DOMException('denied', 'SecurityError');
+  const request = {result:db};
+  queueMicrotask(()=>request.onsuccess());
+  return request;
+}};
+const dbContext = vm.createContext({
+  window:{indexedDB}, indexedDB, DOMException, setTimeout, clearTimeout,
+  updateHistoryCount:async()=>{},
+  migrateLegacyHistory:async()=>{throw new Error('legacy database unavailable');},
+});
+vm.runInContext(`let historyDbPromise = null;
+  const HISTORY_DB_NAME = 'test-history', HISTORY_DB_VERSION = 2;
+  const HISTORY_STORE = 'generations', HISTORY_META_STORE = 'metadata';
+  ${extractFunction('openHistoryDB')}`, dbContext);
+await assert.rejects(dbContext.openHistoryDB(), {name:'SecurityError'});
+assert.equal(await dbContext.openHistoryDB(), db);
+assert.equal(openCalls,2);
+assert.equal(await dbContext.openHistoryDB(), db);
+assert.equal(openCalls,2, 'successful connections are reused');
+db.onversionchange();
+assert.equal(closed,1, 'an old tab must release its connection for upgrades');
+assert.equal(await dbContext.openHistoryDB(), db);
+assert.equal(openCalls,3, 'invalidated connections must be reopened');
+db.transaction = ()=>{throw new DOMException('connection lost', 'InvalidStateError');};
+vm.runInContext(extractFunction('historyRequest'), dbContext);
+await assert.rejects(dbContext.historyRequest('readwrite', ()=>{}), {name:'InvalidStateError'});
+assert.equal(await dbContext.openHistoryDB(), db);
+assert.equal(openCalls,4, 'a failed transaction must not retain a closed connection');
+
+// 其他标签页占用旧库时，排队请求可能没有 blocked 事件；超时后仍可恢复，迟到连接必须关闭。
+const queuedRequests = [], timers = [];
+let lateConnectionsClosed = 0;
+const queuedDB = {open:()=>{
+  const request = {result:{close:()=>{lateConnectionsClosed++;}}};
+  queuedRequests.push(request);
+  return request;
+}};
+const queuedContext = vm.createContext({
+  window:{indexedDB:queuedDB}, indexedDB:queuedDB, DOMException,
+  setTimeout:callback=>{timers.push(callback); return timers.length;}, clearTimeout:()=>{},
+  updateHistoryCount:async()=>{},
+  migrateLegacyHistory:()=>new Promise(()=>{}),
+});
+vm.runInContext(`let historyDbPromise = null;
+  const HISTORY_DB_NAME = 'queued-history', HISTORY_DB_VERSION = 2;
+  const HISTORY_STORE = 'generations', HISTORY_META_STORE = 'metadata';
+  ${extractFunction('openHistoryDB')}`, queuedContext);
+const blockedOpen = queuedContext.openHistoryDB();
+queuedRequests[0].onblocked();
+await assert.rejects(blockedOpen, {name:'HistoryBlockedError'});
+const queuedOpen = queuedContext.openHistoryDB();
+timers[1]();
+await assert.rejects(queuedOpen, {name:'HistoryBlockedError'});
+const recoveredOpen = queuedContext.openHistoryDB();
+queuedRequests[2].onsuccess();
+assert.equal(await recoveredOpen, queuedRequests[2].result, 'a stalled migration must not block new records');
+queuedRequests[0].onsuccess();
+queuedRequests[1].onsuccess();
+assert.equal(lateConnectionsClosed,2);
+assert.equal(await queuedContext.openHistoryDB(), queuedRequests[2].result);
+
+// 保存失败保留待保存结果；重试使用同一记录 ID，成功后才清除待保存状态。
+let writes = 0;
+const retriedRecords = [];
+const notice = {hidden:true}, retry = {}, message = {};
+const retryContext = vm.createContext({
+  historySaveNotice:notice, historyRetry:retry, historySaveMessage:message,
+  putHistoryRecord:async record=>{
+    retriedRecords.push(record);
+    if(++writes === 1) throw new DOMException('full', 'QuotaExceededError');
+  },
+  updateHistoryCount:async()=>{}, showHint:()=>{}, t:key=>key,
+  historySaveErrorMessage:error=>error.name,
+});
+vm.runInContext(`let pendingHistoryRecord = {id:'same-result'};
+  ${extractFunction('persistPendingHistory')}`, retryContext);
+await retryContext.persistPendingHistory();
+assert.equal(notice.hidden,false);
+assert.equal(message.textContent,'QuotaExceededError');
+assert.equal(retry.disabled,false);
+await retryContext.persistPendingHistory();
+assert.equal(notice.hidden,true);
+assert.equal(retriedRecords[0],retriedRecords[1]);
+await retryContext.persistPendingHistory();
+assert.equal(writes,2, 'a saved result must not be written again');
 
 console.log('frontend try-on tests passed');
