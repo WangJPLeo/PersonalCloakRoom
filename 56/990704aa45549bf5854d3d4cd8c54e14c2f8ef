@@ -1,0 +1,19 @@
+index.html
+  s_f1beb99e6910ab::t_4858356180235c 7-10,443,690-691,720,804-805,834
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "56990704aa45549bf5854d3d4cd8c54e14c2f8ef",
+  "prompts": {},
+  "sessions": {
+    "s_f1beb99e6910ab": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1b065-aa44-7962-8025-9d2fb6dd0ec4",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "wangjipeng01 <wangjipeng01@zhuanzhuan.com>"
+    }
+  }
+}
