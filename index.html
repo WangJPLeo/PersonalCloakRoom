@@ -1313,12 +1313,18 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
       // 图片和完成标记在同一个事务内写入；清空历史后不会重新导入旧记录。
       const tx = db.transaction([HISTORY_STORE, HISTORY_META_STORE], 'readwrite');
       const store = tx.objectStore(HISTORY_STORE);
-      records.forEach(record=>{
-        // 重试迁移时不覆盖当前数据库中已经保存的结果。
-        const existing = store.get(record.id);
-        existing.onsuccess = ()=>{ if(!existing.result) store.put(record); };
-      });
-      tx.objectStore(HISTORY_META_STORE).put(true, 'legacyHistoryMigrated');
+      const metadata = tx.objectStore(HISTORY_META_STORE);
+      const marker = metadata.get('legacyHistoryMigrated');
+      marker.onsuccess = ()=>{
+        // 读取旧库期间用户可能已经清空记录；在写入事务内重新确认。
+        if(marker.result) return;
+        records.forEach(record=>{
+          // 重试迁移时不覆盖当前数据库中已经保存的结果。
+          const existing = store.get(record.id);
+          existing.onsuccess = ()=>{ if(!existing.result) store.put(record); };
+        });
+        metadata.put(true, 'legacyHistoryMigrated');
+      };
       tx.oncomplete = ()=>resolve();
       tx.onabort = tx.onerror = ()=>reject(tx.error || new Error('History migration failed'));
     });
@@ -1366,11 +1372,11 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
     return historyDbPromise;
   }
 
-  async function historyRequest(mode, operation){
+  async function historyRequest(mode, operation, stores = HISTORY_STORE){
     const db = await openHistoryDB();
     return new Promise((resolve, reject)=>{
-      const tx = db.transaction(HISTORY_STORE, mode);
-      const request = operation(tx.objectStore(HISTORY_STORE));
+      const tx = db.transaction(stores, mode);
+      const request = operation(tx.objectStore(HISTORY_STORE), tx);
       let result;
       if(request){
         request.onsuccess = ()=>{ result = request.result; };
@@ -1396,7 +1402,10 @@ function resolveTrustedTryonEndpoint(config, pageOrigin){
   const getHistoryRecord = id=>historyRequest('readonly', store=>store.get(id));
   const putHistoryRecord = record=>historyRequest('readwrite', store=>store.put(record));
   const deleteHistoryRecord = id=>historyRequest('readwrite', store=>store.delete(id));
-  const clearHistoryRecords = ()=>historyRequest('readwrite', store=>store.clear());
+  const clearHistoryRecords = ()=>historyRequest('readwrite', (store, tx)=>{
+    store.clear();
+    tx.objectStore(HISTORY_META_STORE).put(true, 'legacyHistoryMigrated');
+  }, [HISTORY_STORE, HISTORY_META_STORE]);
   const countHistoryRecords = ()=>historyRequest('readonly', store=>store.count());
 
   function detectImageMimeFromBytes(bytes){

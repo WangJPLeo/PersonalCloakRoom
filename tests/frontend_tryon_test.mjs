@@ -267,6 +267,34 @@ queuedRequests[1].onsuccess();
 assert.equal(lateConnectionsClosed,2);
 assert.equal(await queuedContext.openHistoryDB(), queuedRequests[2].result);
 
+// 旧库读取尚未返回时清空历史，后台迁移不能把记录重新写回来。
+let clearedDuringMigration = false, migrationWrites = 0;
+const migrationContext = vm.createContext({
+  readLegacyHistoryRecords:async()=>{
+    clearedDuringMigration = true;
+    return [{id:'old-record'}];
+  },
+});
+vm.runInContext(`const HISTORY_STORE = 'generations', HISTORY_META_STORE = 'metadata';
+  const LEGACY_HISTORY_DB_NAMES = ['legacy-history'];
+  ${extractFunction('migrateLegacyHistory')}`, migrationContext);
+await migrationContext.migrateLegacyHistory({transaction:(_, mode)=>{
+  const tx = {objectStore:()=>({
+    get:()=>{
+      const request = {};
+      queueMicrotask(()=>{
+        request.result = clearedDuringMigration;
+        request.onsuccess();
+        if(mode === 'readwrite') queueMicrotask(()=>tx.oncomplete());
+      });
+      return request;
+    },
+    put:()=>{migrationWrites++;},
+  })};
+  return tx;
+}});
+assert.equal(migrationWrites,0, 'cleared records must not be restored by a delayed migration');
+
 // 保存失败保留待保存结果；重试使用同一记录 ID，成功后才清除待保存状态。
 let writes = 0;
 const retriedRecords = [];
